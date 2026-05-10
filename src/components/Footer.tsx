@@ -1,9 +1,7 @@
 'use client'
 import React from 'react';
 import Link from 'next/link';
-import Image from 'next/image';
 import { usePathname } from 'next/navigation';
-import { FiMail, FiPhone, FiShare2, FiGlobe } from 'react-icons/fi';
 
 const Footer = () => {
   const pathname = usePathname();
@@ -13,63 +11,93 @@ const Footer = () => {
     return null;
   }
 
+  const services = [
+    'Ağır Vasıta Beyin Tamiri',
+    'Otomotiv ECU Tamiri',
+    'ABS / Klima Onarımı',
+    'Elektronik Kart Tamiri',
+    'iPhone Anakart Tamiri',
+    'Mikro Lehimleme'
+  ];
+
   return (
-    <footer className="bg-[#f8fafc] pt-20 border-t border-gray-100">
-      <div className="mx-auto max-w-7xl px-5 sm:px-7 lg:px-10">
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 pb-16">
+    <footer className="bg-surface-container-lowest text-on-surface-variant border-t border-outline-variant pt-20 pb-10">
+      <div className="max-w-container-max mx-auto px-margin-desktop">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
           
-          {/* Logo ve Hakkında */}
-          <div className="space-y-6 text-center md:text-left">
-            <Link href="/" className="inline-block">
-              <div className="relative h-10 w-40 sm:h-12 sm:w-48">
-                <Image
-                  src="/demirbaslogo.png"
-                  alt="Demirbaş Muhasebe Logo"
-                  fill
-                  className="object-contain object-left md:object-left"
-                />
-              </div>
-            </Link>
-            <p className="text-sm leading-relaxed text-[#5f6970] max-w-xs mx-auto md:mx-0">
-              Küresel standartlarda mali müşavirlik ve stratejik danışmanlık hizmetleri sunan güvenilir çözüm ortağınız.
+          {/* Brand Info */}
+          <div className="space-y-6">
+            <div className="text-3xl font-display font-bold text-on-surface uppercase tracking-tighter">
+              TECH-LAB <span className="text-tertiary">PRECISION</span>
+            </div>
+            <p className="text-sm leading-relaxed max-w-xs">
+              Endüstriyel elektronik onarımında dünya standartlarında laboratuvar altyapısı ve uzman mühendis kadrosu ile çözüm üretiyoruz.
             </p>
+            <div className="flex gap-4">
+              <Link href="#" className="w-10 h-10 border border-outline-variant flex items-center justify-center hover:border-tertiary hover:text-tertiary transition-all">
+                <span className="material-symbols-outlined text-sm">share</span>
+              </Link>
+              <Link href="#" className="w-10 h-10 border border-outline-variant flex items-center justify-center hover:border-tertiary hover:text-tertiary transition-all">
+                <span className="material-symbols-outlined text-sm">alternate_email</span>
+              </Link>
+            </div>
           </div>
 
-          {/* Hızlı Bağlantılar */}
-          <div className="text-center md:text-left">
-            <h3 className="text-lg font-bold text-[#1a1a1a] mb-6">Hızlı Bağlantılar</h3>
-            <ul className="space-y-4 text-sm text-[#5f6970]">
-              <li><Link href="/hakkimizda" className="hover:text-[var(--lale-gold)] transition-colors">Gizlilik Politikası</Link></li>
-              <li><Link href="/hizmetlerimiz" className="hover:text-[var(--lale-gold)] transition-colors">Kullanım Şartları</Link></li>
-              <li><Link href="/haberler" className="hover:text-[var(--lale-gold)] transition-colors">Kariyer</Link></li>
+          {/* Services */}
+          <div>
+            <h4 className="font-technical text-on-surface text-[10px] tracking-[0.2em] uppercase mb-8">HİZMETLERİMİZ</h4>
+            <ul className="space-y-4">
+              {services.map((service, index) => (
+                <li key={index}>
+                  <Link href="/hizmetlerimiz" className="text-sm hover:text-tertiary transition-colors flex items-center gap-2 group">
+                    <span className="w-1 h-1 bg-tertiary/30 group-hover:bg-tertiary transition-all"></span>
+                    {service}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 
-          {/* İletişim */}
-          <div className="text-center md:text-left">
-            <h3 className="text-lg font-bold text-[#1a1a1a] mb-6">İletişim</h3>
-            <ul className="space-y-4 text-sm text-[#5f6970]">
-              <li className="flex items-center justify-center md:justify-start gap-3">
-                <FiMail className="text-[var(--lale-gold)]" />
-                <span>info@demirbas.com</span>
-              </li>
-              <li className="flex items-center justify-center md:justify-start gap-3">
-                <FiPhone className="text-[var(--lale-gold)]" />
-                <span>+90 (212) 555 01 01</span>
-              </li>
-              <li className="flex items-center justify-center md:justify-start gap-6 pt-2">
-                <FiShare2 className="text-gray-400 cursor-pointer hover:text-[var(--lale-gold)] transition-colors" />
-                <FiGlobe className="text-gray-400 cursor-pointer hover:text-[var(--lale-gold)] transition-colors" />
-              </li>
+          {/* Quick Links */}
+          <div>
+            <h4 className="font-technical text-on-surface text-[10px] tracking-[0.2em] uppercase mb-8">KURUMSAL</h4>
+            <ul className="space-y-4">
+              <li><Link href="/hakkimizda" className="text-sm hover:text-tertiary transition-colors">Hakkımızda</Link></li>
+              <li><Link href="/galeri" className="text-sm hover:text-tertiary transition-colors">Laboratuvarımız</Link></li>
+              <li><Link href="/haberler" className="text-sm hover:text-tertiary transition-colors">Teknik Analizler</Link></li>
+              <li><Link href="/iletisim" className="text-sm hover:text-tertiary transition-colors">İletişim</Link></li>
+              <li><Link href="#" className="text-sm hover:text-tertiary transition-colors">KVKK Aydınlatma Metni</Link></li>
+              <li><Link href="#" className="text-sm hover:text-tertiary transition-colors">Garanti Şartları</Link></li>
             </ul>
           </div>
+
+          {/* Contact */}
+          <div>
+            <h4 className="font-technical text-on-surface text-[10px] tracking-[0.2em] uppercase mb-8">İLETİŞİM</h4>
+            <div className="space-y-6">
+              <div className="flex items-start gap-4">
+                <span className="material-symbols-outlined text-tertiary text-lg">location_on</span>
+                <p className="text-sm">İkitelli OSB, Teknik Sanayi Sitesi 14. Blok No: 28, Başakşehir/İstanbul</p>
+              </div>
+              <div className="flex items-start gap-4">
+                <span className="material-symbols-outlined text-tertiary text-lg">call</span>
+                <p className="text-sm font-technical">+90 (212) 555 01 23</p>
+              </div>
+            </div>
+          </div>
+
         </div>
 
-        {/* Alt Bilgi */}
-        <div className="border-t border-gray-200 py-10 text-center">
-          <p className="text-xs text-gray-400">
-            © 2026 Demirbaş. Created by <a href="https://www.alceix.com/" target="_blank" rel="noopener noreferrer" className="font-bold hover:text-[var(--lale-gold)] transition-colors">Alceix</a>
-          </p>
+        {/* Bottom Bar */}
+        <div className="border-t border-outline-variant/30 pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
+          <div className="font-technical text-[10px] tracking-widest uppercase opacity-60">
+            © 2024 TECH-LAB PRECISION. TÜM HAKLARI SAKLIDIR.
+          </div>
+          <div className="font-technical text-[10px] tracking-widest uppercase flex items-center gap-4">
+            <span>DESIGNED BY <span className="text-tertiary font-bold">ALCEIX</span></span>
+            <span className="opacity-40">|</span>
+            <span className="opacity-60">ALCEIX tarafından oluşturulmuştur.</span>
+          </div>
         </div>
       </div>
     </footer>

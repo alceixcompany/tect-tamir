@@ -7,94 +7,94 @@ import { FiArrowRight, FiCheckCircle, FiArrowLeft, FiClock, FiSettings, FiActivi
 import { motion } from 'framer-motion';
 
 const servicesData = {
-  'genel-muhasebe': {
-    title: 'Genel Muhasebe',
-    image: '/banner/srv_accounting.png',
+  'agir-vasita-beyin-tamiri': {
+    title: 'Ağır Vasıta Beyin Tamiri',
+    image: '/heavy_truck_ecu_repair_1778397685432.png',
     icon: '01',
-    description: 'Aylık muhasebe kayıtları, belge akışı ve dönem sonu hazırlıkları için düzenli operasyon desteği.',
-    features: ['Yevmiye ve resmi kayıt takibi', 'Belge düzeni ve kontrol akışı', 'Dönem sonu hazırlıkları', 'Aylık operasyon disiplini'],
-    overview: 'Genel muhasebe hizmetimiz, işletmenin mali kayıt tarafını düzenli, öngörülebilir ve denetime hazır biçimde sürdürmek için planlanır.',
-    whyChoose: ['Aylık düzenli kontrol', 'Belgelerde dağınıklığı azaltan akış', 'İşletmeye uygun çalışma modeli'],
+    description: 'Tır, kamyon ve otobüs kontrol ünitelerinde (ECU) çip seviyesi hassas müdahale ve onarım.',
+    features: ['EURO 6 Sistem Desteği', 'Parametre Programlama', 'Hata Kodu Temizleme', 'Orijinal Donanım Testi'],
+    overview: 'Ağır vasıta araçların kalbi sayılan kontrol üniteleri, zorlu çalışma koşullarında arızalanabilir. Laboratuvarımızda, bu üniteleri IPC standartlarında onararak yüksek maliyetli parça değişimlerinin önüne geçiyoruz.',
+    whyChoose: ['Gelişmiş Arıza Simülatörleri', 'Yüksek Isıya Dayanıklı Komponentler', 'Fabrika Çıkış Ayarlarıyla Teslimat'],
     process: [
-      { step: 1, title: 'İhtiyaç Analizi', description: 'Mevcut evrak ve işlem yoğunluğu değerlendirilir.' },
-      { step: 2, title: 'Süreç Kurgusu', description: 'Belge teslim ve kontrol düzeni netleştirilir.' },
-      { step: 3, title: 'Aylık Takip', description: 'Kayıt, kontrol ve resmi süreçler takvimli biçimde yürütülür.' },
-      { step: 4, title: 'Dönemsel Değerlendirme', description: 'Eksikler ve iyileştirme alanları görünür hale getirilir.' },
+      { step: 1, title: 'Diagnostik Analiz', description: 'Cihazın hata kodları ve fiziksel durumu gelişmiş osiloskoplarla incelenir.' },
+      { step: 2, title: 'Bileşen Testi', description: 'Kart üzerindeki mikro-çipler, kapasitörler ve dirençler tek tek test edilir.' },
+      { step: 3, title: 'Mikro-Onarım', description: 'Arızalı parçalar BGA rework istasyonlarında hassas ısı kontrolüyle değiştirilir.' },
+      { step: 4, title: 'Simülasyon', description: 'Onarılan ünite, araç simülatöründe gerçek çalışma koşullarında test edilir.' },
     ],
   },
-  'vergi-beyanname': {
-    title: 'Vergi ve Beyanname',
-    image: '/banner/srv_tax.png',
+  'otomotiv-ecu-tamiri': {
+    title: 'Otomotiv ECU Tamiri',
+    image: '/automotive_ecu_repair_1778397704368.png',
     icon: '02',
-    description: 'Beyanname yükümlülüklerini zamanında ve mevzuata uygun yerine getiren kontrollü vergi süreci yönetimi.',
-    features: ['KDV ve muhtasar beyanları', 'Geçici vergi süreci', 'Son tarih takibi', 'Kontrollü bildirim akışı'],
-    overview: 'Vergi ve beyanname hizmetimiz, yasal yükümlülüklerin son gün stresine bırakılmadan planlı şekilde hazırlanmasını hedefler.',
-    whyChoose: ['Takvim odaklı işleyiş', 'Gecikme riskini azaltan kontrol', 'Mevzuata uygun takip'],
+    description: 'Binek araçların motor ve konfor beyinlerinde donanımsal onarım ve yazılım güncellemeleri.',
+    features: ['Immobilizer Onarımı', 'Airbag Beyin Tamiri', 'Yazılım Güncelleme', 'ABS Modül Onarımı'],
+    overview: 'Binek otomobillerin karmaşık elektronik yapısı, uzmanlık gerektiren müdahaleler ihtiyaç duyar. Laboratuvarımızda her marka ve model aracın beyin onarımı gerçekleştirilmektedir.',
+    whyChoose: ['Tüm Markalarla Uyumlu Yazılım', 'Hızlı Onarım Süreci', 'Garantili Teknik Destek'],
     process: [
-      { step: 1, title: 'Takvimleme', description: 'Dönemsel yükümlülükler tarih bazında planlanır.' },
-      { step: 2, title: 'Veri Kontrolü', description: 'Gerekli belge ve kayıtlar gözden geçirilir.' },
-      { step: 3, title: 'Hazırlık', description: 'Beyannameler ve ilgili hesaplamalar hazırlanır.' },
-      { step: 4, title: 'Bildirim', description: 'İşlem tamamlanır ve gerekli bilgilendirme yapılır.' },
+      { step: 1, title: 'Yazılım Okuma', description: 'Mevcut yazılım yedeklenir ve veri kaybı önlenir.' },
+      { step: 2, title: 'Hata Analizi', description: 'Donanımsal ve yazılımsal hatalar ayrıştırılır.' },
+      { step: 3, title: 'Hassas Müdahale', description: 'Gerekli entegre değişimleri veya yazılım yamaları uygulanır.' },
+      { step: 4, title: 'Son Kontrol', description: 'Araç üzerindeki tüm fonksiyonların çalışabilirliği onaylanır.' },
     ],
   },
-  'bordro-sgk': {
-    title: 'Bordro ve SGK',
-    image: '/banner/srv_payroll.png',
+  'iphone-anakart-tamiri': {
+    title: 'iPhone Anakart Tamiri',
+    image: '/iphone_motherboard_repair_1778397775835.png',
     icon: '03',
-    description: 'Personel özlük, maaş bordroları ve SGK bildirimleri için düzenli ve güvenli süreç yönetimi.',
-    features: ['Bordro hazırlanması', 'İşe giriş-çıkış işlemleri', 'SGK bildirim takibi', 'Personel süreç disiplini'],
-    overview: 'Bordro ve SGK hizmetimiz, personel tarafındaki resmi yükümlülüklerin aksamasını önleyecek bir operasyon akışı kurar.',
-    whyChoose: ['Personel süreçlerinde hız', 'SGK tarafında düzenli takip', 'İş yükünü azaltan destek'],
+    description: 'Sıvı teması, şebeke ve enerji sorunlarında mikro-cerrahi hassasiyetinde anakart onarımı.',
+    features: ['Veri Kurtarma', 'NAND Değişimi', 'Audio IC Tamiri', 'FaceID Onarımı'],
+    overview: 'Mikro-elektronik dünyasının en hassas alanı olan iPhone anakartları, laboratuvarımızda yüksek çözünürlüklü mikroskoplar altında onarılmaktadır.',
+    whyChoose: ['Mikro-Cerrahi Ekipmanlar', 'Veri Güvenliği Önceliği', 'Yüksek Başarı Oranı'],
     process: [
-      { step: 1, title: 'Personel Yapısı Analizi', description: 'Çalışan sayısı ve işlem tipi değerlendirilir.' },
-      { step: 2, title: 'Bordro Planı', description: 'Aylık bordro işleyişi ve teslim düzeni kurulur.' },
-      { step: 3, title: 'SGK İşlemleri', description: 'Giriş, çıkış ve bildirim süreçleri yürütülür.' },
-      { step: 4, title: 'Aylık Kontrol', description: 'Dönem sonu bordro ve bildirge kontrolleri tamamlanır.' },
+      { step: 1, title: 'Mikroskopik İnceleme', description: 'Kart üzerindeki oksitlenme ve kısa devre alanları saptanır.' },
+      { step: 2, title: 'Katman Analizi', description: 'Çok katmanlı kart yapısındaki iç kopukluklar kontrol edilir.' },
+      { step: 3, title: 'Entegre Reballing', description: 'Ayakları kopan veya bozulan çipler yeniden kalıplanarak dizilir.' },
+      { step: 4, title: 'Stabilite Testi', description: 'Cihazın tüm sensör ve ağ fonksiyonları test edilir.' },
     ],
   },
-  'sirket-kurulusu': {
-    title: 'Şirket Kuruluşu',
-    image: '/banner/hero_bg_home.png',
+  'elektronik-kart-tamiri': {
+    title: 'Endüstriyel Kart Tamiri',
+    image: '/pcb_card_repair_1778397751635.png',
     icon: '04',
-    description: 'Yeni girişimler için şirket türü seçimi, kuruluş evrakları ve başlangıç yükümlülükleri konusunda yol haritası.',
-    features: ['Şirket türü yönlendirmesi', 'Kuruluş evrak planı', 'Başlangıç yükümlülükleri', 'İlk dönem mali rehberlik'],
-    overview: 'Şirket kuruluş hizmetimiz, girişimlerin en baştan doğru mali zeminde ilerlemesini sağlamak için kurgulanır.',
-    whyChoose: ['Kuruluş öncesi net yönlendirme', 'Evrak sürecinde düzen', 'Başlangıç risklerini azaltan plan'],
+    description: 'Üretim makineleri ve endüstriyel cihazların çok katmanlı PCB kartlarında profesyonel çözüm.',
+    features: ['PCB Rework', 'BGA Entegre Değişimi', 'Devre Analizi', 'PLC Ünite Onarımı'],
+    overview: 'Endüstriyel üretim hatlarındaki duruş süresini en aza indirmek için kritik önem taşıyan kontrol kartlarını hızla onarıyoruz.',
+    whyChoose: ['Endüstriyel Parça Stoğu', 'Yerinde Analiz İmkanı', 'Kritik Sistem Tecrübesi'],
     process: [
-      { step: 1, title: 'Ön Görüşme', description: 'Faaliyet alanı ve şirket yapısı değerlendirilir.' },
-      { step: 2, title: 'Kuruluş Hazırlığı', description: 'Evrak listesi ve izlenecek yol netleştirilir.' },
-      { step: 3, title: 'Resmi Süreç', description: 'Kuruluş adımları plan dahilinde yürütülür.' },
-      { step: 4, title: 'İlk Dönem Uyum', description: 'Kuruluş sonrası yükümlülükler açıklanır ve süreç başlatılır.' },
+      { step: 1, title: 'Devre Şeması Analizi', description: 'Kartın çalışma prensibi ve kritik noktaları belirlenir.' },
+      { step: 2, title: 'Kritik Komponent Testi', description: 'Yüksek voltaj ve akım altında çalışan parçalar incelenir.' },
+      { step: 3, title: 'Parça Değişimi', description: 'Endüstriyel standartlarda yedek parçalarla onarım yapılır.' },
+      { step: 4, title: 'Yük Altında Test', description: 'Kartın gerçek çalışma yükünde stabilitesi ölçülür.' },
     ],
   },
-  'e-defter-e-fatura': {
-    title: 'E-Defter ve E-Fatura',
-    image: '/banner/srv_consulting.png',
+  'abs-klima-beyni': {
+    title: 'ABS / Klima Beyni Onarımı',
+    image: '/abs_klima_repair_1778397726542.png',
     icon: '05',
-    description: 'Dijital belge süreçlerini işletmenize uyumlu hale getiren e-dönüşüm desteği.',
-    features: ['E-fatura uyum desteği', 'E-defter işleyişi', 'Dijital belge akışı', 'Süreç sürdürülebilirliği'],
-    overview: 'E-dönüşüm hizmetimiz, dijital mali süreçlerin yalnızca kurulmasını değil, düzenli çalışmasını da hedefler.',
-    whyChoose: ['Dijital düzene geçiş kolaylığı', 'Operasyonla uyumlu kurgu', 'Süreç sürekliliği'],
+    description: 'Güvenlik ve konfor ünitelerinde kronikleşmiş elektronik arızaların kalıcı onarımı.',
+    features: ['ABS Modül Tamiri', 'Klima Kontrol Onarımı', 'Sinyal Analizi', 'CAN-BUS İletişim Testi'],
+    overview: 'ABS ve Klima gibi güvenlik ve konfor odaklı ünitelerdeki kronik arızaları, mühendislik yaklaşımlarıyla kalıcı olarak çözüyoruz.',
+    whyChoose: ['Mühendislik Bazlı Çözümler', 'Kronik Hata Veritabanı', 'Kalıcı Onarım Garantisi'],
     process: [
-      { step: 1, title: 'Uygunluk Analizi', description: 'Şirketin e-dönüşüm kapsamı belirlenir.' },
-      { step: 2, title: 'Kurulum Planı', description: 'Gerekli dijital adımlar planlanır.' },
-      { step: 3, title: 'İşleyiş Takibi', description: 'Belge akışı ve kayıt düzeni izlenir.' },
-      { step: 4, title: 'Süreç Kontrolü', description: 'Devamlılık için gerekli kontroller tamamlanır.' },
+      { step: 1, title: 'İletişim Testi', description: 'CAN-BUS hatlarındaki veri trafiği izlenir.' },
+      { step: 2, title: 'Sinyal İzleme', description: 'Giriş ve çıkış sinyallerindeki anormallikler saptanır.' },
+      { step: 3, title: 'Donanım Güçlendirme', description: 'Kronikleşen zayıf noktalar daha dayanıklı parçalarla revize edilir.' },
+      { step: 4, title: 'Güvenlik Protokolü', description: 'Güvenlik sistemleri için gereken tüm doğrulama testleri yapılır.' },
     ],
   },
-  'mali-danismanlik': {
-    title: 'Mali Danışmanlık',
-    image: '/banner/srv_consulting.png',
+  'mikro-lehimleme': {
+    title: 'Mikro Lehimleme Laboratuvarı',
+    image: '/micro_soldering_lab_1778397801389.png',
     icon: '06',
-    description: 'Muhasebe verilerini yorumlayarak işletme sahibine karar desteği sunan mali danışmanlık yaklaşımı.',
-    features: ['Finansal görünürlük', 'Yönetici bilgilendirmesi', 'Karar destek bakışı', 'Operasyonel yönlendirme'],
-    overview: 'Mali danışmanlık hizmetimiz, yalnızca kayıt tutmakla kalmayıp bu kayıtların işletme yönetimine katkı sunmasını amaçlar.',
-    whyChoose: ['Rakamları anlaşılır hale getirme', 'İşletmeye özel değerlendirme', 'Yönetim kararlarını destekleme'],
+    description: 'İleri seviye mikroskoplar altında gerçekleştirilen hassas mikro lehimleme ve reballing işlemleri.',
+    features: ['BGA Reballing', 'SMD Entegre Montajı', 'Mikroskopik Onarım', 'İnce Hat Jumper Uygulaması'],
+    overview: 'Standart lehimleme tekniklerinin yetersiz kaldığı mikron seviyesindeki işlemler için uzman ekibimizle hizmet veriyoruz.',
+    whyChoose: ['JBC & Metcal Ekipmanlar', 'Sertifikalı Teknik Personel', 'Mikron Seviyesinde Hassasiyet'],
     process: [
-      { step: 1, title: 'Mevcut Durum Analizi', description: 'İşletmenin mali yapısı genel hatlarıyla incelenir.' },
-      { step: 2, title: 'Önceliklerin Belirlenmesi', description: 'Odak alanları ve riskli başlıklar saptanır.' },
-      { step: 3, title: 'Yönlendirme', description: 'Uygulanabilir ve sade öneriler sunulur.' },
-      { step: 4, title: 'Periyodik Takip', description: 'Gerekli görülen alanlarda düzenli değerlendirme yapılır.' },
+      { step: 1, title: 'Hazırlık', description: 'Çalışma alanı ve komponentler ESD korumalı ortamda hazırlanır.' },
+      { step: 2, title: 'Mikro-Müdahale', description: 'Yüksek çözünürlüklü mikroskop altında hassas lehimleme yapılır.' },
+      { step: 3, title: 'X-Ray Kontrolü', description: 'Görünmeyen lehim bağlantıları teknik yöntemlerle kontrol edilir.' },
+      { step: 4, title: 'Temizlik & Koruma', description: 'Onarılan alan ultrasonik temizlikten geçirilir ve koruyucu kaplama uygulanır.' },
     ],
   },
 } as const;
@@ -111,38 +111,38 @@ export default function ServiceDetailPage() {
   }
 
   return (
-    <main className="min-h-screen bg-white text-[var(--lale-anthracite)]">
+    <main className="min-h-screen bg-background text-on-background">
       {/* Hero Section */}
-      <section className="relative flex min-h-[450px] items-center overflow-hidden">
+      <section className="relative flex min-h-[500px] items-end overflow-hidden">
         <div className="absolute inset-0">
           <Image
             src={service.image}
             alt={service.title}
             fill
             priority
-            className="object-cover"
+            className="object-cover opacity-40 brightness-75"
           />
-          <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
+          <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
         </div>
 
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-6 lg:px-8">
+        <div className="relative z-10 mx-auto w-full max-w-7xl px-6 lg:px-8 pb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
             className="max-w-3xl"
           >
-            <Link href="/hizmetlerimiz" className="inline-flex items-center gap-2 text-xs font-bold text-white uppercase tracking-[0.2em] mb-8 hover:text-[var(--lale-gold)] transition-colors">
-              <FiArrowLeft /> HİZMETLERE DÖN
+            <Link href="/hizmetlerimiz" className="inline-flex items-center gap-2 text-[10px] font-bold text-tertiary uppercase tracking-[0.4em] mb-8 hover:opacity-70 transition-all">
+              <FiArrowLeft /> ANALİZ MERKEZİNE DÖN
             </Link>
             <div className="mb-6 flex items-center gap-4">
-              <span className="h-px w-12 bg-[var(--lale-gold)]" />
-              <span className="text-sm font-bold uppercase tracking-[0.3em] text-[var(--lale-gold)]">Hizmet Detayı</span>
+              <span className="h-[1px] w-12 bg-tertiary/40" />
+              <span className="text-[10px] font-bold uppercase tracking-[0.4em] text-tertiary">Teknik Spesifikasyon</span>
             </div>
-            <h1 className="text-4xl md:text-6xl font-bold text-white leading-tight mb-6">
+            <h1 className="text-4xl md:text-7xl font-display font-bold text-on-surface leading-[0.95] mb-6 uppercase tracking-tighter">
               {service.title}
             </h1>
-            <p className="text-lg md:text-xl text-white/80 leading-relaxed max-w-xl">
+            <p className="text-lg md:text-xl text-on-surface-variant/80 leading-relaxed max-w-xl font-display uppercase tracking-tight">
               {service.description}
             </p>
           </motion.div>
@@ -150,44 +150,48 @@ export default function ServiceDetailPage() {
       </section>
 
       {/* Content Section */}
-      <section className="py-24 bg-white">
+      <section className="py-24 bg-background relative overflow-hidden">
+        <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-outline-variant/30 to-transparent"></div>
+        
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="grid grid-cols-1 gap-16 lg:grid-cols-12">
             
             {/* Left Column: Scope & Features */}
-            <div className="lg:col-span-7">
-              <div className="mb-12">
-                <h2 className="text-3xl font-bold mb-6">Hizmet Kapsamı</h2>
-                <p className="text-lg leading-relaxed text-[#5a666d] mb-10">
+            <div className="lg:col-span-7 space-y-20">
+              <div className="space-y-8">
+                <h2 className="text-3xl font-display font-bold text-on-surface uppercase tracking-tight">Operasyonel Kapsam</h2>
+                <p className="text-lg leading-relaxed text-on-surface-variant/70 font-display">
                   {service.overview}
                 </p>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6">
                   {service.features.map((item) => (
-                    <div key={item} className="flex items-start gap-3 p-4 rounded-xl border border-gray-50 bg-gray-50/50">
-                      <FiCheckCircle className="h-5 w-5 text-[var(--lale-gold)] shrink-0 mt-0.5" />
-                      <span className="text-sm font-medium text-[var(--lale-anthracite)]">{item}</span>
+                    <div key={item} className="flex items-start gap-4 p-5 rounded-md border border-outline-variant/30 bg-surface-container/50 group hover:border-tertiary/30 transition-all">
+                      <div className="h-6 w-6 rounded-sm bg-tertiary/10 border border-tertiary/20 flex items-center justify-center shrink-0">
+                        <FiCheckCircle className="h-3 w-3 text-tertiary" />
+                      </div>
+                      <span className="text-[10px] font-technical font-bold uppercase tracking-widest text-on-surface-variant/80">{item}</span>
                     </div>
                   ))}
                 </div>
               </div>
 
               {/* Process Section */}
-              <div className="pt-12 border-t border-gray-100">
-                <h2 className="text-3xl font-bold mb-10">Süreç Nasıl İlerler?</h2>
-                <div className="space-y-8">
+              <div className="pt-12 border-t border-outline-variant/20">
+                <h2 className="text-3xl font-display font-bold text-on-surface uppercase tracking-tight mb-12">Teknik İş Akışı</h2>
+                <div className="space-y-4">
                   {service.process.map((item) => (
-                    <div key={item.step} className="relative flex gap-8 group">
+                    <div key={item.step} className="relative flex gap-10 group bg-surface-container/30 p-8 rounded-lg border border-transparent hover:border-outline-variant/30 transition-all">
                       <div className="flex flex-col items-center">
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-[var(--lale-gold)] text-white text-sm font-bold shadow-lg shadow-[var(--lale-gold)]/20 z-10">
-                          {item.step}
+                        <div className="flex h-12 w-12 shrink-0 items-center justify-center rounded-sm bg-background border border-outline-variant text-tertiary text-xs font-technical font-bold z-10 group-hover:border-tertiary transition-colors">
+                          0{item.step}
                         </div>
                         {item.step !== service.process.length && (
-                          <div className="h-full w-px bg-gray-100 absolute top-10" />
+                          <div className="h-full w-[1px] bg-outline-variant/20 absolute top-20" />
                         )}
                       </div>
-                      <div className="pb-8">
-                        <h4 className="text-xl font-bold mb-2 group-hover:text-[var(--lale-gold)] transition-colors">{item.title}</h4>
-                        <p className="text-sm leading-relaxed text-[#5a666d]">{item.description}</p>
+                      <div className="space-y-2">
+                        <h4 className="text-lg font-technical font-bold text-on-surface uppercase tracking-wider group-hover:text-tertiary transition-colors">{item.title}</h4>
+                        <p className="text-xs leading-relaxed text-on-surface-variant/50 uppercase tracking-widest">{item.description}</p>
                       </div>
                     </div>
                   ))}
@@ -197,32 +201,33 @@ export default function ServiceDetailPage() {
 
             {/* Right Column: Why Us & CTA */}
             <div className="lg:col-span-5">
-              <div className="sticky top-28 space-y-8">
+              <div className="sticky top-32 space-y-8">
                 {/* Why Choose Card */}
-                <div className="bg-[#1e333c] rounded-[2.5rem] p-10 text-white shadow-2xl">
-                  <h3 className="text-2xl font-bold mb-8 flex items-center gap-3">
-                    <FiActivity className="text-[var(--lale-gold)]" />
-                    Neden Biz?
+                <div className="bg-surface-container border border-outline-variant p-10 rounded-md relative overflow-hidden group">
+                  <div className="absolute top-0 right-0 w-32 h-32 bg-circuit-pattern opacity-5 rotate-90"></div>
+                  <h3 className="text-xl font-display font-bold text-on-surface uppercase tracking-tight mb-10 flex items-center gap-4">
+                    <FiActivity className="text-tertiary" />
+                    Laboratuvar Standartları
                   </h3>
-                  <div className="space-y-6">
+                  <div className="space-y-8">
                     {service.whyChoose.map((item) => (
-                      <div key={item} className="flex gap-4">
-                        <div className="h-2 w-2 rounded-full bg-[var(--lale-gold)] mt-2.5 shrink-0" />
-                        <p className="text-sm leading-relaxed text-gray-300 font-medium">{item}</p>
+                      <div key={item} className="flex gap-5">
+                        <div className="h-1.5 w-1.5 rounded-full bg-tertiary mt-2 shrink-0 shadow-[0_0_8px_#adc7ff]" />
+                        <p className="text-[10px] leading-relaxed text-on-surface-variant font-technical font-bold uppercase tracking-widest">{item}</p>
                       </div>
                     ))}
                   </div>
                 </div>
 
                 {/* Consultation CTA */}
-                <div className="bg-gray-50 rounded-[2.5rem] p-10 border border-gray-100 text-center">
-                  <FiSettings className="h-10 w-10 text-[var(--lale-gold)] mx-auto mb-6" />
-                  <h3 className="text-xl font-bold mb-4">Size Özel Çözüm</h3>
-                  <p className="text-sm text-[#5a666d] mb-8">
-                    İşletmenizin yapısına uygun çalışma modelini birlikte belirleyelim.
+                <div className="bg-surface-container/30 border border-outline-variant p-10 rounded-md text-center circuit-pattern">
+                  <FiSettings className="h-10 w-10 text-tertiary mx-auto mb-8 animate-spin-slow" />
+                  <h3 className="text-xl font-display font-bold text-on-surface uppercase tracking-tight mb-4">Hassas Analiz Talebi</h3>
+                  <p className="text-[10px] text-on-surface-variant/60 font-technical uppercase tracking-widest leading-loose mb-10">
+                    Kritik sistemleriniz için profesyonel laboratuvar raporu ve onarım planı hazırlayalım.
                   </p>
-                  <Link href="/iletisim" className="block w-full rounded-xl bg-[var(--lale-gold)] px-6 py-4 text-sm font-bold text-white shadow-lg shadow-[var(--lale-gold)]/10 hover:bg-[#f57c00] transition-all">
-                    TEKLİF ALIN
+                  <Link href="/iletisim" className="btn-tech w-full py-5 text-xs font-bold tracking-[0.3em] block rounded-md">
+                    ANALİZ BAŞLAT
                   </Link>
                 </div>
               </div>

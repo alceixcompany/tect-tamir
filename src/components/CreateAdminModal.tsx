@@ -51,62 +51,70 @@ const CreateAdminModal: React.FC<CreateAdminModalProps> = ({ isOpen, onClose }) 
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-[rgba(6,35,31,0.82)] p-4 backdrop-blur-sm">
-      <div className="w-full max-w-md rounded-[24px] border border-[rgba(212,175,55,0.22)] bg-[rgba(6,35,31,0.94)] shadow-[0_30px_80px_rgba(0,0,0,0.34)]">
-        <div className="flex items-center justify-between border-b border-[rgba(212,175,55,0.18)] p-6">
-          <h3 className="text-lg font-semibold text-[var(--lale-ivory)]">Yeni Admin Oluştur</h3>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center bg-background/90 backdrop-blur-md p-6">
+      <div className="w-full max-w-md bg-surface-container border border-outline-variant rounded-md shadow-2xl overflow-hidden relative">
+        <div className="absolute top-0 right-0 w-24 h-24 bg-circuit-pattern opacity-10 rotate-90 pointer-events-none"></div>
+        
+        <div className="p-8 border-b border-outline-variant flex items-center justify-between relative z-10">
+          <div>
+            <h3 className="text-xl font-display font-bold text-on-surface uppercase tracking-tight">YENİ OPERATÖR TANIMI</h3>
+            <p className="font-technical text-[8px] text-on-surface-variant/50 uppercase tracking-[0.4em]">SİSTEM YETKİ KİMLİĞİ</p>
+          </div>
           <button
             onClick={handleClose}
-            className="text-[rgba(251,250,246,0.56)] hover:text-[var(--lale-gold)]"
+            className="h-10 w-10 flex items-center justify-center border border-outline-variant text-on-surface-variant hover:text-tertiary transition-all"
           >
-            <svg className="h-6 w-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </div>
 
-        <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          <div>
-            <label htmlFor="displayName" className="block text-sm font-medium text-[rgba(251,250,246,0.72)] mb-2">
-              Ad Soyad
-            </label>
+        <form onSubmit={handleSubmit} className="p-8 space-y-6 relative z-10">
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 mb-1">
+              <div className="w-1 h-1 bg-tertiary rounded-full"></div>
+              <label htmlFor="displayName" className="font-technical text-[9px] font-bold text-tertiary uppercase tracking-[0.2em]">OPERATÖR ADI</label>
+            </div>
             <input
               type="text"
               id="displayName"
               value={displayName}
               onChange={(e) => setDisplayName(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-              placeholder="Admin adı"
+              className="w-full bg-background border border-outline-variant rounded-md px-5 py-4 text-on-surface font-technical text-xs focus:border-tertiary focus:ring-2 focus:ring-tertiary/10 outline-none transition-all"
+              placeholder="Ad Soyad"
               required
             />
           </div>
 
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium text-[rgba(251,250,246,0.72)] mb-2">
-              E-posta
-            </label>
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 mb-1">
+              <div className="w-1 h-1 bg-tertiary/40 rounded-full"></div>
+              <label htmlFor="email" className="font-technical text-[9px] font-bold text-tertiary uppercase tracking-[0.2em]">SİSTEM E-POSTA</label>
+            </div>
             <input
               type="email"
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
-              placeholder="admin@example.com"
+              className="w-full bg-background border border-outline-variant rounded-md px-5 py-4 text-on-surface font-technical text-xs focus:border-tertiary focus:ring-2 focus:ring-tertiary/10 outline-none transition-all"
+              placeholder="admin@techlabprecision.com"
               required
             />
           </div>
 
-          <div>
-            <label htmlFor="password" className="block text-sm font-medium text-[rgba(251,250,246,0.72)] mb-2">
-              Şifre
-            </label>
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 mb-1">
+              <div className="w-1 h-1 bg-tertiary rounded-full"></div>
+              <label htmlFor="password" className="font-technical text-[9px] font-bold text-tertiary uppercase tracking-[0.2em]">ERİŞİM ŞİFRESİ</label>
+            </div>
             <div className="relative">
               <input
                 type={showPassword ? 'text' : 'password'}
                 id="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                className="w-full bg-background border border-outline-variant rounded-md px-5 py-4 pr-12 text-on-surface font-technical text-xs focus:border-tertiary focus:ring-2 focus:ring-tertiary/10 outline-none transition-all"
                 placeholder="••••••••"
                 required
                 minLength={6}
@@ -114,14 +122,14 @@ const CreateAdminModal: React.FC<CreateAdminModalProps> = ({ isOpen, onClose }) 
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-2 text-[rgba(251,250,246,0.56)] hover:text-[var(--lale-gold)]"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant/40 hover:text-tertiary transition-colors"
               >
                 {showPassword ? (
-                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-5 0-9.27-3.11-11-7.5a11.645 11.645 0 013.77-4.65M9.88 9.88a3 3 0 104.24 4.24M6.1 6.1l11.8 11.8" />
                   </svg>
                 ) : (
-                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                   </svg>
@@ -130,17 +138,18 @@ const CreateAdminModal: React.FC<CreateAdminModalProps> = ({ isOpen, onClose }) 
             </div>
           </div>
 
-          <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-[rgba(251,250,246,0.72)] mb-2">
-              Şifre Tekrar
-            </label>
+          <div className="space-y-3">
+            <div className="flex items-center gap-2 mb-1">
+              <div className="w-1 h-1 bg-tertiary rounded-full"></div>
+              <label htmlFor="confirmPassword" className="font-technical text-[9px] font-bold text-tertiary uppercase tracking-[0.2em]">ŞİFRE DOĞRULAMA</label>
+            </div>
             <div className="relative">
               <input
                 type={showConfirmPassword ? 'text' : 'password'}
                 id="confirmPassword"
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
-                className="w-full px-3 py-2 pr-10 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500"
+                className="w-full bg-background border border-outline-variant rounded-md px-5 py-4 pr-12 text-on-surface font-technical text-xs focus:border-tertiary focus:ring-2 focus:ring-tertiary/10 outline-none transition-all"
                 placeholder="••••••••"
                 required
                 minLength={6}
@@ -148,14 +157,14 @@ const CreateAdminModal: React.FC<CreateAdminModalProps> = ({ isOpen, onClose }) 
               <button
                 type="button"
                 onClick={() => setShowConfirmPassword(!showConfirmPassword)}
-                className="absolute right-3 top-2 text-[rgba(251,250,246,0.56)] hover:text-[var(--lale-gold)]"
+                className="absolute right-4 top-1/2 -translate-y-1/2 text-on-surface-variant/40 hover:text-tertiary transition-colors"
               >
                 {showConfirmPassword ? (
-                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.875 18.825A10.05 10.05 0 0112 19c-5 0-9.27-3.11-11-7.5a11.645 11.645 0 013.77-4.65M9.88 9.88a3 3 0 104.24 4.24M6.1 6.1l11.8 11.8" />
                   </svg>
                 ) : (
-                  <svg className="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.477 0 8.268 2.943 9.542 7-1.274 4.057-5.065 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
                   </svg>
@@ -165,35 +174,31 @@ const CreateAdminModal: React.FC<CreateAdminModalProps> = ({ isOpen, onClose }) 
           </div>
 
           {password !== confirmPassword && confirmPassword && (
-            <div className="text-red-600 text-sm">
-              Şifreler eşleşmiyor
+            <div className="p-3 bg-red-900/10 border border-red-900/20 text-red-400 font-technical text-[8px] uppercase tracking-widest text-center">
+              DİKKAT: Şifreler eşleşmiyor
             </div>
           )}
 
           {error && (
-            <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-md text-sm">
-              {error}
+            <div className="p-3 bg-red-900/10 border border-red-900/20 text-red-400 font-technical text-[8px] uppercase tracking-widest text-center">
+              HATA: {error}
             </div>
           )}
 
-          <div className="flex justify-end space-x-3 pt-4">
+          <div className="flex gap-4 pt-4">
             <button
               type="button"
               onClick={handleClose}
-              className="px-4 py-2 text-[rgba(251,250,246,0.72)] bg-[rgba(251,250,246,0.08)] hover:bg-[rgba(251,250,246,0.12)] rounded-lg transition-colors"
+              className="btn-tech-outline flex-1 py-5 rounded-md"
             >
-              İptal
+              İPTAL
             </button>
             <button
               type="submit"
               disabled={isLoading || password !== confirmPassword}
-              className={`px-4 py-2 text-white rounded-lg transition-colors ${
-                isLoading || password !== confirmPassword
-                  ? 'bg-gray-400 cursor-not-allowed'
-                  : 'bg-[var(--lale-gold)] hover:bg-[var(--lale-gold-soft)] text-[var(--lale-emerald-deep)]'
-              }`}
+              className="btn-tech flex-1 py-5 rounded-md disabled:opacity-50"
             >
-              {isLoading ? 'Oluşturuluyor...' : 'Admin Oluştur'}
+              {isLoading ? 'OLUŞTURULUYOR...' : 'OPERATÖR TANIMLA'}
             </button>
           </div>
         </form>

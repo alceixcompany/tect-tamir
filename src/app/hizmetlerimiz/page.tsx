@@ -2,248 +2,152 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { FiArrowRight, FiBarChart2, FiCheck, FiFileText, FiFolder, FiLayers, FiShield, FiUsers, FiTarget } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 
 const services = [
   {
-    slug: 'genel-muhasebe',
-    icon: FiFileText,
-    title: 'Genel Muhasebe',
-    image: '/banner/service_accounting.png',
-    description:
-      'Yevmiye kayıtları, dönemsel kontroller ve resmi yükümlülük takibini planlı biçimde yürütüyoruz.',
-    highlights: ['Aylık kayıt düzeni', 'Evrak kontrol akışı', 'Dönem sonu hazırlığı'],
+    slug: 'agir-vasita-beyin-tamiri',
+    image: '/heavy_truck_ecu_repair_1778397685432.png',
+    title: 'Ağır Vasıta Beyin Tamiri',
+    description: 'Tır, kamyon ve otobüs kontrol ünitelerinde (ECU) çip seviyesi hassas müdahale ve onarım.',
+    features: ['EURO 6 Sistem Desteği', 'Parametre Programlama', 'Hata Kodu Temizleme']
   },
   {
-    slug: 'vergi-beyanname',
-    icon: FiShield,
-    title: 'Vergi ve Beyanname',
-    image: '/banner/service_accounting.png',
-    description:
-      'KDV, muhtasar, geçici vergi ve diğer beyan süreçlerini mevzuata uygun, zamanında ve kontrollü şekilde yönetiyoruz.',
-    highlights: ['Beyan takvimi yönetimi', 'Son tarih disiplini', 'Risk azaltan kontrol'],
+    slug: 'otomotiv-ecu-tamiri',
+    image: '/automotive_ecu_repair_1778397704368.png',
+    title: 'Otomotiv ECU Tamiri',
+    description: 'Binek araçların motor ve konfor beyinlerinde donanımsal onarım ve yazılım güncellemeleri.',
+    features: ['Immobilizer Onarımı', 'Airbag Beyin Tamiri', 'Yazılım Güncelleme']
   },
   {
-    slug: 'bordro-sgk',
-    icon: FiUsers,
-    title: 'Bordro ve SGK',
-    image: '/banner/service_consulting.png',
-    description:
-      'Personel bordroları, işe giriş-çıkış işlemleri ve SGK bildirimlerini düzenli operasyon akışıyla takip ediyoruz.',
-    highlights: ['Aylık bordro hazırlığı', 'SGK bildirim desteği', 'Personel süreç takibi'],
+    slug: 'iphone-anakart-tamiri',
+    image: '/iphone_motherboard_repair_1778397775835.png',
+    title: 'iPhone Anakart Tamiri',
+    description: 'Sıvı teması, şebeke ve enerji sorunlarında mikro-cerrahi hassasiyetinde anakart onarımı.',
+    features: ['Veri Kurtarma', 'NAND Değişimi', 'Audio IC Tamiri']
   },
   {
-    slug: 'sirket-kurulusu',
-    icon: FiFolder,
-    title: 'Şirket Kuruluşu',
-    image: '/banner/service_consulting.png',
-    description:
-      'Yeni girişimler için şirket türü seçimi, kuruluş evrakları ve başlangıç yükümlülükleri konusunda net yol haritası sunuyoruz.',
-    highlights: ['Kuruluş yönlendirmesi', 'Evrak hazırlık desteği', 'Başlangıç planlaması'],
+    slug: 'elektronik-kart-tamiri',
+    image: '/pcb_card_repair_1778397751635.png',
+    title: 'Endüstriyel Kart Tamiri',
+    description: 'Üretim makineleri ve endüstriyel cihazların çok katmanlı PCB kartlarında profesyonel çözüm.',
+    features: ['PCB Rework', 'BGA Entegre Değişimi', 'Devre Analizi']
   },
   {
-    slug: 'e-defter-e-fatura',
-    icon: FiLayers,
-    title: 'E-Defter ve E-Fatura',
-    image: '/banner/service_digital.png',
-    description:
-      'Dijital mali süreçleri işletmenizin operasyonuna uyumlu hale getirerek e-dönüşüm tarafını daha sürdürülebilir kılıyoruz.',
-    highlights: ['E-dönüşüm uyumu', 'Dijital süreç takibi', 'Düzenli kayıt akışı'],
+    slug: 'abs-klima-beyni',
+    image: '/abs_klima_repair_1778397726542.png',
+    title: 'ABS / Klima Beyni Onarımı',
+    description: 'Güvenlik ve konfor ünitelerinde kronikleşmiş elektronik arızaların kalıcı onarımı.',
+    features: ['ABS Modül Tamiri', 'Klima Kontrol Onarımı', 'Sinyal Analizi']
   },
   {
-    slug: 'mali-danismanlik',
-    icon: FiBarChart2,
-    title: 'Mali Danışmanlık',
-    image: '/banner/service_digital.png',
-    description:
-      'Yalnızca muhasebe kaydı değil, karar destek bakışıyla işletmenizin mali yapısına yönelik yönlendirme sağlıyoruz.',
-    highlights: ['Yönetici görünürlüğü', 'Finansal değerlendirme', 'Karar destek yaklaşımı'],
-  },
-] as const;
-
-const values = [
-  {
-    icon: FiShield,
-    title: 'Kontrollü Süreç',
-    description: 'Her ay neyin, ne zaman ve hangi sırayla yapılacağını netleştiren iş disiplini.',
-  },
-  {
-    icon: FiUsers,
-    title: 'Ulaşılabilir İletişim',
-    description: 'Soru işareti bırakmayan, açık ve çözüm odaklı iletişim yaklaşımı.',
-  },
-  {
-    icon: FiBarChart2,
-    title: 'İşletmeye Uyum',
-    description: 'Her firmanın işlem yoğunluğuna ve yapısına göre şekillenen hizmet modeli.',
-  },
-] as const;
+    slug: 'mikro-lehimleme',
+    image: '/micro_soldering_lab_1778397801389.png',
+    title: 'Mikro Lehimleme Laboratuvarı',
+    description: 'İleri seviye mikroskoplar altında gerçekleştirilen hassas mikro lehimleme ve reballing işlemleri.',
+    features: ['BGA Reballing', 'SMD Entegre Montajı', 'Mikroskopik Onarım']
+  }
+];
 
 const ServicesPage = () => {
   return (
-    <main className="page-flow min-h-screen bg-white">
-      {/* High-Impact Hero Section */}
-      <section className="relative flex min-h-[600px] items-center overflow-hidden">
-        <div className="absolute inset-0">
-          <Image
-            src="/banner/services_hero.png"
-            alt="Demirbaş Muhasebe Hizmetlerimiz"
-            fill
-            priority
-            className="object-cover object-center"
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-[rgba(30,51,60,0.70)] mix-blend-multiply" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[rgba(150,73,0,0.3)] to-transparent" />
-        </div>
-
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-6 sm:px-8 lg:px-10">
+    <main className="min-h-screen bg-background text-on-background">
+      {/* Services Hero Section */}
+      <section className="relative h-[45vh] min-h-[400px] w-full overflow-hidden flex items-end">
+        <Image 
+          src="/bga_rework_1778396487205.png"
+          alt="TECH-LAB BGA Rework"
+          fill
+          className="object-cover opacity-40 brightness-75"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"></div>
+        <div className="max-w-container-max mx-auto px-margin-desktop relative z-10 w-full pb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="max-w-3xl"
           >
-            <div className="mb-6 inline-block rounded bg-[var(--lale-gold)] px-4 py-1.5 text-xs font-bold uppercase tracking-[0.2em] text-white">
-              Uzmanlık Alanlarımız
-            </div>
-
-            <h1 className="text-4xl font-extrabold leading-[1.1] tracking-tight text-white sm:text-6xl">
-              İşletmenize Değer Katan <br />
-              <span className="text-[var(--lale-gold)]">Mali Stratejiler</span>
+            <span className="font-technical text-tertiary tracking-[0.4em] uppercase text-[10px] mb-4 block font-bold">Teknik Çözümler</span>
+            <h1 className="text-5xl md:text-7xl font-display font-bold text-on-surface uppercase tracking-tighter">
+              Endüstriyel <span className="text-tertiary">Uzmanlık</span>
             </h1>
-
-            <p className="mt-8 max-w-2xl text-lg leading-relaxed text-white/90">
-              Modern dijital araçlar ve köklü mali disiplini birleştirerek, 
-              işletmenizin sürdürülebilir büyümesine profesyonel destek sağlıyoruz.
-            </p>
-
-            <div className="mt-12 grid grid-cols-2 gap-8 border-t border-white/20 pt-8 sm:grid-cols-3">
-              <div>
-                <p className="text-3xl font-bold text-[var(--lale-gold)]">20+</p>
-                <p className="mt-1 text-xs font-semibold uppercase tracking-widest text-white/70">Uzman Kadro</p>
-              </div>
-              <div>
-                <p className="text-3xl font-bold text-[var(--lale-gold)]">500+</p>
-                <p className="mt-1 text-xs font-semibold uppercase tracking-widest text-white/70">Mutlu İşletme</p>
-              </div>
-              <div className="hidden sm:block">
-                <p className="text-3xl font-bold text-[var(--lale-gold)]">100%</p>
-                <p className="mt-1 text-xs font-semibold uppercase tracking-widest text-white/70">Yasal Uyum</p>
-              </div>
-            </div>
           </motion.div>
         </div>
       </section>
 
-      {/* Services Grid - Structured */}
-      <section id="hizmet-listesi" className="py-20 sm:py-24 bg-white">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="mb-16 border-l-4 border-[var(--lale-gold)] pl-6">
-            <h2 className="text-2xl font-bold text-[var(--lale-anthracite)]">
-              Hizmet Alanlarımız
-            </h2>
-            <p className="mt-2 text-base text-[#5a666d]">
-              Geniş hizmet yelpazemizle işletmenizin her ihtiyacına cevap veriyoruz.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {services.map((service) => (
-              <div
-                key={service.slug}
-                className="group relative flex flex-col overflow-hidden rounded-xl border border-gray-100 bg-white shadow-sm transition-all hover:shadow-md"
-              >
-                <div className="relative h-48 w-full overflow-hidden">
-                  <Image
-                    src={service.image}
-                    alt={service.title}
-                    fill
-                    className="object-cover"
-                  />
-                  <div className="absolute inset-0 bg-black/5"></div>
-                </div>
-
-                <div className="flex flex-1 flex-col p-6">
-                  <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-lg bg-gray-50 text-[var(--lale-gold)]">
-                    <service.icon className="h-5 w-5" />
-                  </div>
-                  
-                  <h3 className="text-xl font-bold text-[var(--lale-anthracite)]">
-                    {service.title}
-                  </h3>
-                  
-                  <p className="mt-3 text-sm leading-6 text-[#5a666d]">
-                    {service.description}
-                  </p>
-
-                  <ul className="mt-6 space-y-2">
-                    {service.highlights.map((highlight) => (
-                      <li key={highlight} className="flex items-center gap-2 text-xs font-medium text-[#5a666d]">
-                        <FiCheck className="h-3 w-3 text-[var(--lale-gold)]" />
-                        {highlight}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <div className="mt-auto pt-6">
-                    <Link
-                      href={`/hizmetlerimiz/${service.slug}`}
-                      className="inline-flex items-center gap-2 text-xs font-bold text-[var(--lale-gold)] hover:underline"
-                    >
-                      DETAYI GÖRÜNTÜLE
-                      <FiArrowRight className="h-3 w-3" />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
+      <section className="max-w-container-max mx-auto px-margin-desktop py-20">
+        <div className="max-w-4xl">
+          <p className="text-xl text-on-surface-variant leading-relaxed font-display uppercase tracking-tight">
+            Laboratuvarımızda en karmaşık anakart ve beyin arızalarını, IPC standartlarında ve orijinal parçalar kullanarak çip seviyesinde onarıyoruz.
+          </p>
         </div>
       </section>
 
-      {/* Corporate Values */}
-      <section className="py-20 bg-gray-50">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="grid gap-12 md:grid-cols-3">
-            {values.map((value) => (
-              <div key={value.title} className="text-left">
-                <div className="mb-4 flex h-12 w-12 items-center justify-center rounded-lg bg-white text-[var(--lale-gold)] shadow-sm">
-                  <value.icon className="h-6 w-6" />
-                </div>
-                <h3 className="text-lg font-bold text-[var(--lale-anthracite)]">{value.title}</h3>
-                <p className="mt-2 text-sm leading-6 text-[#5a666d]">{value.description}</p>
+      {/* Services Grid */}
+      <section className="max-w-container-max mx-auto px-margin-desktop">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+          {services.map((service, index) => (
+            <motion.div
+              key={service.slug}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: index * 0.1 }}
+              className="group bg-surface-container border border-outline-variant rounded-md hover:border-tertiary transition-all duration-500 overflow-hidden glow-border"
+            >
+              <div className="relative h-64 overflow-hidden">
+                <Image
+                  src={service.image}
+                  alt={service.title}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0 opacity-80 group-hover:opacity-100"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-surface-container via-transparent to-transparent"></div>
               </div>
-            ))}
-          </div>
+
+              <div className="p-8">
+                <h3 className="text-2xl font-display font-bold text-on-surface mb-4">{service.title}</h3>
+                <p className="text-on-surface-variant text-sm leading-relaxed mb-8">
+                  {service.description}
+                </p>
+                
+                <div className="space-y-3 mb-8">
+                  {service.features.map((feature, i) => (
+                    <div key={i} className="flex items-center gap-3 text-xs font-technical text-on-surface-variant uppercase tracking-wider">
+                      <span className="w-1.5 h-1.5 bg-tertiary shadow-[0_0_8px_#adc7ff]"></span>
+                      {feature}
+                    </div>
+                  ))}
+                </div>
+
+                <Link
+                  href={`/hizmetlerimiz/${service.slug}`}
+                  className="btn-tech-outline w-full text-center block"
+                >
+                  TEKNİK DETAYLAR
+                </Link>
+              </div>
+            </motion.div>
+          ))}
         </div>
       </section>
 
-      {/* Corporate CTA */}
-      <section className="py-20 bg-white border-t border-gray-100">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          <div className="rounded-2xl bg-[#1e333c] p-8 md:p-16 text-center">
-            <h2 className="text-2xl font-bold text-white sm:text-3xl">
-              Profesyonel Destek İçin Bizimle <span className="text-[var(--lale-gold)]">İletişime Geçin</span>
-            </h2>
-            <p className="mx-auto mt-4 max-w-2xl text-base text-gray-300">
-              İşletmenizin mali süreçlerini birlikte değerlendirelim ve size özel çözümler üretelim.
-            </p>
-            <div className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4">
-              <Link
-                href="/iletisim"
-                className="rounded-lg bg-[var(--lale-gold)] px-8 py-3 text-sm font-bold text-white shadow-sm hover:bg-[#f57c00] transition-colors"
-              >
-                İletişim Formu
-              </Link>
-              <Link
-                href="tel:+905320000000"
-                className="rounded-lg border border-white/20 px-8 py-3 text-sm font-bold text-white hover:bg-white/5 transition-colors"
-              >
-                Bizi Arayın
-              </Link>
-            </div>
+      {/* CTA Section */}
+      <section className="max-w-container-max mx-auto px-margin-desktop mt-32">
+        <div className="bg-surface-container border border-outline-variant rounded-md p-12 md:p-20 relative overflow-hidden text-center circuit-pattern">
+          <h2 className="text-3xl md:text-5xl font-display font-bold text-on-surface mb-6 uppercase tracking-tighter">
+            Cihazınız İçin <span className="text-tertiary neon-text-glow">Ücretsiz Ön Analiz</span> Alın
+          </h2>
+          <p className="text-on-surface-variant max-w-2xl mx-auto mb-10 text-lg">
+            Laboratuvarımızda yapılacak ilk inceleme sonrası arıza ve onarım süreci hakkında detaylı rapor sunuyoruz.
+          </p>
+          <div className="flex flex-wrap justify-center gap-6">
+            <Link href="/iletisim" className="btn-tech px-12 py-4">
+              ANALİZ TALEBİ OLUŞTUR
+            </Link>
+            <Link href="tel:+902125550123" className="btn-tech-outline px-12 py-4">
+              TEKNİK DESTEK HATTI
+            </Link>
           </div>
         </div>
       </section>

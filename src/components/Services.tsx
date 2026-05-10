@@ -1,69 +1,92 @@
 'use client'
 import React from 'react';
 import Link from 'next/link';
-import {
-  FiBarChart2,
-  FiFileText,
-  FiShield,
-  FiUsers,
-  FiBriefcase
-} from 'react-icons/fi';
+import Image from 'next/image';
 
 const services = [
   {
-    icon: FiFileText,
-    title: 'Muhasebe',
-    description: 'Dönemsel kayıt tutma ve mali raporlama.'
+    icon: 'local_shipping',
+    image: '/heavy_truck_ecu_repair_1778397685432.png',
+    title: 'Ağır Vasıta Beyin Tamiri',
+    description: 'Tır, kamyon ve otobüslerin motor kontrol üniteleri (ECU) üzerinde çip seviyesi hassas onarım.'
   },
   {
-    icon: FiShield,
-    title: 'Vergi Danışmanlığı',
-    description: 'Vergi avantajlarını maksimize eden yasal çözümler.'
+    icon: 'directions_car',
+    image: '/automotive_ecu_repair_1778397704368.png',
+    title: 'Otomotiv ECU Tamiri',
+    description: 'Binek araçların tüm elektronik beyin arızaları, yazılım güncellemeleri ve donanım müdahaleleri.'
   },
   {
-    icon: FiBriefcase,
-    title: 'Şirket Kuruluşu',
-    description: 'Yerli ve yabancı sermayeli şirketlerin uçtan uca kurulum süreci.'
+    icon: 'ac_unit',
+    image: '/abs_klima_repair_1778397726542.png',
+    title: 'ABS / Klima Beyni Onarımı',
+    description: 'Güvenlik ve konfor ünitelerinde meydana gelen sistemsel ve fiziksel arızaların giderilmesi.'
   },
   {
-    icon: FiUsers,
-    title: 'Bordro Hizmetleri',
-    description: 'Hatasız bordrolama ve profesyonel İK yönetimi desteği.'
+    icon: 'memory',
+    image: '/pcb_card_repair_1778397751635.png',
+    title: 'Elektronik Kart Tamiri',
+    description: 'Endüstriyel ve bireysel kullanımda olan her türlü çok katmanlı elektronik kartın onarımı.'
   },
   {
-    icon: FiBarChart2,
-    title: 'Finansal Danışmanlık',
-    description: 'Şirketinizin finansal sağlığını koruyan veri odaklı analizler.'
+    icon: 'smartphone',
+    image: '/iphone_motherboard_repair_1778397775835.png',
+    title: 'iPhone Anakart Tamiri',
+    description: 'Sıvı teması, şebeke sorunları ve açılmama gibi kritik iPhone anakart arızalarında mikro cerrahi.'
+  },
+  {
+    icon: 'biotech',
+    image: '/micro_soldering_lab_1778397801389.png',
+    title: 'Mikro Lehimleme',
+    description: 'Çip değişimi, entegre onarımı ve BGA reballing işlemlerinde laboratuvar hassasiyeti.'
   }
 ];
 
 const Services = () => {
   return (
-    <section id="hizmetler" className="bg-white py-24">
-      <div className="mx-auto max-w-7xl px-5 sm:px-7 lg:px-10">
-        <div className="mb-16 text-center">
-          <h2 className="text-4xl font-bold text-[#1a1a1a] relative inline-block">
-            Hizmetlerimiz
-            <span className="absolute -bottom-4 left-1/2 -translate-x-1/2 w-16 h-1 bg-[var(--lale-gold)] rounded-full"></span>
-          </h2>
+    <section id="hizmetler" className="py-24 bg-background relative overflow-hidden">
+      <div className="max-w-container-max mx-auto px-margin-desktop">
+        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
+          <div>
+            <span className="font-technical text-tertiary tracking-[0.3em] uppercase text-xs">UZMANLIK ALANLARIMIZ</span>
+            <h2 className="text-4xl text-on-surface mt-2">Endüstriyel Onarım Çözümleri</h2>
+          </div>
+          <div className="text-on-surface-variant font-technical max-w-sm text-right hidden md:block text-xs uppercase tracking-wider">
+            Gelişmiş mikroskoplar ve diagnostik ekipmanlar ile her türlü karmaşık devre onarımını gerçekleştiriyoruz.
+          </div>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
           {services.map((service, index) => (
-            <article
+            <div 
               key={index}
-              className="group p-8 bg-white rounded-xl border border-gray-100 shadow-sm hover:shadow-xl transition-all duration-300 text-center flex flex-col items-center"
+              className="group bg-surface-container border border-outline-variant hover:border-tertiary transition-all duration-300 relative circuit-pattern glow-border overflow-hidden"
             >
-              <div className="mb-6 flex h-14 w-14 items-center justify-center rounded-2xl bg-gray-50 text-[var(--lale-gold)] group-hover:bg-[var(--lale-gold)] group-hover:text-white transition-all duration-300">
-                <service.icon className="h-7 w-7" />
+              {/* Service Image */}
+              <div className="relative h-48 w-full overflow-hidden">
+                <Image 
+                  src={service.image} 
+                  alt={service.title} 
+                  fill 
+                  className="object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-surface-container to-transparent"></div>
               </div>
-              <h3 className="text-lg font-bold text-[#1a1a1a] mb-4">
-                {service.title}
-              </h3>
-              <p className="text-sm leading-relaxed text-[#5f6970]">
-                {service.description}
-              </p>
-            </article>
+              
+              <div className="p-8 pt-4">
+                <div className="w-10 h-10 flex items-center justify-center bg-tertiary/10 text-tertiary mb-4 border border-tertiary/20">
+                  <span className="material-symbols-outlined text-2xl">{service.icon}</span>
+                </div>
+                <h3 className="text-xl font-display font-bold mb-3 text-on-surface">{service.title}</h3>
+                <p className="text-on-surface-variant text-sm mb-6 leading-relaxed h-12 line-clamp-2">{service.description}</p>
+                <Link 
+                  href="/hizmetlerimiz" 
+                  className="font-technical text-tertiary text-[10px] tracking-[0.2em] flex items-center gap-2 group-hover:gap-4 transition-all"
+                >
+                  DETAYLARI İNCELE <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                </Link>
+              </div>
+            </div>
           ))}
         </div>
       </div>

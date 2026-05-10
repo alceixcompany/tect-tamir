@@ -5,22 +5,18 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { db } from '@/lib/firebase';
 import { collection, getDocs } from 'firebase/firestore';
-import { FiCalendar, FiArrowLeft, FiShare2, FiClock, FiTag } from 'react-icons/fi';
 import { motion } from 'framer-motion';
 
 interface Haber {
   id: string;
   title: string;
-  subtitle: string;
+  subtitle?: string;
   description: string;
   content: string;
   imageUrl: string;
-  tags: string[];
-  featured: boolean;
-  isActive: boolean;
-  order: number;
+  tags?: string[];
   createdAt: string;
-  updatedAt: string;
+  isActive: boolean;
 }
 
 const HaberDetay = () => {
@@ -50,8 +46,8 @@ const HaberDetay = () => {
     const fetchHaber = async () => {
       try {
         setLoading(true);
-        const allNewsSnapshot = await getDocs(collection(db, 'haberler'));
-        const allNews = allNewsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as Haber[];
+        const snapshot = await getDocs(collection(db, 'haberler'));
+        const allNews = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as Haber[];
         
         const foundHaber = allNews.find(h => createSlug(h.title) === haberSlug && h.isActive);
         
@@ -59,14 +55,13 @@ const HaberDetay = () => {
           setHaber(foundHaber);
           const related = allNews
             .filter(h => h.isActive && h.id !== foundHaber.id)
-            .filter(h => h.tags && foundHaber.tags && h.tags.some(tag => foundHaber.tags.includes(tag)))
             .slice(0, 3);
           setRelatedHaberler(related);
         } else {
           router.push('/haberler');
         }
       } catch (error) {
-        console.error('Haber yüklenirken hata:', error);
+        console.error('Haber fetch error:', error);
       } finally {
         setLoading(false);
       }
@@ -77,8 +72,8 @@ const HaberDetay = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-white">
-        <div className="w-10 h-10 border-3 border-[var(--lale-gold)] border-t-transparent rounded-full animate-spin"></div>
+      <div className="min-h-screen flex items-center justify-center bg-background">
+        <div className="w-12 h-12 border-2 border-tertiary border-t-transparent animate-spin"></div>
       </div>
     );
   }
@@ -86,81 +81,91 @@ const HaberDetay = () => {
   if (!haber) return null;
 
   return (
-    <main className="min-h-screen bg-white text-[var(--lale-anthracite)] pb-24">
-      {/* Article Hero */}
-      <section className="relative h-[400px] w-full overflow-hidden">
+    <main className="min-h-screen bg-background text-on-background pb-32">
+      {/* Article Header */}
+      <section className="relative h-[60vh] min-h-[500px] w-full overflow-hidden">
         <Image 
-          src={haber.imageUrl || '/banner/news_hero.png'} 
+          src={haber.imageUrl || '/micro_soldering_lab_1778397801389.png'} 
           alt={haber.title}
           fill
-          unoptimized
-          className="object-cover"
+          className="object-cover opacity-60 grayscale hover:grayscale-0 transition-all duration-1000"
           priority
-          onError={(e) => { (e.target as HTMLImageElement).src = '/banner/news_hero.png'; }}
         />
-        <div className="absolute inset-0 bg-black/40" />
-        <div className="absolute inset-0 bg-gradient-to-t from-white via-transparent to-transparent" />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
         
         <div className="absolute bottom-0 left-0 w-full">
-          <div className="mx-auto max-w-4xl px-6 pb-12">
-            <Link href="/haberler" className="inline-flex items-center gap-2 text-xs font-bold text-[var(--lale-gold)] uppercase tracking-widest mb-6 hover:text-white transition-colors">
-              <FiArrowLeft /> HABERLERE DÖN
+          <div className="max-w-container-max mx-auto px-margin-desktop pb-16">
+            <Link href="/haberler" className="group inline-flex items-center gap-4 font-technical text-[10px] text-tertiary uppercase tracking-[0.4em] mb-12 hover:drop-shadow-[0_0_8px_rgba(173,199,255,0.5)] transition-all">
+              <span className="material-symbols-outlined text-sm transition-transform group-hover:-translate-x-2">west</span>
+              TÜM ANALİZLERE DÖN
             </Link>
-            <h1 className="text-3xl md:text-5xl font-bold text-[var(--lale-anthracite)] leading-tight">
+            <div className="flex items-center gap-4 font-technical text-[10px] text-on-surface-variant mb-6 uppercase tracking-widest">
+              <span className="w-2 h-2 bg-tertiary rounded-full"></span>
+              {new Date(haber.createdAt).toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' })}
+            </div>
+            <h1 className="text-5xl md:text-7xl font-display font-bold text-on-surface leading-[0.9] uppercase tracking-tighter max-w-5xl">
               {haber.title}
             </h1>
           </div>
         </div>
       </section>
 
-      {/* Content Area */}
-      <div className="mx-auto max-w-4xl px-6 mt-12">
-        <div className="flex flex-wrap items-center gap-6 text-xs font-bold text-[#5a666d] uppercase tracking-widest mb-10 pb-10 border-b border-gray-100">
-          <div className="flex items-center gap-2">
-            <FiCalendar className="text-[var(--lale-gold)]" />
-            <span>{new Date(haber.createdAt).toLocaleDateString('tr-TR')}</span>
+      {/* Article Body */}
+      <div className="max-w-container-max mx-auto px-margin-desktop grid lg:grid-cols-12 gap-20 mt-20">
+        <div className="lg:col-span-8">
+          <div className="prose prose-invert prose-tech max-w-none">
+            {haber.subtitle && (
+              <p className="text-2xl font-display font-medium text-tertiary leading-relaxed mb-12 italic border-l-2 border-tertiary/30 pl-8">
+                {haber.subtitle}
+              </p>
+            )}
+            
+            <div 
+              className="article-content font-sans text-lg leading-relaxed text-on-surface-variant space-y-8"
+              dangerouslySetInnerHTML={{ __html: haber.content }}
+            />
           </div>
-          <div className="flex items-center gap-2">
-            <FiTag className="text-[var(--lale-gold)]" />
-            <span>{haber.tags?.[0] || 'Muhasebe'}</span>
-          </div>
-          <div className="flex items-center gap-2 ml-auto">
-            <FiShare2 className="text-[var(--lale-gold)]" />
-            <span>PAYLAŞ</span>
-          </div>
+
+          {/* Tags */}
+          {haber.tags && haber.tags.length > 0 && (
+            <div className="mt-20 flex flex-wrap gap-4 pt-10 border-t border-outline-variant">
+              {haber.tags.map(tag => (
+                <span key={tag} className="font-technical text-[10px] text-on-surface-variant border border-outline-variant px-4 py-1 uppercase tracking-widest bg-surface-container">
+                  #{tag}
+                </span>
+              ))}
+            </div>
+          )}
         </div>
 
-        {/* Subtitle / Lead */}
-        {haber.subtitle && (
-          <p className="text-xl font-bold text-[#5a666d] mb-10 leading-relaxed italic border-l-4 border-[var(--lale-gold)] pl-6">
-            {haber.subtitle}
-          </p>
-        )}
-
-        {/* Main Content Render */}
-        <article 
-          className="prose prose-lg max-w-none prose-headings:text-[var(--lale-anthracite)] prose-p:text-[#5a666d] prose-strong:text-[var(--lale-anthracite)] prose-a:text-[var(--lale-gold)]"
-          dangerouslySetInnerHTML={{ __html: haber.content }}
-        />
-
-        {/* Related Section */}
-        {relatedHaberler.length > 0 && (
-          <div className="mt-24 pt-16 border-t border-gray-100">
-            <h3 className="text-2xl font-bold mb-8">İlgili Haberler</h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* Sidebar / Related */}
+        <div className="lg:col-span-4 space-y-12">
+          <div className="bg-surface-container border border-outline-variant p-10">
+            <h3 className="font-technical text-[10px] text-tertiary uppercase tracking-[0.3em] mb-8 border-b border-outline-variant pb-4">İLGİLİ ANALİZLER</h3>
+            <div className="space-y-10">
               {relatedHaberler.map(item => (
-                <Link key={item.id} href={`/haberler/${createSlug(item.title)}`} className="group">
-                  <div className="relative aspect-video rounded-xl overflow-hidden mb-4">
-                    <Image src={item.imageUrl || '/banner/news_hero.png'} alt={item.title} fill className="object-cover transition-transform group-hover:scale-105" />
+                <Link key={item.id} href={`/haberler/${createSlug(item.title)}`} className="group block">
+                  <div className="relative aspect-video overflow-hidden mb-4 border border-outline-variant group-hover:border-tertiary transition-colors">
+                    <Image src={item.imageUrl || '/lab_workstation_1778396468117.png'} alt={item.title} fill className="object-cover opacity-60 group-hover:opacity-100 group-hover:scale-110 transition-all duration-700" />
                   </div>
-                  <h4 className="font-bold text-sm leading-snug group-hover:text-[var(--lale-gold)] transition-colors line-clamp-2">
+                  <h4 className="font-display font-bold text-lg text-on-surface leading-tight group-hover:text-tertiary transition-colors line-clamp-2 uppercase tracking-tight">
                     {item.title}
                   </h4>
                 </Link>
               ))}
             </div>
           </div>
-        )}
+
+          <div className="bg-tertiary/5 border border-tertiary/20 p-10">
+            <h3 className="font-technical text-[10px] text-tertiary uppercase tracking-[0.3em] mb-4">TEKNİK DESTEK</h3>
+            <p className="text-sm text-on-surface-variant mb-8 leading-relaxed">
+              Bu raporla ilgili teknik sorularınız için mühendislik birimimizle iletişime geçin.
+            </p>
+            <Link href="/iletisim" className="btn-tech w-full py-4 text-[10px] uppercase tracking-[0.2em] inline-flex justify-center">
+              ANALİZ TALEBİ GÖNDER
+            </Link>
+          </div>
+        </div>
       </div>
     </main>
   );

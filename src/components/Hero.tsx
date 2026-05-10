@@ -1,65 +1,94 @@
 'use client'
 import React from 'react';
 import Image from 'next/image';
-import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 const Hero = () => {
   return (
-    <section className="relative bg-white pt-24 pb-16 lg:pt-32 lg:pb-32 overflow-hidden">
-      <div className="container mx-auto px-5 sm:px-7 lg:px-10">
-        <div className="flex flex-col lg:flex-row items-center justify-between gap-12 lg:gap-20">
+    <section className="relative min-h-screen flex items-center overflow-hidden bg-[#0a0a0a]">
+      {/* Background Layer - High Fidelity Realistic Photo */}
+      <div className="absolute inset-0 z-0">
+        <Image
+          src="/realistic_hero.png"
+          alt="Profesyonel ECU Onarım Laboratuvarı"
+          fill
+          className="object-cover opacity-50 brightness-90"
+          priority
+        />
+        {/* Natural Vignette and Gradient */}
+        <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a] via-[#0a0a0a]/70 to-transparent"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a] via-transparent to-transparent opacity-80"></div>
+      </div>
+
+      {/* Content Container */}
+      <div className="max-w-container-max mx-auto px-margin-desktop relative z-10 w-full">
+        <div className="max-w-4xl space-y-12">
           
-          {/* Sol Metin Bloğu */}
-          <motion.div 
-            initial={{ opacity: 0, x: -30 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="flex-1 max-w-2xl text-left"
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            className="space-y-6"
           >
-            <h1 className="text-[40px] sm:text-[52px] lg:text-[64px] font-bold leading-[1.1] tracking-tight text-[#1a1a1a]">
-              Finansal Geleceğinizi <br />
-              <span className="text-[var(--lale-gold)]">Güvenle</span> İnşa Edin
+            <div className="flex items-center gap-4">
+              <span className="w-12 h-[1px] bg-tertiary/40"></span>
+              <span className="font-technical text-tertiary uppercase tracking-[0.4em] text-[10px] font-bold">
+                Endüstriyel Teknik Laboratuvarı
+              </span>
+            </div>
+            
+            <h1 className="font-display text-4xl md:text-6xl font-bold leading-[0.95] text-on-surface uppercase tracking-tighter">
+              Bilimsel Metotlarla <br/>
+              <span className="text-white">Elektronik Onarım</span>
             </h1>
             
-            <p className="mt-8 text-lg leading-relaxed text-[#5f6970]">
-              Mali süreçlerinizde uzmanlık, şeffaflık ve dijital dönüşümün 
-              gücüyle işletmenize değer katıyoruz. Prestijli danışmanlık 
-              hizmetlerimizle tanışın.
+            <p className="text-lg md:text-xl text-on-surface-variant/80 font-display uppercase tracking-tight max-w-xl">
+              Ağır Vasıta, Otomotiv ve Mikro-Cerrahi Anakart Uzmanlığı
             </p>
-
-            <div className="mt-10 flex flex-wrap gap-4">
-              <Link 
-                href="/iletisim" 
-                className="inline-flex items-center justify-center rounded-lg bg-[var(--lale-gold)] px-8 py-4 text-sm font-bold uppercase tracking-wider text-white shadow-lg transition-all hover:bg-[#f57c00] hover:scale-105 active:scale-95"
-              >
-                ÜCRETSİZ DANIŞMANLIK AL
-              </Link>
-            </div>
           </motion.div>
 
-          {/* Sağ Görsel Bloğu */}
-          <motion.div 
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.8 }}
-            className="flex-1 w-full relative"
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.4, duration: 1 }}
+            className="flex flex-col md:flex-row items-start md:items-center gap-10"
           >
-            <div className="relative aspect-[4/3] rounded-[2rem] overflow-hidden shadow-2xl">
-              <Image
-                src="/banner/hero_meeting.png"
-                alt="Demirbaş Muhasebe Toplantı Odası"
-                fill
-                priority
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
+            <div className="space-y-2">
+              <p className="text-on-surface-variant/60 text-xs leading-relaxed max-w-sm">
+                Laboratuvarımızda IPC standartlarında, çip seviyesinde hassas müdahaleler gerçekleştirilerek 
+                kritik sistemler orijinal formuna kavuşturulur.
+              </p>
+              <div className="flex gap-6 pt-2">
+                <div className="flex flex-col">
+                  <span className="text-xl font-display font-bold text-tertiary">10+ Yıl</span>
+                  <span className="font-technical text-[8px] uppercase tracking-widest text-on-surface-variant/40">Deneyim</span>
+                </div>
+                <div className="w-[1px] h-8 bg-outline-variant/30"></div>
+                <div className="flex flex-col">
+                  <span className="text-xl font-display font-bold text-tertiary">%98.4</span>
+                  <span className="font-technical text-[8px] uppercase tracking-widest text-on-surface-variant/40">Başarı</span>
+                </div>
+              </div>
             </div>
-            {/* Dekoratif eleman (İsteğe bağlı, resimdeki gölge ve derinlik hissi için) */}
-            <div className="absolute -z-10 -bottom-6 -right-6 w-full h-full border-2 border-[var(--lale-gold)]/10 rounded-[2rem]"></div>
-          </motion.div>
 
+            <div className="flex flex-wrap gap-4">
+              <button className="btn-tech px-8 py-4 text-[10px] uppercase tracking-[0.3em] bg-white text-black hover:bg-tertiary hover:text-white transition-all">
+                TEKNİK ANALİZ TALEBİ
+              </button>
+              <button className="px-8 py-4 border border-white/20 text-white/80 font-technical text-[9px] tracking-widest hover:bg-white/5 transition-all">
+                HİZMETLERİMİZ
+              </button>
+            </div>
+          </motion.div>
         </div>
+      </div>
+
+      {/* Side Detail Element */}
+      <div className="absolute right-12 bottom-12 hidden lg:flex flex-col items-end gap-4">
+        <div className="font-technical text-[9px] text-on-surface-variant/30 uppercase tracking-[0.5em] vertical-rl">
+          EST. 2014 / İSTANBUL / TECH-LAB PRECISION
+        </div>
+        <div className="w-[1px] h-24 bg-gradient-to-b from-outline-variant/50 to-transparent"></div>
       </div>
     </section>
   );

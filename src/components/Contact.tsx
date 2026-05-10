@@ -1,80 +1,77 @@
 'use client'
 import React from 'react';
 import Image from 'next/image';
-import { FiMapPin } from 'react-icons/fi';
 
 const Contact = () => {
   return (
-    <section id="iletisim" className="bg-white py-24">
-      <div className="mx-auto max-w-7xl px-5 sm:px-7 lg:px-10">
-        <div className="flex flex-col lg:flex-row gap-16 items-start">
+    <section id="iletisim" className="bg-background py-24 relative overflow-hidden">
+      <div className="max-w-container-max mx-auto px-margin-desktop">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
           
-          {/* Sol: Form */}
-          <div className="flex-1 w-full">
-            <h2 className="text-4xl font-bold text-[#1a1a1a] mb-2">Bize Ulaşın</h2>
-            <p className="text-[#5f6970] mb-8">
-              Danışmanlık talepleriniz veya sorularınız için aşağıdaki formu doldurabilir ya da bizi ofisimizde ziyaret edebilirsiniz.
-            </p>
-
-            <form className="space-y-6">
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-[#1a1a1a]">AD SOYAD</label>
-                <input
-                  type="text"
-                  placeholder="Adınız Soyadınız"
-                  className="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-lg focus:outline-none focus:border-[var(--lale-gold)] text-sm"
-                />
+          {/* Reviews/Experience */}
+          <div>
+            <span className="font-technical text-tertiary tracking-[0.3em] uppercase mb-4 block text-xs">Müşteri Deneyimi</span>
+            <h2 className="text-4xl text-on-surface mb-12">Güvenilir Referanslar</h2>
+            <div className="space-y-8">
+              <div className="p-6 bg-surface-container-low border-l-4 border-tertiary">
+                <div className="flex text-tertiary mb-3">
+                  {[...Array(5)].map((_, i) => (
+                    <span key={i} className="material-symbols-outlined text-sm">star</span>
+                  ))}
+                </div>
+                <p className="text-on-surface-variant italic mb-4">"Ağır vasıta aracımın beynini başka servislerin 'tamir edilemez' demesine rağmen 2 günde onarıp teslim ettiler. Gerçekten uzman bir ekip."</p>
+                <div className="font-technical text-on-surface text-xs uppercase tracking-wider">Ahmet Y. - Lojistik Firma Sahibi</div>
               </div>
-
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-[#1a1a1a]">E-POSTA</label>
-                <input
-                  type="email"
-                  placeholder="email@adresiniz.com"
-                  className="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-lg focus:outline-none focus:border-[var(--lale-gold)] text-sm"
-                />
+              <div className="p-6 bg-surface-container-low border-l-4 border-outline-variant">
+                <div className="flex text-tertiary mb-3">
+                  {[...Array(5)].map((_, i) => (
+                    <span key={i} className="material-symbols-outlined text-sm">star</span>
+                  ))}
+                </div>
+                <p className="text-on-surface-variant italic mb-4">"iPhone anakartındaki sıvı temasını titizlikle temizleyip cihazımı verileriyle birlikte kurtardılar. Teşekkürler TECH-LAB."</p>
+                <div className="font-technical text-on-surface text-xs uppercase tracking-wider">Merve K. - Freelance Tasarımcı</div>
               </div>
-
-              <div className="space-y-1.5">
-                <label className="text-[10px] font-bold uppercase tracking-widest text-[#1a1a1a]">MESAJINIZ</label>
-                <textarea
-                  rows={4}
-                  placeholder="Size nasıl yardımcı olabiliriz?"
-                  className="w-full px-5 py-3 bg-gray-50 border border-gray-100 rounded-lg focus:outline-none focus:border-[var(--lale-gold)] text-sm resize-none"
-                />
-              </div>
-
-              <button
-                type="submit"
-                className="w-full bg-[var(--lale-gold)] text-white py-4 rounded-lg font-bold text-xs tracking-[0.15em] hover:bg-[#f57c00] transition-all shadow-lg shadow-[var(--lale-gold)]/20 active:scale-[0.98]"
-              >
-                GÖNDER
-              </button>
-            </form>
+            </div>
           </div>
 
-          {/* Sağ: Harita/Adres Bloğu */}
-          <div className="flex-1 w-full relative">
-            <div className="aspect-[4/3] w-full bg-gray-200 rounded-[2rem] relative overflow-hidden flex items-center justify-center shadow-2xl">
-              {/* Ofis Görseli */}
-              <Image 
-                src="/banner/office_contact.png"
-                alt="Demirbaş Ofis"
-                fill
-                className="object-cover opacity-60"
-              />
-              <div className="absolute inset-0 bg-gray-900/10"></div>
-              
-              {/* Adres Kartı */}
-              <div className="relative z-10 bg-white/90 backdrop-blur-md p-8 rounded-2xl shadow-2xl border border-white/20 flex flex-col items-center text-center max-w-[320px]">
-                <div className="h-10 w-10 bg-[var(--lale-gold)]/10 rounded-full flex items-center justify-center text-[var(--lale-gold)] mb-4">
-                  <FiMapPin className="h-5 w-5" />
+          {/* Contact/Map */}
+          <div className="bg-surface-container border border-outline-variant p-8 relative">
+            <h3 className="text-2xl font-display font-bold text-on-surface mb-8 uppercase tracking-tighter">İletişim & Lokasyon</h3>
+            <div className="space-y-6 mb-8">
+              <div className="flex items-start gap-4">
+                <span className="material-symbols-outlined text-tertiary mt-1">location_on</span>
+                <div>
+                  <div className="font-technical text-on-surface-variant text-[10px] tracking-widest uppercase">ADRES</div>
+                  <p className="text-sm">İkitelli OSB, Teknik Sanayi Sitesi 14. Blok No: 28, Başakşehir/İstanbul</p>
                 </div>
-                <h4 className="font-bold text-[#1a1a1a] mb-2 text-lg">Demirbaş Merkez Ofis</h4>
-                <p className="text-sm text-[#5f6970] leading-relaxed">
-                  Levent, Büyükdere Cd. No:123 <br />
-                  34394 Beşiktaş/İstanbul
-                </p>
+              </div>
+              <div className="flex items-start gap-4">
+                <span className="material-symbols-outlined text-tertiary mt-1">call</span>
+                <div>
+                  <div className="font-technical text-on-surface-variant text-[10px] tracking-widest uppercase">TELEFON</div>
+                  <p className="text-sm">+90 (212) 555 01 23</p>
+                </div>
+              </div>
+              <div className="flex items-start gap-4">
+                <span className="material-symbols-outlined text-tertiary mt-1">mail</span>
+                <div>
+                  <div className="font-technical text-on-surface-variant text-[10px] tracking-widest uppercase">E-POSTA</div>
+                  <p className="text-sm">servis@techlab-precision.com</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="w-full h-48 bg-background border border-outline-variant relative overflow-hidden">
+              <Image 
+                src="/stylized_map_1778396592720.png"
+                alt="Istanbul Location Map"
+                fill
+                className="object-cover opacity-80 contrast-125"
+              />
+              <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+                <div className="bg-background/90 border border-tertiary p-2 text-[10px] font-technical text-tertiary animate-bounce uppercase">
+                  TECH-LAB LOCATED HERE
+                </div>
               </div>
             </div>
           </div>

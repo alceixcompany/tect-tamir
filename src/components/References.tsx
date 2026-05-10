@@ -1,51 +1,37 @@
 'use client'
 import React from 'react';
 
+const steps = [
+  { icon: 'input', title: 'CİHAZ KABUL', desc: 'Kayıt ve fiziksel ön inceleme.' },
+  { icon: 'search_insights', title: 'ARIZA TESPİTİ', desc: 'Yazılımsal ve donanımsal tarama.' },
+  { icon: 'analytics', title: 'TEKNİK ANALİZ', desc: 'Mikroskobik devre incelemesi.' },
+  { icon: 'precision_manufacturing', title: 'ÇİP ONARIM', desc: 'Hassas mikro lehimleme işlemi.' },
+  { icon: 'fact_check', title: 'TEST SÜRECİ', desc: 'Fonksiyonel performans testleri.' },
+  { icon: 'verified_user', title: 'TESLİMAT', desc: 'Garanti belgesi ile güvenli teslim.' },
+];
+
 const References = () => {
-  const testimonials = [
-    {
-      name: 'Ahmet Yılmaz',
-      title: 'CEO, TechForward AS',
-      comment: '"Demirbaş ile çalışmaya başladığımızdan beri mali süreçlerimizde gözle görülür bir hızlanma ve netlik sağladık."'
-    },
-    {
-      name: 'Zeynep Kaya',
-      title: 'Kurucu, Global Trade',
-      comment: '"Mali danışmanlık konusundaki derin bilgileri, yatırım kararlarımızda bize büyük bir güven verdi."'
-    },
-    {
-      name: 'Mehmet Demir',
-      title: 'Operasyon Müdürü, Nexus Log',
-      comment: '"Bordrolama ve SGK desteği konusunda aldığımız hizmet, operasyonel yükümüzü %40 oranında azalttı."'
-    }
-  ];
-
   return (
-    <section id="referanslar" className="bg-white py-24">
-      <div className="mx-auto max-w-7xl px-5 sm:px-7 lg:px-10">
-        <div className="mb-16 text-center">
-          <h2 className="text-4xl font-bold text-[#1a1a1a]">Referanslarımız</h2>
-          <p className="mt-4 text-[#5f6970]">Lider kurumların güvenilir iş ortağıyız.</p>
+    <section id="process" className="py-24 bg-background">
+      <div className="max-w-container-max mx-auto px-margin-desktop">
+        <div className="text-center mb-20">
+          <span className="font-technical text-tertiary tracking-[0.3em] uppercase text-xs">Süreç Analizi</span>
+          <h2 className="text-4xl text-on-surface mt-2 uppercase tracking-tighter">Onarım Algoritması</h2>
         </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {testimonials.map((item, index) => (
-            <article
-              key={index}
-              className="relative p-10 bg-white rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-all duration-300"
-            >
-              <div className="text-6xl text-[var(--lale-gold)]/20 font-serif absolute top-6 right-8 leading-none select-none">”</div>
-              
-              <p className="relative z-10 text-lg leading-relaxed text-[#5f6970] mb-8 italic">
-                {item.comment}
-              </p>
-              
-              <div className="mt-auto">
-                <h4 className="font-bold text-[#1a1a1a] text-lg">{item.name}</h4>
-                <p className="text-[var(--lale-gold)] text-sm font-medium mt-1">{item.title}</p>
+        
+        <div className="relative">
+          <div className="absolute top-1/2 left-0 w-full h-[1px] bg-outline-variant hidden lg:block"></div>
+          <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-8 relative z-10">
+            {steps.map((step, index) => (
+              <div key={index} className="flex flex-col items-center group">
+                <div className="w-16 h-16 rounded-full bg-surface-container border border-outline-variant flex items-center justify-center mb-6 group-hover:border-tertiary group-hover:shadow-[0_0_15px_rgba(173,199,255,0.3)] transition-all bg-background">
+                  <span className="material-symbols-outlined text-tertiary">{step.icon}</span>
+                </div>
+                <h4 className="font-technical text-on-surface mb-2 text-center text-xs font-bold tracking-wider">{step.title}</h4>
+                <p className="text-[10px] text-on-surface-variant text-center px-4 uppercase tracking-tight">{step.desc}</p>
               </div>
-            </article>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>

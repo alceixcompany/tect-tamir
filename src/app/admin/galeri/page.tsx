@@ -4,6 +4,8 @@ import { db } from '@/lib/firebase';
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 import Image from 'next/image';
 import CKEditorComponent from '@/components/CKEditorComponent';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FiStar, FiX, FiImage, FiPlus, FiLayout, FiEdit2, FiTrash2, FiCalendar } from 'react-icons/fi';
 
 interface GalleryCategory {
   id: string;
@@ -215,164 +217,120 @@ const AdminGallery = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="p-8 lg:p-12 max-w-7xl mx-auto space-y-12 bg-background min-h-screen">
       {/* Page Header */}
-      <div className="bg-white border-b border-gray-200 px-6 py-6">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center gap-3 mb-4">
-            <div className="w-8 h-8 bg-amber-600 rounded-lg flex items-center justify-center">
-              <span className="text-lg text-white">🖼️</span>
-            </div>
-            <div>
-              <h1 className="text-xl font-bold text-gray-900">Galeri Yönetimi</h1>
-              <p className="text-sm text-gray-600 mt-1">Kategorileri ve resimleri yönetin</p>
-            </div>
-          </div>
-          
-          {/* Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-3">
-            <div className="bg-white border border-gray-200 rounded-lg p-3">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-gray-500 text-xs">Kategoriler</p>
-                  <p className="text-xl font-bold text-gray-900">{categories.length}</p>
-                </div>
-                <span className="text-xl">📁</span>
-              </div>
-            </div>
-            
-            <div className="bg-white border border-gray-200 rounded-lg p-3">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-gray-500 text-xs">Resimler</p>
-                  <p className="text-xl font-bold text-gray-900">{galleryItems.length}</p>
-                </div>
-                <span className="text-xl">🖼️</span>
-              </div>
-            </div>
-            
-            <div className="bg-white border border-gray-200 rounded-lg p-3">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-gray-500 text-xs">Aktif</p>
-                  <p className="text-xl font-bold text-gray-900">{categories.filter(c => c.isActive).length}</p>
-                </div>
-                <span className="text-xl">✅</span>
-              </div>
-            </div>
-            
-            <div className="bg-white border border-gray-200 rounded-lg p-3">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-gray-500 text-xs">Öne Çıkan</p>
-                  <p className="text-xl font-bold text-gray-900">{galleryItems.filter(i => i.isFeatured).length}</p>
-                </div>
-                <span className="text-xl">⭐</span>
-              </div>
-            </div>
-          </div>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-8 border-b border-outline-variant relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-circuit-pattern opacity-5 pointer-events-none"></div>
+        <div className="relative z-10">
+          <span className="font-technical text-tertiary text-[10px] tracking-[0.4em] uppercase mb-2 block">Görsel Veri & Kayıt Yönetimi</span>
+          <h1 className="text-4xl font-display font-bold text-on-surface uppercase tracking-tighter">Laboratuvar <span className="text-tertiary">Galerisi</span></h1>
         </div>
+      </div>
+      
+      {/* Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        {[
+          { label: 'BİRİMLER', val: categories.length, icon: 'folder', color: 'text-tertiary' },
+          { label: 'KAYITLI GÖRSEL', val: galleryItems.length, icon: 'image', color: 'text-tertiary' },
+          { label: 'AKTİF BİRİM', val: categories.filter(c => c.isActive).length, icon: 'check_circle', color: 'text-green-400' },
+          { label: 'ÖNE ÇIKAN', val: galleryItems.filter(i => i.isFeatured).length, icon: 'star', color: 'text-tertiary' }
+        ].map((stat, i) => (
+          <div key={i} className="bg-surface-container p-6 border border-outline-variant rounded-md relative overflow-hidden group">
+            <div className="absolute top-0 right-0 w-12 h-12 bg-circuit-pattern opacity-5"></div>
+            <div className="flex items-center gap-4 mb-4">
+              <span className={`material-symbols-outlined ${stat.color} text-xl group-hover:scale-110 transition-transform`}>{stat.icon}</span>
+              <span className="font-technical text-[9px] text-on-surface-variant/50 uppercase tracking-widest">{stat.label}</span>
+            </div>
+            <div className="text-3xl font-display font-bold text-on-surface">{stat.val}</div>
+          </div>
+        ))}
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-6">
+      <div className="space-y-8">
         {/* Tabs */}
-        <div className="bg-white rounded-lg border border-gray-200 p-1 mb-6">
-          <div className="flex">
-            <button
-              onClick={() => setActiveTab('categories')}
-              className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-md font-medium transition-colors ${
-                activeTab === 'categories'
-                  ? 'bg-amber-600 text-white'
-                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-              }`}
-            >
-              <span>📁</span>
-              <span className="text-sm">Kategoriler ({categories.length})</span>
-            </button>
-            <button
-              onClick={() => setActiveTab('items')}
-              className={`flex-1 flex items-center justify-center gap-2 px-4 py-2.5 rounded-md font-medium transition-colors ${
-                activeTab === 'items'
-                  ? 'bg-amber-600 text-white'
-                  : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
-              }`}
-            >
-              <span>🖼️</span>
-              <span className="text-sm">Resimler ({galleryItems.length})</span>
-            </button>
-          </div>
+        <div className="flex border-b border-outline-variant">
+          <button
+            onClick={() => setActiveTab('categories')}
+            className={`px-8 py-4 font-technical text-[10px] tracking-[0.3em] uppercase transition-all relative ${
+              activeTab === 'categories'
+                ? 'text-tertiary'
+                : 'text-on-surface-variant/40 hover:text-on-surface-variant'
+            }`}
+          >
+            SİSTEM BİRİMLERİ
+            {activeTab === 'categories' && <motion.div layoutId="activeTab" className="absolute bottom-0 left-0 right-0 h-0.5 bg-tertiary" />}
+          </button>
+          <button
+            onClick={() => setActiveTab('items')}
+            className={`px-8 py-4 font-technical text-[10px] tracking-[0.3em] uppercase transition-all relative ${
+              activeTab === 'items'
+                ? 'text-tertiary'
+                : 'text-on-surface-variant/40 hover:text-on-surface-variant'
+            }`}
+          >
+            GÖRSEL ARŞİV
+            {activeTab === 'items' && <motion.div layoutId="activeTab" className="absolute bottom-0 left-0 right-0 h-0.5 bg-tertiary" />}
+          </button>
         </div>
 
         {/* Categories Tab */}
         {activeTab === 'categories' && (
-          <div className="space-y-4">
+          <div className="space-y-8">
             <div className="flex justify-between items-center">
-              <div>
-                <h2 className="text-lg font-semibold text-gray-900">Kategoriler</h2>
-                <p className="text-sm text-gray-600 mt-1">Galeri kategorilerini yönetin</p>
-              </div>
+              <h2 className="font-technical text-xs font-bold text-on-surface uppercase tracking-[0.2em]">BİRİM LİSTESİ</h2>
               <button
                 onClick={() => setShowCategoryModal(true)}
-                className="bg-amber-600 hover:bg-amber-700 text-white px-3 py-2 rounded-lg font-medium transition-colors text-sm"
+                className="btn-tech text-[9px] py-3 px-6"
               >
-                + Yeni Kategori
+                + YENİ BİRİM TANIMLA
               </button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
               {categories.map((category) => (
-                <div key={category.id} className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:border-amber-300 transition-all duration-200">
-                  {/* Header with Icon */}
-                  <div className="bg-gray-50 px-4 py-3 border-b border-gray-200">
-                    <div className="flex items-center gap-3">
-                      <div className={`w-10 h-10 rounded-lg flex items-center justify-center text-lg bg-${category.color}-500 text-white`}>
-                        {category.icon}
-                      </div>
-                      <div className="flex-1">
-                        <h4 className="font-semibold text-gray-900">{category.name}</h4>
-                        <div className="flex items-center gap-3 text-xs text-gray-500">
-                          <span className={`px-2 py-0.5 rounded-full text-xs ${
-                            category.isActive 
-                              ? 'bg-green-100 text-green-700' 
-                              : 'bg-gray-100 text-gray-600'
-                          }`}>
-                            {category.isActive ? 'Aktif' : 'Pasif'}
-                          </span>
-                        </div>
-                      </div>
+                <div key={category.id} className="bg-surface-container border border-outline-variant rounded-md group hover:border-tertiary/30 transition-all relative overflow-hidden">
+                  <div className="absolute top-0 right-0 w-16 h-16 bg-circuit-pattern opacity-5"></div>
+                  <div className="p-8 border-b border-outline-variant/30 flex items-center gap-6">
+                    <div className="h-12 w-12 bg-background border border-outline-variant flex items-center justify-center text-xl">
+                      {category.icon}
+                    </div>
+                    <div className="flex-1">
+                      <h4 className="font-display font-bold text-on-surface uppercase tracking-tight">{category.name}</h4>
+                      <span className={`font-technical text-[8px] px-2 py-0.5 border uppercase tracking-widest ${
+                        category.isActive 
+                          ? 'border-green-900/30 text-green-400 bg-green-900/10' 
+                          : 'border-outline-variant text-on-surface-variant/40'
+                      }`}>
+                        {category.isActive ? 'AKTİF' : 'DEVRE DIŞI'}
+                      </span>
                     </div>
                   </div>
                   
-                  {/* Content */}
-                  <div className="p-4">
-                    <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                  <div className="p-8 space-y-6">
+                    <p className="font-technical text-[10px] text-on-surface-variant/60 line-clamp-2 uppercase tracking-wider h-10">
                       {category.description}
                     </p>
                     
-                    {/* Image Count */}
-                    <div className="flex items-center justify-between text-xs text-gray-500 mb-4">
-                      <span className="flex items-center gap-1">
-                        <svg className="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                        </svg>
-                        {galleryItems.filter(item => item.categoryId === category.id).length} resim
+                    <div className="flex items-center justify-between font-technical text-[9px] text-tertiary/40 uppercase tracking-widest">
+                      <span className="flex items-center gap-2">
+                        <span className="material-symbols-outlined text-sm">photo_library</span>
+                        {galleryItems.filter(item => item.categoryId === category.id).length} VERİ KAYDI
                       </span>
                     </div>
                     
-                    {/* Actions */}
-                    <div className="flex gap-2">
+                    <div className="flex gap-4 pt-4">
                       <button
                         onClick={() => handleCategoryEdit(category)}
-                        className="flex-1 bg-blue-50 hover:bg-blue-100 text-blue-700 px-3 py-2 rounded-md text-sm font-medium transition-colors border border-blue-200"
+                        className="flex-1 border border-outline-variant text-on-surface-variant font-technical text-[9px] py-3 uppercase tracking-widest hover:border-tertiary hover:text-tertiary transition-all"
                       >
-                        Düzenle
+                        DÜZENLE
                       </button>
                       <button
                         onClick={() => handleCategoryDelete(category.id)}
-                        className="flex-1 bg-red-50 hover:bg-red-100 text-red-700 px-3 py-2 rounded-md text-sm font-medium transition-colors border border-red-200"
+                        className="flex-1 border border-outline-variant text-on-surface-variant/40 font-technical text-[9px] py-3 uppercase tracking-widest hover:border-red-900/50 hover:text-red-400 transition-all"
                       >
-                        Sil
+                        SİL
                       </button>
                     </div>
                   </div>
@@ -380,104 +338,81 @@ const AdminGallery = () => {
               ))}
             </div>
             
-            {/* Empty State */}
             {categories.length === 0 && (
-              <div className="text-center py-16">
-                <div className="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <span className="text-3xl text-gray-400">📁</span>
-                </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-3">Henüz kategori yok</h3>
-                <p className="text-gray-500 mb-8 max-w-md mx-auto">Galeri kategorileri oluşturarak resimlerinizi organize etmeye başlayın</p>
-                <button
-                  onClick={() => setShowCategoryModal(true)}
-                  className="bg-amber-600 hover:bg-amber-700 text-white px-8 py-3 rounded-lg font-medium transition-colors"
-                >
-                  + Kategori Oluştur
-                </button>
+              <div className="text-center py-32 border border-outline-variant bg-surface-container/30">
+                <span className="material-symbols-outlined text-outline-variant text-6xl mb-6">folder_open</span>
+                <h3 className="font-technical text-sm font-bold text-on-surface uppercase tracking-[0.3em]">SİSTEM BİRİMİ TANIMLANMAMIŞ</h3>
+                <p className="font-technical text-[10px] text-on-surface-variant/40 mt-2 uppercase tracking-widest">Laboratuvar birimlerini tanımlayarak başlayın.</p>
               </div>
             )}
           </div>
         )}
 
-        {/* Gallery Items Tab */}
         {activeTab === 'items' && (
-          <div className="space-y-4">
+          <div className="space-y-8">
             <div className="flex justify-between items-center">
-              <div>
-                <h2 className="text-lg font-semibold text-gray-900">Galeri Resimleri</h2>
-                <p className="text-sm text-gray-600 mt-1">Resimleri kategorilere göre yönetin</p>
-              </div>
+              <h2 className="font-technical text-xs font-bold text-on-surface uppercase tracking-[0.2em]">ARŞİV KAYITLARI</h2>
               <button
                 onClick={() => setShowItemModal(true)}
-                className="bg-amber-600 hover:bg-amber-700 text-white px-3 py-2 rounded-lg font-medium transition-colors text-sm"
+                className="btn-tech text-[9px] py-3 px-6"
               >
-                + Yeni Resim
+                + YENİ GÖRSEL KAYDI
               </button>
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
               {galleryItems.map((item) => (
-                <div key={item.id} className="bg-white border border-gray-200 rounded-lg overflow-hidden hover:shadow-md transition-shadow">
-                  <div className="aspect-video bg-gray-100 flex items-center justify-center relative overflow-hidden">
+                <div key={item.id} className="bg-surface-container border border-outline-variant rounded-md group hover:border-tertiary/30 transition-all overflow-hidden">
+                  <div className="aspect-square bg-background relative overflow-hidden">
                     {item.imageUrl ? (
                       <Image
                         src={item.imageUrl}
                         alt={item.title}
-                        width={400}
-                        height={300}
-                        className="w-full h-full object-cover"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.style.display = 'none';
-                        }}
+                        fill
+                        className="object-cover opacity-60 group-hover:opacity-100 transition-opacity"
+                        unoptimized
                       />
                     ) : (
-                      <div className="text-center">
-                        <span className="text-3xl text-gray-300 mb-1 block">🖼️</span>
-                        <p className="text-xs text-gray-500">Resim yok</p>
+                      <div className="flex items-center justify-center h-full text-outline-variant/20">
+                        <span className="material-symbols-outlined text-4xl">image</span>
                       </div>
                     )}
                     
-                    {/* Category Badge */}
-                    <div className="absolute top-2 left-2">
-                      <span className="inline-flex items-center px-2 py-1 bg-white/90 rounded-full text-xs font-medium text-gray-700">
+                    <div className="absolute top-3 left-3">
+                      <span className="font-technical text-[8px] px-2 py-1 bg-background/90 border border-outline-variant text-tertiary uppercase tracking-widest">
                         {getCategoryName(item.categoryId)}
                       </span>
                     </div>
                     
-                    {/* Featured Badge */}
                     {item.isFeatured && (
-                      <div className="absolute top-2 right-2">
-                        <span className="inline-flex items-center px-2 py-1 bg-amber-500 text-white rounded-full text-xs font-medium">
-                          ⭐
-                        </span>
+                      <div className="absolute top-3 right-3">
+                        <div className="bg-tertiary text-on-tertiary p-1.5 shadow-2xl">
+                          <FiStar className="w-3 h-3 fill-current" />
+                        </div>
                       </div>
                     )}
+                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
                   </div>
                   
-                  <div className="p-3">
-                    <h3 className="font-semibold text-gray-900 mb-2 line-clamp-2 text-sm">{item.title}</h3>
+                  <div className="p-6 space-y-4">
+                    <h3 className="font-display font-bold text-on-surface uppercase tracking-tight text-sm line-clamp-1 group-hover:text-tertiary transition-colors">{item.title}</h3>
                     
-                    <p className="text-gray-600 text-xs mb-2 line-clamp-2">{item.description}</p>
-                    
-                    <div className="flex items-center justify-between mb-2">
-                      <span className="text-xs text-gray-500">
-                        {new Date(item.createdAt).toLocaleDateString('tr-TR')}
-                      </span>
+                    <div className="flex items-center justify-between font-technical text-[8px] text-on-surface-variant/30 uppercase tracking-widest">
+                      <span>{new Date(item.createdAt).toLocaleDateString('tr-TR')}</span>
                     </div>
                     
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 pt-2">
                       <button
                         onClick={() => handleItemEdit(item)}
-                        className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-2 py-1.5 rounded text-xs font-medium transition-colors"
+                        className="flex-1 border border-outline-variant text-on-surface-variant font-technical text-[8px] py-2.5 uppercase tracking-widest hover:border-tertiary hover:text-tertiary transition-all"
                       >
-                        Düzenle
+                        DÜZENLE
                       </button>
                       <button
                         onClick={() => handleItemDelete(item.id)}
-                        className="flex-1 bg-red-600 hover:bg-red-700 text-white px-2 py-1.5 rounded text-xs font-medium transition-colors"
+                        className="flex-1 border border-outline-variant text-on-surface-variant/40 font-technical text-[8px] py-2.5 uppercase tracking-widest hover:border-red-900/50 hover:text-red-400 transition-all"
                       >
-                        Sil
+                        SİL
                       </button>
                     </div>
                   </div>
@@ -490,339 +425,294 @@ const AdminGallery = () => {
 
       {/* Category Modal */}
       {showCategoryModal && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg max-w-md w-full p-6">
-            <h3 className="text-lg font-semibold text-gray-900 mb-4">
-              {editingCategory ? 'Kategori Düzenle' : 'Yeni Kategori Ekle'}
-            </h3>
+        <div className="fixed inset-0 bg-background/90 backdrop-blur-md flex items-center justify-center p-6 z-[100]">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-surface-container border border-outline-variant max-w-md w-full p-10 relative overflow-hidden shadow-2xl"
+          >
+            <div className="absolute top-0 right-0 w-32 h-32 bg-circuit-pattern opacity-10 rotate-90 pointer-events-none"></div>
+            <div className="flex justify-between items-center mb-10">
+              <h3 className="text-xl font-display font-bold text-on-surface uppercase tracking-tight">
+                {editingCategory ? 'BİRİM DÜZENLEME' : 'YENİ BİRİM TANIMI'}
+              </h3>
+              <button 
+                onClick={() => setShowCategoryModal(false)}
+                className="text-on-surface-variant hover:text-tertiary transition-colors"
+              >
+                <span className="material-symbols-outlined">close</span>
+              </button>
+            </div>
             
-            <form onSubmit={handleCategorySubmit} className="space-y-4">
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Kategori Adı *</label>
+            <form onSubmit={handleCategorySubmit} className="space-y-8">
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 mb-1">
+                  <div className="w-1 h-1 bg-tertiary rounded-full"></div>
+                  <label className="font-technical text-[10px] font-bold text-tertiary uppercase tracking-[0.2em]">BİRİM ADI *</label>
+                </div>
                 <input
                   type="text"
                   value={categoryForm.name}
                   onChange={(e) => setCategoryForm({...categoryForm, name: e.target.value})}
                   required
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
-                  placeholder="Örn: Kanalizasyon"
+                  className="w-full bg-background border border-outline-variant rounded-md px-5 py-4 text-on-surface font-technical text-xs focus:border-tertiary focus:ring-2 focus:ring-tertiary/10 outline-none transition-all placeholder:text-outline-variant/30"
+                  placeholder="Örn: ECU Onarım Birimi"
                 />
               </div>
               
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Açıklama</label>
+              <div className="space-y-3">
+                <div className="flex items-center gap-2 mb-1">
+                  <div className="w-1 h-1 bg-tertiary/40 rounded-full"></div>
+                  <label className="font-technical text-[10px] font-bold text-tertiary uppercase tracking-[0.2em]">OPERASYONEL AÇIKLAMA</label>
+                </div>
                 <textarea
                   value={categoryForm.description}
                   onChange={(e) => setCategoryForm({...categoryForm, description: e.target.value})}
                   rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
-                  placeholder="Kategori açıklaması..."
+                  className="w-full bg-background border border-outline-variant rounded-md px-5 py-4 text-on-surface font-technical text-xs focus:border-tertiary focus:ring-2 focus:ring-tertiary/10 outline-none transition-all resize-none placeholder:text-outline-variant/30"
+                  placeholder="Birim görev tanımı..."
                 />
               </div>
               
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">İkon</label>
+              <div className="grid grid-cols-2 gap-6">
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 mb-1">
+                    <div className="w-1 h-1 bg-tertiary/40 rounded-full"></div>
+                    <label className="font-technical text-[10px] font-bold text-tertiary uppercase tracking-[0.2em]">İKON (EMOJI)</label>
+                  </div>
                   <input
                     type="text"
                     value={categoryForm.icon}
                     onChange={(e) => setCategoryForm({...categoryForm, icon: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full bg-background border border-outline-variant rounded-md px-5 py-4 text-on-surface font-technical text-xs focus:border-tertiary focus:ring-2 focus:ring-tertiary/10 outline-none text-center"
                     placeholder="📷"
                   />
                 </div>
                 
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Renk</label>
+                <div className="space-y-3">
+                  <div className="flex items-center gap-2 mb-1">
+                    <div className="w-1 h-1 bg-tertiary/40 rounded-full"></div>
+                    <label className="font-technical text-[10px] font-bold text-tertiary uppercase tracking-[0.2em]">SİSTEM RENGİ</label>
+                  </div>
                   <select
                     value={categoryForm.color}
                     onChange={(e) => setCategoryForm({...categoryForm, color: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full bg-background border border-outline-variant rounded-md px-5 py-4 text-on-surface font-technical text-xs focus:border-tertiary focus:ring-2 focus:ring-tertiary/10 outline-none cursor-pointer"
                   >
-                    <option value="blue">Mavi</option>
-                    <option value="red">Kırmızı</option>
-                    <option value="green">Yeşil</option>
-                    <option value="yellow">Sarı</option>
-                    <option value="purple">Mor</option>
-                    <option value="pink">Pembe</option>
-                    <option value="gray">Gri</option>
+                    <option value="blue">TEKNİK MAVİ</option>
+                    <option value="gray">ENDÜSTRİYEL GRİ</option>
+                    <option value="purple">HASSAS MOR</option>
                   </select>
                 </div>
               </div>
               
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  id="isActive"
-                  checked={categoryForm.isActive}
-                  onChange={(e) => setCategoryForm({...categoryForm, isActive: e.target.checked})}
-                  className="h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300 rounded"
-                />
-                <label htmlFor="isActive" className="ml-2 text-sm text-gray-700">Aktif</label>
-              </div>
+              <label className="flex items-center gap-4 cursor-pointer group">
+                <div className="relative">
+                  <input
+                    type="checkbox"
+                    checked={categoryForm.isActive}
+                    onChange={(e) => setCategoryForm({...categoryForm, isActive: e.target.checked})}
+                    className="w-5 h-5 bg-background border-outline-variant rounded-sm text-tertiary focus:ring-tertiary/50"
+                  />
+                </div>
+                <span className="font-technical text-[10px] font-bold text-on-surface-variant group-hover:text-tertiary transition-colors uppercase tracking-widest">AKTİF DURUMDA</span>
+              </label>
               
-              <div className="flex gap-3 pt-4">
+              <div className="flex gap-4 pt-4">
                 <button
                   type="button"
-                  onClick={() => {
-                    setShowCategoryModal(false);
-                    setEditingCategory(null);
-                    setCategoryForm({ name: '', description: '', icon: '📷', color: 'blue', isActive: true });
-                  }}
-                  className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
+                  onClick={() => setShowCategoryModal(false)}
+                  className="btn-tech-outline flex-1 py-5 text-[10px] rounded-md"
                 >
-                  İptal
+                  İPTAL
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg transition-colors"
+                  className="btn-tech flex-1 py-5 text-[10px] rounded-md"
                 >
-                  {editingCategory ? 'Güncelle' : 'Ekle'}
+                  {editingCategory ? 'GÜNCELLE' : 'SİSTEME TANIMLA'}
                 </button>
               </div>
             </form>
-          </div>
+          </motion.div>
         </div>
       )}
 
       {/* Gallery Item Modal */}
       {showItemModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-6xl w-full h-[95vh] flex flex-col shadow-2xl">
-            <div className="p-6 border-b border-gray-200 flex-shrink-0 bg-gray-50">
-              <h2 className="text-xl font-semibold text-gray-900">
-                {editingItem ? 'Galeri Resmi Düzenle' : 'Yeni Galeri Resmi Ekle'}
-              </h2>
+        <div className="fixed inset-0 bg-background/90 backdrop-blur-md flex items-center justify-center p-6 z-[100]">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-surface-container border border-outline-variant max-w-6xl w-full max-h-[95vh] flex flex-col relative overflow-hidden shadow-2xl"
+          >
+            <div className="absolute top-0 right-0 w-48 h-48 bg-circuit-pattern opacity-10 rotate-90 pointer-events-none"></div>
+            
+            <div className="p-10 border-b border-outline-variant flex items-center justify-between relative z-10">
+              <div className="flex items-center gap-6">
+                <div className="h-14 w-14 bg-tertiary/10 text-tertiary border border-tertiary/20 flex items-center justify-center">
+                  <span className="material-symbols-outlined text-3xl">image_search</span>
+                </div>
+                <div>
+                  <h2 className="text-2xl font-display font-bold text-on-surface uppercase tracking-tight">
+                    {editingItem ? 'KAYIT DÜZENLEME' : 'YENİ GÖRSEL KAYDI'}
+                  </h2>
+                  <p className="font-technical text-[10px] text-on-surface-variant/50 uppercase tracking-[0.4em]">VERİ ARŞİV TERMİNALİ</p>
+                </div>
+              </div>
+              <button onClick={() => setShowItemModal(false)} className="h-12 w-12 flex items-center justify-center border border-outline-variant text-on-surface-variant hover:text-tertiary transition-all">
+                <FiX className="w-6 h-6" />
+              </button>
             </div>
             
-            <form onSubmit={handleItemSubmit} className="flex flex-col flex-1 overflow-hidden">
-              <div className="flex-1 overflow-y-auto p-6 space-y-6">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  {/* Sol taraf - Form alanları */}
-                  <div className="space-y-4">
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Başlık *</label>
-                        <input
-                          type="text"
-                          value={itemForm.title}
-                          onChange={(e) => setItemForm({...itemForm, title: e.target.value})}
-                          required
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
-                          placeholder="Örn: Modern Kanalizasyon"
-                        />
+            <form onSubmit={handleItemSubmit} className="flex-1 overflow-y-auto p-10 relative z-10 scrollbar-technical">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
+                <div className="space-y-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <div className="w-1 h-1 bg-tertiary rounded-full"></div>
+                        <label className="font-technical text-[10px] font-bold text-tertiary uppercase tracking-[0.2em]">KAYIT BAŞLIĞI *</label>
                       </div>
-                      
-                      <div>
-                        <label className="block text-sm font-medium text-gray-700 mb-1">Kategori *</label>
-                        <select
-                          value={itemForm.categoryId}
-                          onChange={(e) => setItemForm({...itemForm, categoryId: e.target.value})}
-                          required
-                          className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
-                        >
-                          <option value="">Kategori Seçin</option>
-                          {categories.map((category) => (
-                            <option key={category.id} value={category.id}>
-                              {category.icon} {category.name}
-                            </option>
-                          ))}
-                        </select>
-                      </div>
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Ana Resim URL *</label>
-                      <input
-                        type="url"
-                        value={itemForm.imageUrl}
-                        onChange={(e) => setItemForm({...itemForm, imageUrl: e.target.value})}
-                        required
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
-                        placeholder="https://example.com/resim.jpg"
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Küçük Resim URL</label>
-                      <input
-                        type="url"
-                        value={itemForm.thumbnailUrl}
-                        onChange={(e) => setItemForm({...itemForm, thumbnailUrl: e.target.value})}
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
-                        placeholder="https://example.com/resim-kucuk.jpg (opsiyonel)"
-                      />
-                    </div>
-                    
-                    <div>
-                      <label className="block text-sm font-medium text-gray-700 mb-1">Etiketler (virgülle ayırın)</label>
                       <input
                         type="text"
-                        value={itemForm.tags}
-                        onChange={(e) => setItemForm({...itemForm, tags: e.target.value})}
-                        placeholder="cilt bakimi, lazer, merkez, isilti"
-                        className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
+                        value={itemForm.title}
+                        onChange={(e) => setItemForm({...itemForm, title: e.target.value})}
+                        required
+                        className="w-full bg-background border border-outline-variant rounded-md px-6 py-4 text-on-surface font-technical text-xs focus:border-tertiary focus:ring-2 focus:ring-tertiary/10 outline-none transition-all placeholder:text-outline-variant/30"
+                        placeholder="Örn: ECU Mikro-Lehimleme İşlemi"
                       />
                     </div>
                     
-                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                      <div className="flex items-center">
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <div className="w-1 h-1 bg-tertiary/40 rounded-full"></div>
+                        <label className="font-technical text-[10px] font-bold text-tertiary uppercase tracking-[0.2em]">BİRİM SEÇİMİ *</label>
+                      </div>
+                      <select
+                        value={itemForm.categoryId}
+                        onChange={(e) => setItemForm({...itemForm, categoryId: e.target.value})}
+                        required
+                        className="w-full bg-background border border-outline-variant rounded-md px-6 py-4 text-on-surface font-technical text-xs focus:border-tertiary focus:ring-2 focus:ring-tertiary/10 outline-none cursor-pointer"
+                      >
+                        <option value="">BİRİM SEÇİNİZ</option>
+                        {categories.map((category) => (
+                          <option key={category.id} value={category.id}>
+                            {category.name.toUpperCase()}
+                          </option>
+                        ))}
+                      </select>
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 mb-1">
+                      <div className="w-1 h-1 bg-tertiary/40 rounded-full"></div>
+                      <label className="font-technical text-[10px] font-bold text-tertiary uppercase tracking-[0.2em]">ANA GÖRSEL URL *</label>
+                    </div>
+                    <input
+                      type="url"
+                      value={itemForm.imageUrl}
+                      onChange={(e) => setItemForm({...itemForm, imageUrl: e.target.value})}
+                      required
+                      className="w-full bg-background border border-outline-variant rounded-md px-6 py-4 text-on-surface font-technical text-[10px] focus:border-tertiary focus:ring-2 focus:ring-tertiary/10 outline-none transition-all placeholder:text-outline-variant/30"
+                      placeholder="https://.../high-res-image.jpg"
+                    />
+                  </div>
+                  
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 mb-1">
+                      <div className="w-1 h-1 bg-tertiary/40 rounded-full"></div>
+                      <label className="font-technical text-[10px] font-bold text-tertiary uppercase tracking-[0.2em]">TETKİK ETİKETLERİ (VİRGÜLLE AYIRIN)</label>
+                    </div>
+                    <input
+                      type="text"
+                      value={itemForm.tags}
+                      onChange={(e) => setItemForm({...itemForm, tags: e.target.value})}
+                      placeholder="ecu, analiz, onarim..."
+                      className="w-full bg-background border border-outline-variant rounded-md px-6 py-4 text-on-surface font-technical text-xs focus:border-tertiary focus:ring-2 focus:ring-tertiary/10 outline-none transition-all placeholder:text-outline-variant/30"
+                    />
+                  </div>
+                  
+                  <div className="flex gap-10 pt-4 px-2">
+                    <label className="flex items-center gap-4 cursor-pointer group">
+                      <div className="relative">
                         <input
                           type="checkbox"
-                          id="isActive"
                           checked={itemForm.isActive}
                           onChange={(e) => setItemForm({...itemForm, isActive: e.target.checked})}
-                          className="h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300 rounded"
+                          className="w-5 h-5 bg-background border-outline-variant rounded-sm text-tertiary focus:ring-tertiary/50"
                         />
-                        <label htmlFor="isActive" className="ml-2 text-sm text-gray-700">Aktif</label>
                       </div>
-                      
-                      <div className="flex items-center">
+                      <span className="font-technical text-[10px] font-bold text-on-surface-variant group-hover:text-tertiary transition-colors uppercase tracking-widest">ARŞİVDE AKTİF</span>
+                    </label>
+                    
+                    <label className="flex items-center gap-4 cursor-pointer group">
+                      <div className="relative">
                         <input
                           type="checkbox"
-                          id="isFeatured"
                           checked={itemForm.isFeatured}
                           onChange={(e) => setItemForm({...itemForm, isFeatured: e.target.checked})}
-                          className="h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300 rounded"
+                          className="w-5 h-5 bg-background border-outline-variant rounded-sm text-tertiary focus:ring-tertiary/50"
                         />
-                        <label htmlFor="isFeatured" className="ml-2 text-sm text-gray-700">Öne Çıkan</label>
                       </div>
-                    </div>
-                  </div>
-
-                  {/* Sağ taraf - Resim önizleme */}
-                  <div className="space-y-4">
-                    <h4 className="text-sm font-medium text-gray-700 mb-2">Resim Önizleme</h4>
-                    
-                    {/* Ana resim önizleme */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-500 mb-2">Ana Resim</label>
-                      <div className="aspect-video bg-gray-100 rounded-lg overflow-hidden border border-gray-300">
-                        {itemForm.imageUrl ? (
-                          <Image
-                            src={itemForm.imageUrl}
-                            alt="Önizleme"
-                            width={400}
-                            height={300}
-                            className="w-full h-full object-cover"
-                            onError={(e) => {
-                              const target = e.target as HTMLImageElement;
-                              target.style.display = 'none';
-                              (target.nextElementSibling as HTMLElement)!.style.display = 'flex';
-                            }}
-                          />
-                        ) : null}
-                        <div 
-                          className={`w-full h-full flex items-center justify-center ${itemForm.imageUrl ? 'hidden' : 'flex'}`}
-                          style={{ display: itemForm.imageUrl ? 'none' : 'flex' } as React.CSSProperties}
-                        >
-                          <div className="text-center">
-                            <span className="text-4xl text-gray-400 mb-2 block">🖼️</span>
-                            <p className="text-sm text-gray-500">Resim URL&apos;si girin</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Küçük resim önizleme */}
-                    <div>
-                      <label className="block text-sm font-medium text-gray-500 mb-2">Küçük Resim</label>
-                      <div className="aspect-square bg-gray-100 rounded-lg overflow-hidden border border-gray-300">
-                        {itemForm.thumbnailUrl ? (
-                          <Image
-                            src={itemForm.thumbnailUrl}
-                            alt="Küçük önizleme"
-                            width={200}
-                            height={200}
-                            className="w-full h-full object-cover"
-                            onError={(e) => {
-                              const target = e.target as HTMLImageElement;
-                              target.style.display = 'none';
-                              (target.nextElementSibling as HTMLElement)!.style.display = 'flex';
-                            }}
-                          />
-                        ) : null}
-                        <div 
-                          className={`w-full h-full flex items-center justify-center ${itemForm.thumbnailUrl ? 'hidden' : 'flex'}`}
-                          style={{ display: itemForm.thumbnailUrl ? 'none' : 'flex' } as React.CSSProperties}
-                        >
-                          <div className="text-center">
-                            <span className="text-4xl text-gray-400 mb-1 block">🖼️</span>
-                            <p className="text-xs text-gray-500">Opsiyonel</p>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Hızlı URL örnekleri */}
-                    <div className="bg-gray-50 rounded-lg p-3">
-                      <h5 className="text-xs font-medium text-gray-700 mb-2">Hızlı URL Örnekleri:</h5>
-                      <div className="space-y-1">
-                        <button
-                          type="button"
-                          onClick={() => setItemForm({...itemForm, imageUrl: 'https://images.unsplash.com/photo-1581578731548-c64695cc6952?w=800&h=600&fit=crop'})}
-                          className="block text-xs text-blue-600 hover:text-blue-800 text-left w-full"
-                        >
-                          ✨ Cilt bakimi ornegi
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setItemForm({...itemForm, imageUrl: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800&h=600&fit=crop'})}
-                          className="block text-xs text-blue-600 hover:text-blue-800 text-left w-full"
-                        >
-                          🌿 Lazer epilasyon ornegi
-                        </button>
-                        <button
-                          type="button"
-                          onClick={() => setItemForm({...itemForm, imageUrl: 'https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=800&h=600&fit=crop'})}
-                          className="block text-xs text-blue-600 hover:text-blue-800 text-left w-full"
-                        >
-                          💆 Vucut bakimi ornegi
-                        </button>
-                      </div>
-                    </div>
+                      <span className="font-technical text-[10px] font-bold text-on-surface-variant group-hover:text-tertiary transition-colors uppercase tracking-widest">KRİTİK GÖRSEL</span>
+                    </label>
                   </div>
                 </div>
-                
-                {/* Açıklama - En Altta */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Açıklama *</label>
-                  <div className="border border-gray-300 rounded-lg">
-                    <CKEditorComponent
-                      value={itemForm.description}
-                      onChange={(data: string) => setItemForm({...itemForm, description: data})}
-                      placeholder="Resim açıklaması..."
-                      height="200px"
-                      label=""
-                    />
+
+                <div className="space-y-8">
+                  <label className="font-technical text-[10px] font-bold text-tertiary uppercase tracking-[0.2em] ml-1 block mb-4">GÖRSEL ANALİZ ÖNİZLEME</label>
+                  <div className="aspect-video bg-background border border-outline-variant overflow-hidden flex items-center justify-center relative">
+                    {itemForm.imageUrl ? (
+                      <Image
+                        src={itemForm.imageUrl}
+                        alt="Preview"
+                        fill
+                        className="object-cover opacity-80"
+                        unoptimized
+                      />
+                    ) : (
+                      <div className="text-center opacity-10">
+                        <span className="material-symbols-outlined text-6xl mb-4">image</span>
+                        <p className="font-technical text-[10px] uppercase tracking-[0.4em]">SİSTEME VERİ BEKLENİYOR</p>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
               
-              {/* Fixed Bottom Buttons */}
-              <div className="flex-shrink-0 border-t border-gray-200 p-6">
-                <div className="flex gap-3">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setShowItemModal(false);
-                      setEditingItem(null);
-                      setItemForm({ title: '', description: '', categoryId: '', imageUrl: '', thumbnailUrl: '', tags: '', isActive: true, isFeatured: false });
-                    }}
-                    className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-                  >
-                    İptal
-                  </button>
-                  <button
-                    type="submit"
-                    className="flex-1 px-4 py-2 bg-amber-600 hover:bg-amber-700 text-white rounded-lg transition-colors"
-                  >
-                    {editingItem ? 'Güncelle' : 'Ekle'}
-                  </button>
+              <div className="space-y-4">
+                <div className="flex items-center gap-2 mb-1">
+                  <div className="w-1 h-1 bg-tertiary rounded-full"></div>
+                  <label className="font-technical text-[10px] font-bold text-tertiary uppercase tracking-[0.2em]">TEKNİK ANALİZ NOTLARI *</label>
+                </div>
+                <div className="border border-outline-variant bg-white rounded-md min-h-[300px] text-slate-900 overflow-hidden">
+                  <CKEditorComponent
+                    value={itemForm.description}
+                    onChange={(data: string) => setItemForm({...itemForm, description: data})}
+                    placeholder="Görsel ile ilgili teknik detayları buraya girin..."
+                  />
                 </div>
               </div>
             </form>
-          </div>
+            
+            <div className="p-10 border-t border-outline-variant flex items-center justify-end gap-6 bg-background/50 relative z-10">
+              <button 
+                type="button"
+                onClick={() => setShowItemModal(false)} 
+                className="font-technical text-[10px] font-bold text-on-surface-variant/50 hover:text-on-surface transition-colors uppercase tracking-[0.4em]"
+              >
+                İPTAL TERMİNALİ
+              </button>
+              <button 
+                onClick={handleItemSubmit}
+                className="btn-tech px-12 py-5 h-auto text-xs rounded-md"
+              >
+                {editingItem ? 'VERİLERİ GÜNCELLE' : 'ARŞİVE KAYDET'}
+              </button>
+            </div>
+          </motion.div>
         </div>
       )}
     </div>

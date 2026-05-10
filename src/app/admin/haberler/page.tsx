@@ -129,50 +129,40 @@ const AdminNews = () => {
   }
 
   return (
-    <div className="p-8 lg:p-12 max-w-7xl mx-auto">
+    <div className="p-8 lg:p-12 max-w-7xl mx-auto space-y-12 bg-background min-h-screen">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-12">
-        <div>
-          <h1 className="text-3xl font-bold text-[var(--lale-anthracite)] mb-2">Haber Yönetimi</h1>
-          <p className="text-[#5a666d] font-medium">Sitenizdeki güncel gelişmeleri ve blog yazılarını yönetin.</p>
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 pb-8 border-b border-outline-variant relative overflow-hidden">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-circuit-pattern opacity-5 pointer-events-none"></div>
+        <div className="relative z-10">
+          <span className="font-technical text-tertiary text-[10px] tracking-[0.4em] uppercase mb-2 block">İçerik & Rapor Yönetimi</span>
+          <h1 className="text-4xl font-display font-bold text-on-surface uppercase tracking-tighter">Teknik <span className="text-tertiary">Yayınlar</span></h1>
         </div>
         <button 
           onClick={() => setShowAddModal(true)}
-          className="px-6 py-3 bg-[var(--lale-gold)] text-white font-bold text-sm rounded-2xl shadow-lg shadow-[var(--lale-gold)]/20 hover:scale-[1.02] transition-all flex items-center gap-2"
+          className="btn-tech flex items-center gap-3 h-12 relative z-10"
         >
-          <FiPlus /> YENİ HABER EKLE
+          <FiPlus /> YENİ ANALİZ EKLE
         </button>
       </div>
 
       {/* Stats Quick View */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-        <div className="bg-white p-6 rounded-3xl border border-gray-100 flex items-center gap-4">
-          <div className="h-12 w-12 bg-blue-50 text-blue-500 rounded-2xl flex items-center justify-center">
-            <FiFileText className="w-6 h-6" />
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {[
+          { label: 'TOPLAM KAYIT', val: haberler.length, color: 'text-tertiary', icon: FiFileText },
+          { label: 'KRİTİK / ÖNE ÇIKAN', val: haberler.filter(h => h.featured).length, color: 'text-tertiary', icon: FiStar },
+          { label: 'AKTİF YAYIN', val: haberler.filter(h => h.isActive).length, color: 'text-green-400', icon: FiCheck }
+        ].map((stat, i) => (
+          <div key={i} className="bg-surface-container p-8 border border-outline-variant rounded-md flex items-center gap-6 group relative overflow-hidden">
+            <div className="absolute top-0 right-0 w-16 h-16 bg-circuit-pattern opacity-5"></div>
+            <div className={`h-12 w-12 bg-background border border-outline-variant ${stat.color} flex items-center justify-center group-hover:scale-110 transition-transform`}>
+              <stat.icon className="w-6 h-6" />
+            </div>
+            <div>
+              <p className="font-technical text-[9px] text-on-surface-variant/50 uppercase tracking-[0.3em] mb-1">{stat.label}</p>
+              <p className="text-3xl font-display font-bold text-on-surface">{stat.val}</p>
+            </div>
           </div>
-          <div>
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">TOPLAM</p>
-            <p className="text-2xl font-bold text-[var(--lale-anthracite)]">{haberler.length}</p>
-          </div>
-        </div>
-        <div className="bg-white p-6 rounded-3xl border border-gray-100 flex items-center gap-4">
-          <div className="h-12 w-12 bg-amber-50 text-amber-500 rounded-2xl flex items-center justify-center">
-            <FiStar className="w-6 h-6" />
-          </div>
-          <div>
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">ÖNE ÇIKAN</p>
-            <p className="text-2xl font-bold text-[var(--lale-anthracite)]">{haberler.filter(h => h.featured).length}</p>
-          </div>
-        </div>
-        <div className="bg-white p-6 rounded-3xl border border-gray-100 flex items-center gap-4">
-          <div className="h-12 w-12 bg-green-50 text-green-500 rounded-2xl flex items-center justify-center">
-            <FiCheck className="w-6 h-6" />
-          </div>
-          <div>
-            <p className="text-xs font-bold text-gray-400 uppercase tracking-widest">AKTİF</p>
-            <p className="text-2xl font-bold text-[var(--lale-anthracite)]">{haberler.filter(h => h.isActive).length}</p>
-          </div>
-        </div>
+        ))}
       </div>
 
       {/* News Grid */}
@@ -181,50 +171,54 @@ const AdminNews = () => {
           <motion.div 
             layout
             key={haber.id} 
-            className="bg-white rounded-[2rem] border border-gray-100 p-6 hover:shadow-xl hover:shadow-gray-200/40 transition-all group"
+            className="bg-surface-container border border-outline-variant rounded-md p-8 group hover:border-tertiary/30 transition-all"
           >
-            <div className="flex flex-col md:flex-row gap-6">
-              <div className="relative w-full md:w-48 h-32 rounded-2xl overflow-hidden bg-gray-50 shrink-0">
+            <div className="flex flex-col md:flex-row gap-10">
+              <div className="relative w-full md:w-56 h-40 bg-background border border-outline-variant/30 rounded-sm overflow-hidden shrink-0">
                 {haber.imageUrl ? (
-                  <Image src={haber.imageUrl} alt={haber.title} fill className="object-cover" />
+                  <Image src={haber.imageUrl} alt={haber.title} fill className="object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
                 ) : (
-                  <div className="flex items-center justify-center h-full text-gray-300">
-                    <FiImage className="w-8 h-8" />
+                  <div className="flex items-center justify-center h-full text-outline-variant/20">
+                    <FiImage className="w-12 h-12" />
                   </div>
                 )}
                 {haber.featured && (
-                  <div className="absolute top-2 left-2 bg-[var(--lale-gold)] text-white p-1.5 rounded-lg shadow-lg">
-                    <FiStar className="w-3 h-3 fill-current" />
+                  <div className="absolute top-3 left-3 bg-tertiary text-on-tertiary p-2 shadow-2xl">
+                    <FiStar className="w-4 h-4 fill-current" />
                   </div>
                 )}
+                <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
               </div>
               
-              <div className="flex-1 min-w-0">
-                <div className="flex items-start justify-between gap-4 mb-2">
-                  <div>
-                    <div className="flex items-center gap-3 mb-1">
-                      <span className={`text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-wider ${haber.isActive ? 'bg-green-50 text-green-600' : 'bg-red-50 text-red-600'}`}>
-                        {haber.isActive ? 'YAYINDA' : 'TASLAK'}
-                      </span>
-                      <span className="text-[10px] font-bold text-gray-300 flex items-center gap-1">
-                        <FiCalendar /> {new Date(haber.createdAt).toLocaleDateString('tr-TR')}
-                      </span>
+              <div className="flex-1 min-w-0 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-start justify-between gap-6 mb-4">
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-4">
+                        <span className={`font-technical text-[8px] px-3 py-1 border uppercase tracking-widest ${haber.isActive ? 'border-green-900/30 text-green-400 bg-green-900/10' : 'border-red-900/30 text-red-400 bg-red-900/10'}`}>
+                          {haber.isActive ? 'AKTİF ANALİZ' : 'TASLAK KAYIT'}
+                        </span>
+                        <span className="font-technical text-[9px] text-on-surface-variant/30 flex items-center gap-2 uppercase tracking-widest">
+                          <FiCalendar className="text-tertiary/50" /> {new Date(haber.createdAt).toLocaleDateString('tr-TR')}
+                        </span>
+                      </div>
+                      <h3 className="text-2xl font-display font-bold text-on-surface uppercase tracking-tight group-hover:text-tertiary transition-colors">{haber.title}</h3>
                     </div>
-                    <h3 className="text-xl font-bold text-[var(--lale-anthracite)] truncate group-hover:text-[var(--lale-gold)] transition-colors">{haber.title}</h3>
+                    <div className="flex items-center gap-3">
+                      <button onClick={() => handleEdit(haber)} className="h-10 w-10 flex items-center justify-center border border-outline-variant text-on-surface-variant hover:text-tertiary hover:border-tertiary transition-all">
+                        <FiEdit2 className="w-4 h-4" />
+                      </button>
+                      <button onClick={() => handleDelete(haber.id)} className="h-10 w-10 flex items-center justify-center border border-outline-variant text-on-surface-variant hover:text-red-400 hover:border-red-400 transition-all">
+                        <FiTrash2 className="w-4 h-4" />
+                      </button>
+                    </div>
                   </div>
-                  <div className="flex items-center gap-2">
-                    <button onClick={() => handleEdit(haber)} className="p-3 text-gray-400 hover:text-blue-500 hover:bg-blue-50 rounded-xl transition-all">
-                      <FiEdit2 className="w-5 h-5" />
-                    </button>
-                    <button onClick={() => handleDelete(haber.id)} className="p-3 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all">
-                      <FiTrash2 className="w-5 h-5" />
-                    </button>
-                  </div>
+                  <p className="font-technical text-xs text-on-surface-variant/60 line-clamp-2 mb-6 uppercase tracking-wider leading-relaxed">{haber.description}</p>
                 </div>
-                <p className="text-sm text-[#5a666d] line-clamp-2 mb-4">{haber.description}</p>
-                <div className="flex flex-wrap gap-2">
+                
+                <div className="flex flex-wrap gap-3">
                   {haber.tags?.map(tag => (
-                    <span key={tag} className="text-[10px] font-bold text-gray-400 bg-gray-50 px-2 py-1 rounded-lg">#{tag}</span>
+                    <span key={tag} className="font-technical text-[9px] text-tertiary/40 border border-tertiary/10 px-3 py-1 uppercase tracking-widest hover:text-tertiary hover:border-tertiary/30 transition-all cursor-default">#{tag}</span>
                   ))}
                 </div>
               </div>
@@ -236,186 +230,180 @@ const AdminNews = () => {
       {/* Modal */}
       <AnimatePresence>
         {showAddModal && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-6">
             <motion.div 
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               onClick={closeModal}
-              className="absolute inset-0 bg-slate-900/40 backdrop-blur-sm"
+              className="absolute inset-0 bg-background/90 backdrop-blur-md"
             />
             <motion.div 
               initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 20 }}
-              className="relative w-full max-w-5xl max-h-[90vh] bg-white rounded-[2.5rem] shadow-2xl flex flex-col overflow-hidden"
+              className="relative w-full max-w-6xl max-h-[95vh] bg-surface-container border border-outline-variant rounded-md flex flex-col overflow-hidden shadow-2xl"
             >
-              <div className="p-8 border-b border-gray-100 flex items-center justify-between">
-                <div className="flex items-center gap-4">
-                  <div className="h-12 w-12 bg-[var(--lale-gold)]/10 text-[var(--lale-gold)] rounded-2xl flex items-center justify-center">
-                    <FiLayout className="w-6 h-6" />
+              <div className="absolute top-0 right-0 w-48 h-48 bg-circuit-pattern opacity-10 rotate-90 pointer-events-none"></div>
+              
+              <div className="p-10 border-b border-outline-variant flex items-center justify-between relative z-10">
+                <div className="flex items-center gap-6">
+                  <div className="h-14 w-14 bg-tertiary/10 text-tertiary border border-tertiary/20 flex items-center justify-center">
+                    <FiLayout className="w-7 h-7" />
                   </div>
                   <div>
-                    <h2 className="text-xl font-bold text-[var(--lale-anthracite)]">{editingHaber ? 'Haberi Düzenle' : 'Yeni Haber Ekle'}</h2>
-                    <p className="text-xs font-medium text-gray-400 uppercase tracking-widest">İÇERİK YÖNETİMİ</p>
+                    <h2 className="text-2xl font-display font-bold text-on-surface uppercase tracking-tight">{editingHaber ? 'ANALİZ DÜZENLEME' : 'YENİ TEKNİK ANALİZ'}</h2>
+                    <p className="font-technical text-[10px] text-on-surface-variant/50 uppercase tracking-[0.4em]">VERİ GİRİŞ TERMİNALİ</p>
                   </div>
                 </div>
-                <button onClick={closeModal} className="p-2 text-gray-400 hover:text-gray-600 rounded-full hover:bg-gray-50">
+                <button onClick={closeModal} className="h-12 w-12 flex items-center justify-center border border-outline-variant text-on-surface-variant hover:text-tertiary transition-all">
                   <FiX className="w-6 h-6" />
                 </button>
               </div>
 
-              <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-8">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
-                  <div className="space-y-6">
-                    <div className="space-y-2">
-                      <label className="text-xs font-bold text-[var(--lale-anthracite)] uppercase tracking-wider ml-1">Başlık *</label>
+              <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-10 relative z-10 scrollbar-technical">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
+                  <div className="space-y-8">
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <div className="w-1 h-1 bg-tertiary rounded-full"></div>
+                        <label className="font-technical text-[10px] font-bold text-tertiary uppercase tracking-[0.2em]">ANALİZ BAŞLIĞI *</label>
+                      </div>
                       <input
                         type="text"
                         required
                         value={haberForm.title}
                         onChange={(e) => setHaberForm({...haberForm, title: e.target.value})}
-                        className="w-full px-5 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:border-[var(--lale-gold)] focus:bg-white transition-all text-sm"
-                        placeholder="Haber başlığını girin..."
+                        className="w-full px-6 py-4 bg-background border border-outline-variant rounded-md text-on-surface font-technical text-xs focus:border-tertiary focus:ring-2 focus:ring-tertiary/10 outline-none transition-all placeholder:text-outline-variant/30"
+                        placeholder="Örn: ECU Onarım Teknikleri"
                       />
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-xs font-bold text-[var(--lale-anthracite)] uppercase tracking-wider ml-1">Alt Başlık</label>
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <div className="w-1 h-1 bg-tertiary/40 rounded-full"></div>
+                        <label className="font-technical text-[10px] font-bold text-tertiary uppercase tracking-[0.2em]">KATEGORİ / ALT BAŞLIK</label>
+                      </div>
                       <input
                         type="text"
                         value={haberForm.subtitle}
                         onChange={(e) => setHaberForm({...haberForm, subtitle: e.target.value})}
-                        className="w-full px-5 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:border-[var(--lale-gold)] focus:bg-white transition-all text-sm"
-                        placeholder="Kısa alt başlık..."
+                        className="w-full px-6 py-4 bg-background border border-outline-variant rounded-md text-on-surface font-technical text-xs focus:border-tertiary focus:ring-2 focus:ring-tertiary/10 outline-none transition-all placeholder:text-outline-variant/30"
+                        placeholder="Örn: Donanım Mühendisliği"
                       />
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-xs font-bold text-[var(--lale-anthracite)] uppercase tracking-wider ml-1">Özet Açıklama *</label>
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <div className="w-1 h-1 bg-tertiary rounded-full"></div>
+                        <label className="font-technical text-[10px] font-bold text-tertiary uppercase tracking-[0.2em]">TEKNİK ÖZET *</label>
+                      </div>
                       <textarea
-                        rows={3}
+                        rows={4}
                         required
                         value={haberForm.description}
                         onChange={(e) => setHaberForm({...haberForm, description: e.target.value})}
-                        className="w-full px-5 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:border-[var(--lale-gold)] focus:bg-white transition-all text-sm resize-none"
-                        placeholder="Listeleme sayfasında görünecek kısa özet..."
+                        className="w-full px-6 py-4 bg-background border border-outline-variant rounded-md text-on-surface font-technical text-xs focus:border-tertiary focus:ring-2 focus:ring-tertiary/10 outline-none transition-all resize-none placeholder:text-outline-variant/30"
+                        placeholder="Analizin kısa teknik özeti..."
                       />
                     </div>
                   </div>
 
-                  <div className="space-y-6">
-                    <div className="space-y-2">
-                      <label className="text-xs font-bold text-[var(--lale-anthracite)] uppercase tracking-wider ml-1">Kapak Görseli</label>
-                      <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                        <div className="md:col-span-2 space-y-4">
+                  <div className="space-y-8">
+                    <div className="space-y-4">
+                      <div className="flex items-center gap-2 mb-1">
+                        <div className="w-1 h-1 bg-tertiary/40 rounded-full"></div>
+                        <label className="font-technical text-[10px] font-bold text-tertiary uppercase tracking-[0.2em]">GÖRSEL MATERYAL</label>
+                      </div>
+                      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div className="space-y-6">
                           <input
                             type="url"
                             value={haberForm.imageUrl}
                             onChange={(e) => setHaberForm({...haberForm, imageUrl: e.target.value})}
-                            className="w-full px-5 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:border-[var(--lale-gold)] focus:bg-white transition-all text-sm"
-                            placeholder="Resim URL'si (https://...) veya dosya yükleyin"
+                            className="w-full px-6 py-4 bg-background border border-outline-variant rounded-md text-on-surface font-technical text-[10px] focus:border-tertiary focus:ring-2 focus:ring-tertiary/10 outline-none transition-all placeholder:text-outline-variant/30"
+                            placeholder="Görsel URL..."
                           />
-                          <div className="relative group">
-                            <input
-                              type="file"
-                              accept="image/*"
-                              onChange={(e) => {
-                                const file = e.target.files?.[0];
-                                if (file) {
-                                  const reader = new FileReader();
-                                  reader.onloadend = () => {
-                                    setHaberForm({...haberForm, imageUrl: reader.result as string});
-                                  };
-                                  reader.readAsDataURL(file);
-                                }
-                              }}
-                              className="hidden"
-                              id="news-image-upload"
-                            />
-                            <label 
-                              htmlFor="news-image-upload"
-                              className="flex items-center justify-center gap-2 w-full px-5 py-3 border-2 border-dashed border-gray-200 rounded-2xl text-gray-400 hover:border-[var(--lale-gold)] hover:text-[var(--lale-gold)] transition-all cursor-pointer font-bold text-xs"
-                            >
-                              <FiPlus /> CİHAZDAN DOSYA SEÇ
-                            </label>
-                          </div>
                         </div>
-                        <div className="relative aspect-video bg-gray-50 rounded-2xl overflow-hidden border border-gray-100 flex items-center justify-center">
+                        <div className="relative aspect-video bg-background border border-outline-variant rounded-md overflow-hidden flex items-center justify-center">
                           {haberForm.imageUrl ? (
                             <Image 
                               src={haberForm.imageUrl} 
                               alt="Preview" 
                               fill 
-                              className="object-cover"
-                              unoptimized // Admin panelinde önizleme için optimizasyonu kapatalım
-                              onError={() => {
-                                // Hata durumunda URL'yi temizleyebiliriz veya uyarı verebiliriz
-                              }}
+                              className="object-cover opacity-80"
+                              unoptimized
                             />
                           ) : (
-                            <div className="text-center p-4">
-                              <FiImage className="w-8 h-8 text-gray-200 mx-auto mb-2" />
-                              <p className="text-[10px] text-gray-300 font-bold uppercase">ÖNİZLEME</p>
+                            <div className="text-center opacity-10">
+                              <FiImage className="w-10 h-10 mx-auto mb-2" />
+                              <p className="font-technical text-[8px] uppercase tracking-widest">GÖRSEL YOK</p>
                             </div>
                           )}
                         </div>
                       </div>
-                      <p className="text-[10px] text-gray-400 font-medium px-1">
-                        * İnternetten resim eklerken direkt resim dosyasının linkini yapıştırdığınızdan emin olun (Örn: .jpg, .png ile biten linkler).
-                      </p>
                     </div>
-                    <div className="space-y-2">
-                      <label className="text-xs font-bold text-[var(--lale-anthracite)] uppercase tracking-wider ml-1">Etiketler (virgülle ayırın)</label>
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <div className="w-1 h-1 bg-tertiary/40 rounded-full"></div>
+                        <label className="font-technical text-[10px] font-bold text-tertiary uppercase tracking-[0.2em]">ETİKETLER (VİRGÜLLE AYIRIN)</label>
+                      </div>
                       <input
                         type="text"
                         value={haberForm.tags}
                         onChange={(e) => setHaberForm({...haberForm, tags: e.target.value})}
-                        className="w-full px-5 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:border-[var(--lale-gold)] focus:bg-white transition-all text-sm"
-                        placeholder="muhasebe, vergi, danismanlik..."
+                        className="w-full px-6 py-4 bg-background border border-outline-variant rounded-md text-on-surface font-technical text-xs focus:border-tertiary focus:ring-2 focus:ring-tertiary/10 outline-none transition-all placeholder:text-outline-variant/30"
+                        placeholder="Örn: ecu, bga, osiloskop..."
                       />
                     </div>
-                    <div className="flex gap-8 pt-4 ml-1">
-                      <label className="flex items-center gap-3 cursor-pointer group">
-                        <input
-                          type="checkbox"
-                          checked={haberForm.featured}
-                          onChange={(e) => setHaberForm({...haberForm, featured: e.target.checked})}
-                          className="w-5 h-5 rounded-lg border-gray-300 text-[var(--lale-gold)] focus:ring-[var(--lale-gold)]"
-                        />
-                        <span className="text-sm font-bold text-[#5a666d] group-hover:text-[var(--lale-gold)] transition-colors">Öne Çıkar</span>
+                    <div className="flex gap-10 pt-4 px-2">
+                      <label className="flex items-center gap-4 cursor-pointer group">
+                        <div className="relative">
+                          <input
+                            type="checkbox"
+                            checked={haberForm.featured}
+                            onChange={(e) => setHaberForm({...haberForm, featured: e.target.checked})}
+                            className="w-5 h-5 bg-background border-outline-variant rounded-sm text-tertiary focus:ring-tertiary/50"
+                          />
+                        </div>
+                        <span className="font-technical text-[10px] font-bold text-on-surface-variant group-hover:text-tertiary transition-colors uppercase tracking-widest">KRİTİK / ÖNE ÇIKAR</span>
                       </label>
-                      <label className="flex items-center gap-3 cursor-pointer group">
-                        <input
-                          type="checkbox"
-                          checked={haberForm.isActive}
-                          onChange={(e) => setHaberForm({...haberForm, isActive: e.target.checked})}
-                          className="w-5 h-5 rounded-lg border-gray-300 text-[var(--lale-gold)] focus:ring-[var(--lale-gold)]"
-                        />
-                        <span className="text-sm font-bold text-[#5a666d] group-hover:text-[var(--lale-gold)] transition-colors">Yayına Al</span>
+                      <label className="flex items-center gap-4 cursor-pointer group">
+                        <div className="relative">
+                          <input
+                            type="checkbox"
+                            checked={haberForm.isActive}
+                            onChange={(e) => setHaberForm({...haberForm, isActive: e.target.checked})}
+                            className="w-5 h-5 bg-background border-outline-variant rounded-sm text-tertiary focus:ring-tertiary/50"
+                          />
+                        </div>
+                        <span className="font-technical text-[10px] font-bold text-on-surface-variant group-hover:text-tertiary transition-colors uppercase tracking-widest">YAYINDA AKTİF ET</span>
                       </label>
                     </div>
                   </div>
                 </div>
 
-                <div className="space-y-2">
-                  <label className="text-xs font-bold text-[var(--lale-anthracite)] uppercase tracking-wider ml-1">Haber Detay İçeriği *</label>
-                  <div className="rounded-3xl border border-gray-100 overflow-hidden bg-white min-h-[300px]">
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2 mb-1">
+                    <div className="w-1 h-1 bg-tertiary rounded-full"></div>
+                    <label className="font-technical text-[10px] font-bold text-tertiary uppercase tracking-[0.2em]">DETAYLI ANALİZ RAPORU *</label>
+                  </div>
+                  <div className="border border-outline-variant bg-white rounded-md min-h-[400px] text-slate-900 overflow-hidden">
                     <CKEditorComponent
                       value={haberForm.content}
                       onChange={(data) => setHaberForm({...haberForm, content: data})}
-                      placeholder="Haberin detaylı içeriğini buraya yazın..."
+                      placeholder="Teknik raporun tam içeriği..."
                     />
                   </div>
                 </div>
               </form>
 
-              <div className="p-8 border-t border-gray-100 flex items-center justify-end gap-4 bg-gray-50/30">
-                <button onClick={closeModal} className="px-8 py-3 text-sm font-bold text-gray-400 hover:text-gray-600 transition-colors">İPTAL</button>
+              <div className="p-10 border-t border-outline-variant flex items-center justify-end gap-6 bg-background/50 relative z-10">
+                <button onClick={closeModal} className="font-technical text-[10px] font-bold text-on-surface-variant/50 hover:text-on-surface transition-colors uppercase tracking-[0.4em]">İPTAL TERMİNALİ</button>
                 <button 
                   onClick={handleSubmit}
                   disabled={isUploading}
-                  className="px-10 py-4 bg-[var(--lale-anthracite)] text-white font-bold text-sm rounded-2xl shadow-xl hover:bg-[#2c3e47] transition-all disabled:opacity-50"
+                  className="btn-tech px-12 py-5 h-auto text-xs rounded-md"
                 >
-                  {isUploading ? 'KAYDEDİLİYOR...' : 'KAYDET VE YAYINLA'}
+                  {isUploading ? 'VERİ AKTARILIYOR...' : 'SİSTEME KAYDET VE YAYINLA'}
                 </button>
               </div>
             </motion.div>

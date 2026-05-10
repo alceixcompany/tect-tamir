@@ -3,30 +3,22 @@ import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { db } from '@/lib/firebase';
-import { collection, getDocs, addDoc } from 'firebase/firestore';
-import { FiArrowRight, FiCalendar, FiTag, FiMail, FiSearch } from 'react-icons/fi';
+import { collection, getDocs } from 'firebase/firestore';
 import { motion } from 'framer-motion';
 
 interface Haber {
   id: string;
   title: string;
-  subtitle: string;
   description: string;
-  content: string;
   imageUrl: string;
-  tags: string[];
-  featured: boolean;
-  isActive: boolean;
-  order: number;
   createdAt: string;
-  updatedAt: string;
+  tags?: string[];
+  isActive: boolean;
 }
 
 const NewsPage = () => {
   const [haberler, setHaberler] = useState<Haber[]>([]);
   const [loading, setLoading] = useState(true);
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 8;
 
   const createSlug = (title: string): string => {
     return title
@@ -42,23 +34,17 @@ const NewsPage = () => {
       .replace(/-+/g, '-')
       .trim();
   };
-  
-  const [email, setEmail] = useState('');
-  const [isSubscribing, setIsSubscribing] = useState(false);
-  const [subscriptionMessage, setSubscriptionMessage] = useState('');
-  const [subscriptionStatus, setSubscriptionStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const newsSnapshot = await getDocs(collection(db, 'haberler'));
-        const newsData = newsSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as Haber[];
-        const activeNews = newsData.filter(haber => haber.isActive);
-        activeNews.sort((a, b) => (new Date(b.createdAt).getTime()) - (new Date(a.createdAt).getTime()));
-        setHaberler(activeNews);
+        const snapshot = await getDocs(collection(db, 'haberler'));
+        const newsData = snapshot.docs
+          .map(doc => ({ id: doc.id, ...doc.data() })) as Haber[];
+        setHaberler(newsData.filter(h => h.isActive).sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()));
       } catch (error) {
-        console.error('Haber verisi yüklenirken hata:', error);
+        console.error('Haberler fetch error:', error);
       } finally {
         setLoading(false);
       }
@@ -66,221 +52,122 @@ const NewsPage = () => {
     fetchData();
   }, []);
 
-  const totalPages = Math.ceil(haberler.length / itemsPerPage);
-  const startIndex = (currentPage - 1) * itemsPerPage;
-  const currentNews = haberler.slice(startIndex, startIndex + itemsPerPage);
-
-  const handlePageChange = (page: number) => {
-    setCurrentPage(page);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
-  };
-
-  const handleNewsletterSubscription = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email || !email.includes('@')) {
-      setSubscriptionStatus('error');
-      setSubscriptionMessage('Lütfen geçerli bir e-posta adresi girin.');
-      return;
-    }
-    try {
-      setIsSubscribing(true);
-      await addDoc(collection(db, 'newsletter_subscriptions'), {
-        email: email.toLowerCase().trim(),
-        createdAt: new Date().toISOString(),
-        isActive: true,
-        source: 'haberler_sayfasi'
-      });
-      setSubscriptionStatus('success');
-      setSubscriptionMessage('E-posta adresiniz başarıyla kaydedildi!');
-      setEmail('');
-      setTimeout(() => {
-        setSubscriptionStatus('idle');
-        setSubscriptionMessage('');
-      }, 5000);
-    } catch (error) {
-      setSubscriptionStatus('error');
-      setSubscriptionMessage('Bir hata oluştu. Lütfen tekrar deneyin.');
-    } finally {
-      setIsSubscribing(false);
-    }
-  };
-
-  if (loading) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-white">
-        <div className="text-center">
-          <div className="w-10 h-10 border-3 border-[var(--lale-gold)] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-[#5a666d] text-xs font-bold uppercase tracking-widest">Yükleniyor...</p>
-        </div>
-      </div>
-    );
-  }
-
   return (
-    <main className="page-flow min-h-screen bg-white">
-      {/* Refined Chic News Hero */}
-      <section className="relative flex min-h-[450px] items-center overflow-hidden">
-        <div className="absolute inset-0">
-          <Image
-            src="/banner/news_hero.png"
-            alt="Demirbaş Muhasebe Haberler"
-            fill
-            priority
-            className="object-cover object-center"
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-[rgba(30,51,60,0.70)] mix-blend-multiply" />
-          <div className="absolute inset-0 bg-gradient-to-r from-[rgba(150,73,0,0.3)] to-transparent" />
-        </div>
-
-        <div className="relative z-10 mx-auto w-full max-w-7xl px-6 sm:px-8 lg:px-10">
+    <main className="min-h-screen bg-background text-on-background">
+      {/* News Hero Section */}
+      <section className="relative h-[45vh] min-h-[400px] w-full overflow-hidden flex items-end">
+        <Image 
+          src="/news_ecu_tech_1778397998458.png"
+          alt="TECH-LAB Teknik Raporlar"
+          fill
+          className="object-cover opacity-40 brightness-75"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"></div>
+        <div className="max-w-container-max mx-auto px-margin-desktop relative z-10 w-full pb-16">
           <motion.div
-            initial={{ opacity: 0, y: 15 }}
+            initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="max-w-2xl"
+            transition={{ duration: 0.8 }}
           >
-            <div className="mb-4 inline-block rounded bg-[var(--lale-gold)] px-3 py-1 text-[10px] font-bold uppercase tracking-[0.2em] text-white">
-              GÜNCEL GELİŞMELER
-            </div>
-
-            <h1 className="text-3xl font-bold leading-tight tracking-tight text-white sm:text-5xl">
-              Mali Gündem ve <br />
-              <span className="text-[var(--lale-gold)]">Sektörel Haberler</span>
+            <span className="font-technical text-tertiary tracking-[0.4em] uppercase text-[10px] mb-4 block font-bold">Teknik Analiz & Gündem</span>
+            <h1 className="text-5xl md:text-7xl font-display font-bold text-on-surface uppercase tracking-tighter">
+              Laboratuvar <span className="text-tertiary">Raporları</span>
             </h1>
-
-            <p className="mt-6 max-w-xl text-base leading-relaxed text-white/80">
-              Vergi dünyasındaki değişiklikler, mevzuat güncellemeleri ve işletmenizi 
-              ilgilendiren tüm önemli başlıkları buradan takip edebilirsiniz.
-            </p>
           </motion.div>
         </div>
       </section>
 
-      {/* Articles Grid */}
-      <section className="py-20 bg-white">
-        <div className="mx-auto max-w-7xl px-6 lg:px-8">
-          {haberler.length === 0 ? (
-            <div className="text-center py-20 bg-gray-50 rounded-2xl border border-gray-100">
-              <h3 className="text-xl font-bold text-[var(--lale-anthracite)]">Henüz haber bulunmuyor</h3>
-              <p className="mt-2 text-sm text-[#5a666d]">En kısa sürede güncel içerikler eklenecektir.</p>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {currentNews.map((haber, index) => (
-                <motion.article
-                  key={haber.id}
-                  initial={{ opacity: 0, y: 15 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
-                  className="group flex flex-col bg-white rounded-2xl border border-gray-100 overflow-hidden shadow-sm hover:shadow-md transition-all duration-300"
-                >
-                  <div className="relative aspect-[16/10] overflow-hidden bg-gray-100">
-                    {haber.imageUrl ? (
-                      <Image
-                        src={haber.imageUrl}
-                        alt={haber.title}
-                        fill
-                        unoptimized
-                        className="object-cover transition-transform duration-500 group-hover:scale-105"
-                        onError={(e) => { (e.target as HTMLImageElement).src = '/banner/news_hero.png'; }}
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center text-gray-200">
-                        <FiTag className="w-12 h-12" />
-                      </div>
-                    )}
-                    <div className="absolute top-4 left-4">
-                      <span className="bg-white/90 backdrop-blur-sm text-[var(--lale-gold)] text-[10px] font-bold px-3 py-1 rounded-full shadow-sm uppercase">
-                        {haber.tags?.[0] || 'Genel'}
-                      </span>
-                    </div>
-                  </div>
-
-                  <div className="p-6 flex flex-col flex-1">
-                    <div className="flex items-center gap-2 text-[10px] font-bold text-[#5a666d] mb-3 uppercase tracking-widest">
-                      <FiCalendar className="w-3 h-3" />
-                      <span>{new Date(haber.createdAt).toLocaleDateString('tr-TR')}</span>
-                    </div>
-
-                    <h2 className="text-lg font-bold text-[var(--lale-anthracite)] mb-3 group-hover:text-[var(--lale-gold)] transition-colors line-clamp-2">
-                      {haber.title}
-                    </h2>
-
-                    <p className="text-sm text-[#5a666d] leading-6 mb-6 line-clamp-3">
-                      {haber.description}
-                    </p>
-
-                    <div className="mt-auto pt-4 border-t border-gray-50">
-                      <Link 
-                        href={`/haberler/${createSlug(haber.title)}`}
-                        className="inline-flex items-center gap-2 text-[10px] font-bold text-[var(--lale-gold)] uppercase tracking-widest group/link"
-                      >
-                        DEVAMINI OKU
-                        <FiArrowRight className="w-3 h-3 transition-transform group-hover/link:translate-x-1" />
-                      </Link>
-                    </div>
-                  </div>
-                </motion.article>
-              ))}
-            </div>
-          )}
-
-          {/* Pagination */}
-          {totalPages > 1 && (
-            <div className="mt-16 flex justify-center items-center gap-3">
-              {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
-                <button
-                  key={page}
-                  onClick={() => handlePageChange(page)}
-                  className={`w-10 h-10 rounded-lg text-sm font-bold transition-all ${
-                    currentPage === page
-                      ? 'bg-[var(--lale-gold)] text-white shadow-md'
-                      : 'border border-gray-100 text-[#5a666d] hover:bg-gray-50'
-                  }`}
-                >
-                  {page}
-                </button>
-              ))}
-            </div>
-          )}
+      <section className="max-w-container-max mx-auto px-margin-desktop py-20">
+        <div className="max-w-4xl">
+          <p className="text-xl text-on-surface-variant leading-relaxed font-display uppercase tracking-tight">
+            Elektronik dünyasındaki son gelişmeler, karmaşık onarım vaka analizleri ve laboratuvarımızdan güncel teknik raporlar.
+          </p>
         </div>
       </section>
 
-      {/* Newsletter - Chic Light */}
-      <section className="py-20 bg-gray-50/50">
-        <div className="mx-auto max-w-3xl px-6">
-          <div className="bg-white rounded-3xl border border-gray-100 p-8 sm:p-12 text-center shadow-sm">
-            <div className="mx-auto mb-6 flex h-12 w-12 items-center justify-center rounded-xl bg-[var(--lale-gold)]/10 text-[var(--lale-gold)]">
-              <FiMail className="w-6 h-6" />
-            </div>
-            <h3 className="text-2xl font-bold text-[var(--lale-anthracite)]">E-Bültene Kaydolun</h3>
-            <p className="mt-4 text-sm text-[#5a666d] leading-6">
-              Mali güncellemeler ve duyurulardan haberdar olmak için bültenimize katılın.
+      <section className="max-w-container-max mx-auto px-margin-desktop">
+        {loading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            {[...Array(4)].map((_, i) => (
+              <div key={i} className="h-96 bg-surface-container animate-pulse border border-outline-variant"></div>
+            ))}
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            {haberler.map((news, index) => (
+              <motion.article
+                key={news.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="group flex flex-col bg-surface-container border border-outline-variant hover:border-tertiary transition-all duration-500 overflow-hidden glow-border"
+              >
+                <div className="relative h-80 overflow-hidden">
+                  <Image
+                    src={news.imageUrl || '/micro_soldering_lab_1778397801389.png'}
+                    alt={news.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-110 grayscale group-hover:grayscale-0 opacity-80 group-hover:opacity-100"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-surface-container to-transparent opacity-60"></div>
+                  <div className="absolute top-6 left-6">
+                    <span className="bg-background/80 backdrop-blur-md border border-outline-variant text-tertiary text-[10px] font-technical px-4 py-1 uppercase tracking-widest">
+                      {news.tags?.[0] || 'TEKNİK RAPOR'}
+                    </span>
+                  </div>
+                </div>
+
+                <div className="p-10 flex flex-col flex-1">
+                  <div className="flex items-center gap-4 text-[10px] font-technical text-on-surface-variant mb-6 uppercase tracking-[0.2em]">
+                    <span className="w-2 h-2 bg-tertiary rounded-full"></span>
+                    {new Date(news.createdAt).toLocaleDateString('tr-TR', { year: 'numeric', month: 'long', day: 'numeric' })}
+                  </div>
+
+                  <h2 className="text-3xl font-display font-bold text-on-surface mb-6 group-hover:text-tertiary transition-colors leading-tight">
+                    {news.title}
+                  </h2>
+
+                  <p className="text-on-surface-variant leading-relaxed mb-10 line-clamp-3">
+                    {news.description}
+                  </p>
+
+                  <div className="mt-auto flex items-center justify-between pt-8 border-t border-outline-variant">
+                    <Link 
+                      href={`/haberler/${createSlug(news.title)}`}
+                      className="group/link inline-flex items-center gap-4 font-technical text-xs text-on-surface uppercase tracking-[0.3em]"
+                    >
+                      TAM ANALİZİ OKU
+                      <span className="material-symbols-outlined text-tertiary transition-transform group-hover/link:translate-x-2">trending_flat</span>
+                    </Link>
+                  </div>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        )}
+      </section>
+
+      {/* Newsletter */}
+      <section className="max-w-container-max mx-auto px-margin-desktop mt-32">
+        <div className="bg-surface-container-high border border-outline-variant p-12 md:p-20 relative overflow-hidden circuit-pattern">
+          <div className="max-w-2xl">
+            <h2 className="text-3xl md:text-5xl font-display font-bold text-on-surface mb-6 uppercase tracking-tighter">
+              Teknik Bültene <span className="text-tertiary neon-text-glow">Abone Olun</span>
+            </h2>
+            <p className="text-on-surface-variant mb-10 text-lg">
+              En son onarım teknikleri ve laboratuvar güncellemelerinden ilk siz haberdar olun.
             </p>
-            
-            <form onSubmit={handleNewsletterSubscription} className="mt-8 flex flex-col sm:flex-row gap-3">
+            <form className="flex flex-col sm:flex-row gap-4">
               <input
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="E-posta adresiniz"
-                required
-                className="flex-1 px-5 py-3 bg-gray-50 border border-gray-100 rounded-xl focus:outline-none focus:border-[var(--lale-gold)] transition-all text-sm"
+                placeholder="E-POSTA ADRESİNİZ"
+                className="flex-1 bg-background border border-outline-variant px-6 py-4 text-on-surface font-technical text-sm focus:border-tertiary outline-none transition-colors"
               />
-              <button 
-                type="submit"
-                className="bg-[var(--lale-gold)] text-white px-8 py-3 rounded-xl font-bold text-xs tracking-widest hover:bg-[#f57c00] transition-all shadow-md active:scale-95"
-              >
+              <button className="btn-tech px-10 py-4 uppercase tracking-widest text-xs font-technical">
                 KAYDOL
               </button>
             </form>
-            {subscriptionMessage && (
-              <p className={`mt-4 text-xs font-bold ${subscriptionStatus === 'success' ? 'text-emerald-600' : 'text-rose-600'}`}>
-                {subscriptionMessage}
-              </p>
-            )}
           </div>
         </div>
       </section>

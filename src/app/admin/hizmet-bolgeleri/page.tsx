@@ -8,6 +8,8 @@ import {
   deleteServiceArea 
 } from '@/store/slices/serviceAreasSlice';
 import CKEditorComponent from '@/components/CKEditorComponent';
+import { motion } from 'framer-motion';
+import { FiEdit2, FiTrash2, FiX } from 'react-icons/fi';
 
 interface ServiceArea {
   id: string;
@@ -22,7 +24,7 @@ interface ServiceArea {
   maps?: Array<{id: string, url: string, title: string}>;
 }
 
-const AdminServiceAreas = () => {
+export default function AdminServiceAreas() {
   const dispatch = useAppDispatch();
   const { items: serviceAreas, isLoading: loading } = useAppSelector((state) => state.serviceAreas);
   const [showAddModal, setShowAddModal] = useState(false);
@@ -44,26 +46,15 @@ const AdminServiceAreas = () => {
     dispatch(fetchServiceAreas({}));
   }, [dispatch]);
 
-
-
   const generateSlug = (name: string) => {
     return name
       .toLowerCase()
-      .replace(/ğ/g, 'g')
-      .replace(/ü/g, 'u')
-      .replace(/ş/g, 's')
-      .replace(/ı/g, 'i')
-      .replace(/ö/g, 'o')
-      .replace(/ç/g, 'c')
-      .replace(/[^a-z0-9\s-]/g, '')
-      .replace(/\s+/g, '-')
-      .replace(/-+/g, '-')
-      .trim();
+      .replace(/ğ/g, 'g').replace(/ü/g, 'u').replace(/ş/g, 's').replace(/ı/g, 'i').replace(/ö/g, 'o').replace(/ç/g, 'c')
+      .replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').trim();
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
     if (!areaForm.name || !areaForm.description || !areaForm.content) {
       alert('Lütfen tüm gerekli alanları doldurun.');
       return;
@@ -90,7 +81,6 @@ const AdminServiceAreas = () => {
       dispatch(fetchServiceAreas({}));
     } catch (error) {
       console.error('Error saving service area:', error);
-      alert('Hizmet bölgesi kaydedilirken hata oluştu.');
     } finally {
       setIsUploading(false);
     }
@@ -99,14 +89,8 @@ const AdminServiceAreas = () => {
   const handleEdit = (area: ServiceArea) => {
     setEditingArea(area);
     setAreaForm({
-      name: area.name,
-      slug: area.slug,
-      description: area.description,
-      content: area.content,
-      imageUrl: area.imageUrl,
-      isActive: area.isActive,
-      order: area.order,
-      maps: area.maps || []
+      name: area.name, slug: area.slug, description: area.description, content: area.content, imageUrl: area.imageUrl,
+      isActive: area.isActive, order: area.order, maps: area.maps || []
     });
     setShowAddModal(true);
   };
@@ -124,329 +108,264 @@ const AdminServiceAreas = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-12 h-12 border-4 border-amber-600 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-600">Yükleniyor...</p>
+      <div className="min-h-screen bg-background flex items-center justify-center">
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-4 border-tertiary border-t-transparent rounded-full animate-spin"></div>
+          <p className="font-technical text-[10px] text-tertiary uppercase tracking-[0.4em]">VERİLER SENKRONİZE EDİLİYOR...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-background p-10">
       {/* Page Header */}
-      <div className="bg-white border-b border-gray-200 px-6 py-8">
-        <div className="max-w-7xl mx-auto">
-          <div className="flex items-center gap-4 mb-6">
-            <div className="w-10 h-10 bg-amber-600 rounded-lg flex items-center justify-center">
-              <span className="text-xl text-white">🏗️</span>
-            </div>
-            <div>
-              <h1 className="text-2xl font-bold text-gray-900">Hizmet Bölgeleri Yönetimi</h1>
-              <p className="text-gray-600 mt-1">Hizmet bölgelerini yönetin ve yeni bölgeler ekleyin</p>
-            </div>
+      <div className="mb-12 flex items-center justify-between">
+        <div className="flex items-center gap-6">
+          <div className="h-16 w-16 bg-tertiary/10 text-tertiary border border-tertiary/20 flex items-center justify-center rounded-md">
+            <span className="material-symbols-outlined text-4xl">location_on</span>
           </div>
-          
-          {/* Stats */}
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-            <div className="bg-white border border-gray-200 rounded-lg p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-gray-500 text-sm">Toplam Bölge</p>
-                  <p className="text-2xl font-bold text-gray-900">{serviceAreas.length}</p>
-                </div>
-                <span className="text-2xl">🏗️</span>
-              </div>
-            </div>
-            
-            <div className="bg-white border border-gray-200 rounded-lg p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-gray-500 text-sm">Aktif</p>
-                  <p className="text-2xl font-bold text-gray-900">{serviceAreas.filter(h => h.isActive).length}</p>
-                </div>
-                <span className="text-2xl">✅</span>
-              </div>
-            </div>
-            
-            <div className="bg-white border border-gray-200 rounded-lg p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-gray-500 text-sm">Pasif</p>
-                  <p className="text-2xl font-bold text-gray-900">{serviceAreas.filter(h => !h.isActive).length}</p>
-                </div>
-                <span className="text-2xl">❌</span>
-              </div>
-            </div>
-            
-            <div className="bg-white border border-gray-200 rounded-lg p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <p className="text-gray-500 text-sm">Bu Ay</p>
-                  <p className="text-2xl font-bold text-gray-900">
-                    {serviceAreas.filter(h => new Date(h.createdAt) > new Date(Date.now() - 30*24*60*60*1000)).length}
-                  </p>
-                </div>
-                <span className="text-2xl">📅</span>
-              </div>
-            </div>
+          <div>
+            <h1 className="text-3xl font-display font-bold text-on-surface uppercase tracking-tight">HİZMET BÖLGELERİ</h1>
+            <p className="font-technical text-[10px] text-on-surface-variant/50 uppercase tracking-[0.4em]">COĞRAFİ OPERASYON MERKEZİ</p>
           </div>
         </div>
+        
+        <button
+          onClick={() => {
+            setShowAddModal(true);
+            setEditingArea(null);
+            setAreaForm({ name: '', slug: '', description: '', content: '', imageUrl: '', isActive: true, order: 0, maps: [] });
+          }}
+          className="btn-tech px-10 py-4 text-xs rounded-md"
+        >
+          YENİ BÖLGE TANIMLA
+        </button>
       </div>
 
-      {/* Content */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        {/* Add Button */}
-        <div className="mb-6">
-          <button
-            onClick={() => {
-              setShowAddModal(true);
-              setEditingArea(null);
-              setAreaForm({ name: '', slug: '', description: '', content: '', imageUrl: '', isActive: true, order: 0, maps: [] });
-            }}
-            className="bg-amber-600 hover:bg-amber-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-300 flex items-center gap-2"
-          >
-            <span>+</span>
-            Yeni Hizmet Bölgesi Ekle
-          </button>
-        </div>
-
-        {/* Service Areas List */}
-        <div className="bg-white rounded-lg shadow">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h2 className="text-lg font-semibold text-gray-900">Hizmet Bölgeleri</h2>
+      {/* Stats */}
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-12">
+        {[
+          { label: 'TOPLAM BÖLGE', value: serviceAreas.length, icon: 'map' },
+          { label: 'AKTİF OPERASYON', value: serviceAreas.filter(h => h.isActive).length, icon: 'check_circle' },
+          { label: 'PASİF / YEDEK', value: serviceAreas.filter(h => !h.isActive).length, icon: 'pause_circle' },
+          { label: 'YENİ VERİLER', value: serviceAreas.filter(h => new Date(h.createdAt) > new Date(Date.now() - 30*24*60*60*1000)).length, icon: 'history' },
+        ].map((stat, i) => (
+          <div key={i} className="bg-surface-container border border-outline-variant p-8 rounded-md group hover:border-tertiary/30 transition-all">
+            <div className="flex items-center justify-between mb-4">
+              <span className="material-symbols-outlined text-tertiary/50 group-hover:text-tertiary transition-colors">{stat.icon}</span>
+              <span className="font-technical text-[10px] text-on-surface-variant/40 font-bold">ST-{i+1}</span>
+            </div>
+            <p className="text-2xl font-display font-bold text-on-surface mb-1">{stat.value}</p>
+            <p className="font-technical text-[9px] text-on-surface-variant/60 uppercase tracking-widest">{stat.label}</p>
           </div>
-          
-          {serviceAreas.length === 0 ? (
-            <div className="p-8 text-center">
-              <div className="text-6xl mb-4">🏗️</div>
-              <h3 className="text-lg font-medium text-gray-900 mb-2">Henüz Hizmet Bölgesi Eklenmemiş</h3>
-              <p className="text-gray-500">İlk hizmet bölgenizi ekleyerek başlayın.</p>
-            </div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-gray-50">
-                  <tr>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Bölge Adı
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Slug
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Sıra
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Durum
-                    </th>
-                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Oluşturulma
-                    </th>
-                    <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      İşlemler
-                    </th>
-                  </tr>
-                </thead>
-                <tbody className="bg-white divide-y divide-gray-200">
-                  {serviceAreas.map((area) => (
-                    <tr key={area.id} className="hover:bg-gray-50">
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="flex items-center">
-                          <div className="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center mr-3">
-                            <span className="text-amber-600 font-semibold text-sm">
-                              {area.name.charAt(0).toUpperCase()}
-                            </span>
-                          </div>
-                          <div>
-                            <div className="text-sm font-medium text-gray-900">{area.name}</div>
-                            <div className="text-sm text-gray-500">{area.description.substring(0, 50)}...</div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {area.slug}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                        {area.order}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap">
-                        <span className={`inline-flex px-2 py-1 text-xs font-semibold rounded-full ${
-                          area.isActive 
-                            ? 'bg-green-100 text-green-800' 
-                            : 'bg-red-100 text-red-800'
-                        }`}>
-                          {area.isActive ? 'Aktif' : 'Pasif'}
-                        </span>
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                        {new Date(area.createdAt).toLocaleDateString('tr-TR')}
-                      </td>
-                      <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <div className="flex items-center justify-end gap-2">
-                          <button
-                            onClick={() => handleEdit(area)}
-                            className="text-amber-600 hover:text-amber-900 transition-colors duration-300"
-                          >
-                            Düzenle
-                          </button>
-                          <button
-                            onClick={() => handleDelete(area.id)}
-                            className="text-red-600 hover:text-red-900 transition-colors duration-300"
-                          >
-                            Sil
-                          </button>
-                        </div>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
-        </div>
+        ))}
+      </div>
+
+      {/* Table */}
+      <div className="bg-surface-container border border-outline-variant rounded-md overflow-hidden">
+        <table className="w-full text-left">
+          <thead className="bg-background/50 border-b border-outline-variant">
+            <tr>
+              <th className="px-8 py-6 font-technical text-[10px] text-tertiary uppercase tracking-widest">BÖLGE / ANALİZ</th>
+              <th className="px-8 py-6 font-technical text-[10px] text-tertiary uppercase tracking-widest">SLUG</th>
+              <th className="px-8 py-6 font-technical text-[10px] text-tertiary uppercase tracking-widest text-center">SIRA</th>
+              <th className="px-8 py-6 font-technical text-[10px] text-tertiary uppercase tracking-widest">DURUM</th>
+              <th className="px-8 py-6 font-technical text-[10px] text-tertiary uppercase tracking-widest text-right">EYLEM</th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-outline-variant/10">
+            {serviceAreas.map((area) => (
+              <tr key={area.id} className="group hover:bg-white/[0.02] transition-all">
+                <td className="px-8 py-6">
+                  <div className="flex items-center gap-4">
+                    <div className="h-10 w-10 bg-surface-container-high border border-outline-variant flex items-center justify-center font-display font-bold text-tertiary rounded-sm group-hover:border-tertiary/30 transition-all">
+                      {area.name.charAt(0)}
+                    </div>
+                    <div>
+                      <p className="text-sm font-display font-bold text-on-surface uppercase tracking-tight">{area.name}</p>
+                      <p className="text-[10px] text-on-surface-variant/40 font-technical uppercase tracking-widest truncate max-w-[200px]">{area.description}</p>
+                    </div>
+                  </div>
+                </td>
+                <td className="px-8 py-6 font-technical text-[10px] text-on-surface-variant/60">{area.slug}</td>
+                <td className="px-8 py-6 font-technical text-[10px] text-on-surface-variant text-center">{area.order}</td>
+                <td className="px-8 py-6">
+                  <span className={`inline-flex px-3 py-1 rounded-sm font-technical text-[9px] font-bold uppercase tracking-widest ${
+                    area.isActive ? 'bg-tertiary/10 text-tertiary border border-tertiary/20' : 'bg-outline-variant/10 text-on-surface-variant/40 border border-outline-variant/20'
+                  }`}>
+                    {area.isActive ? 'AKTİF' : 'PASİF'}
+                  </span>
+                </td>
+                <td className="px-8 py-6 text-right">
+                  <div className="flex items-center justify-end gap-4 opacity-0 group-hover:opacity-100 transition-all">
+                    <button onClick={() => handleEdit(area)} className="p-2 text-tertiary hover:bg-tertiary/10 rounded-sm transition-all"><FiEdit2 /></button>
+                    <button onClick={() => handleDelete(area.id)} className="p-2 text-error hover:bg-error/10 rounded-sm transition-all"><FiTrash2 /></button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </div>
 
       {/* Add/Edit Modal */}
       {showAddModal && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-6xl w-full h-[95vh] flex flex-col shadow-2xl">
-            <div className="p-6 border-b border-gray-200 flex-shrink-0 bg-gray-50">
-              <h2 className="text-xl font-semibold text-gray-900">
-                {editingArea ? 'Hizmet Bölgesi Düzenle' : 'Yeni Hizmet Bölgesi Ekle'}
-              </h2>
+        <div className="fixed inset-0 bg-background/90 backdrop-blur-md flex items-center justify-center z-[100] p-10">
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            className="bg-surface-container border border-outline-variant max-w-6xl w-full max-h-[95vh] flex flex-col relative overflow-hidden shadow-2xl rounded-md"
+          >
+            <div className="absolute top-0 right-0 w-48 h-48 bg-circuit-pattern opacity-10 rotate-90 pointer-events-none"></div>
+            
+            <div className="p-10 border-b border-outline-variant flex items-center justify-between relative z-10">
+              <div className="flex items-center gap-6">
+                <div className="h-14 w-14 bg-tertiary/10 text-tertiary border border-tertiary/20 flex items-center justify-center rounded-sm">
+                  <span className="material-symbols-outlined text-3xl">add_location_alt</span>
+                </div>
+                <div>
+                  <h2 className="text-2xl font-display font-bold text-on-surface uppercase tracking-tight">
+                    {editingArea ? 'BÖLGE GÜNCELLEME' : 'YENİ BÖLGE TANIMI'}
+                  </h2>
+                  <p className="font-technical text-[10px] text-on-surface-variant/50 uppercase tracking-[0.4em]">LOJİSTİK VERİ GİRİŞİ</p>
+                </div>
+              </div>
+              <button onClick={() => setShowAddModal(false)} className="h-12 w-12 flex items-center justify-center border border-outline-variant text-on-surface-variant hover:text-tertiary transition-all">
+                <FiX className="w-6 h-6" />
+              </button>
             </div>
             
-            <form onSubmit={handleSubmit} className="flex flex-col flex-1 overflow-hidden">
-              <div className="flex-1 overflow-y-auto p-6 space-y-6">
-              {/* Temel Bilgiler - Üstte */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Bölge Adı *</label>
-                  <input
-                    type="text"
-                    value={areaForm.name}
-                    onChange={(e) => setAreaForm({...areaForm, name: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
-                    placeholder="Örn: Kadıköy, Beşiktaş, Şişli"
-                  />
+            <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-10 relative z-10 scrollbar-technical">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 mb-12">
+                <div className="space-y-8">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <div className="w-1 h-1 bg-tertiary rounded-full"></div>
+                        <label className="font-technical text-[10px] font-bold text-tertiary uppercase tracking-[0.2em]">BÖLGE ADI *</label>
+                      </div>
+                      <input
+                        type="text"
+                        value={areaForm.name}
+                        onChange={(e) => setAreaForm({...areaForm, name: e.target.value})}
+                        required
+                        className="w-full bg-background border border-outline-variant rounded-md px-6 py-4 text-on-surface font-technical text-xs focus:border-tertiary focus:ring-2 focus:ring-tertiary/10 outline-none transition-all"
+                        placeholder="Örn: Kadıköy"
+                      />
+                    </div>
+                    
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <div className="w-1 h-1 bg-tertiary/40 rounded-full"></div>
+                        <label className="font-technical text-[10px] font-bold text-tertiary uppercase tracking-[0.2em]">URL SLUG</label>
+                      </div>
+                      <input
+                        type="text"
+                        value={areaForm.slug}
+                        onChange={(e) => setAreaForm({...areaForm, slug: e.target.value})}
+                        className="w-full bg-background border border-outline-variant rounded-md px-6 py-4 text-on-surface font-technical text-xs focus:border-tertiary focus:ring-2 focus:ring-tertiary/10 outline-none transition-all"
+                        placeholder="otomatik-olusturulur"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="space-y-3">
+                    <div className="flex items-center gap-2 mb-1">
+                      <div className="w-1 h-1 bg-tertiary rounded-full"></div>
+                      <label className="font-technical text-[10px] font-bold text-tertiary uppercase tracking-[0.2em]">OPERASYONEL ÖZET *</label>
+                    </div>
+                    <textarea
+                      value={areaForm.description}
+                      onChange={(e) => setAreaForm({...areaForm, description: e.target.value})}
+                      required
+                      rows={3}
+                      className="w-full bg-background border border-outline-variant rounded-md px-6 py-4 text-on-surface font-technical text-xs focus:border-tertiary focus:ring-2 focus:ring-tertiary/10 outline-none transition-all resize-none"
+                      placeholder="Bölge hizmet kapsamı özeti..."
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <div className="w-1 h-1 bg-tertiary/40 rounded-full"></div>
+                        <label className="font-technical text-[10px] font-bold text-tertiary uppercase tracking-[0.2em]">KAPAK GÖRSEL URL</label>
+                      </div>
+                      <input
+                        type="url"
+                        value={areaForm.imageUrl}
+                        onChange={(e) => setAreaForm({...areaForm, imageUrl: e.target.value})}
+                        className="w-full bg-background border border-outline-variant rounded-md px-6 py-4 text-on-surface font-technical text-[10px] focus:border-tertiary focus:ring-2 focus:ring-tertiary/10 outline-none transition-all"
+                        placeholder="https://..."
+                      />
+                    </div>
+                    
+                    <div className="space-y-3">
+                      <div className="flex items-center gap-2 mb-1">
+                        <div className="w-1 h-1 bg-tertiary/40 rounded-full"></div>
+                        <label className="font-technical text-[10px] font-bold text-tertiary uppercase tracking-[0.2em]">LİSTE SIRALAMASI</label>
+                      </div>
+                      <input
+                        type="number"
+                        value={areaForm.order}
+                        onChange={(e) => setAreaForm({...areaForm, order: parseInt(e.target.value) || 0})}
+                        className="w-full bg-background border border-outline-variant rounded-md px-6 py-4 text-on-surface font-technical text-xs focus:border-tertiary focus:ring-2 focus:ring-tertiary/10 outline-none transition-all"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="flex items-center gap-4 cursor-pointer group">
+                    <div className="relative">
+                      <input
+                        type="checkbox"
+                        checked={areaForm.isActive}
+                        onChange={(e) => setAreaForm({...areaForm, isActive: e.target.checked})}
+                        className="w-5 h-5 bg-background border-outline-variant rounded-sm text-tertiary focus:ring-tertiary/50"
+                      />
+                    </div>
+                    <span className="font-technical text-[10px] font-bold text-on-surface-variant group-hover:text-tertiary transition-colors uppercase tracking-widest">OPERASYONEL OLARAK AKTİF</span>
+                  </div>
                 </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Slug</label>
-                  <input
-                    type="text"
-                    value={areaForm.slug}
-                    onChange={(e) => setAreaForm({...areaForm, slug: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
-                    placeholder="Boş bırakılırsa otomatik oluşturulur"
-                  />
-                </div>
-              </div>
-              
-              {/* Kısa Açıklama */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Kısa Açıklama *</label>
-                <textarea
-                  value={areaForm.description}
-                  onChange={(e) => setAreaForm({...areaForm, description: e.target.value})}
-                  rows={3}
-                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
-                  placeholder="Bölge hakkında kısa açıklama..."
-                />
-              </div>
-              
-              {/* Resim ve Sıra - Üstte */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Resim URL&apos;si</label>
-                  <input
-                    type="url"
-                    value={areaForm.imageUrl}
-                    onChange={(e) => setAreaForm({...areaForm, imageUrl: e.target.value})}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
-                    placeholder="https://example.com/resim.jpg"
-                  />
-                </div>
-                
-                <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Sıra</label>
-                  <input
-                    type="number"
-                    value={areaForm.order}
-                    onChange={(e) => setAreaForm({...areaForm, order: parseInt(e.target.value) || 0})}
-                    className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-amber-500"
-                    placeholder="0"
-                  />
-                </div>
-              </div>
-              
-              {/* Aktif Durumu */}
-              <div className="flex items-center">
-                <input
-                  type="checkbox"
-                  id="isActive"
-                  checked={areaForm.isActive}
-                  onChange={(e) => setAreaForm({...areaForm, isActive: e.target.checked})}
-                  className="h-4 w-4 text-amber-600 focus:ring-amber-500 border-gray-300 rounded"
-                />
-                <label htmlFor="isActive" className="ml-2 text-sm text-gray-700">Aktif</label>
-              </div>
-              
-              {/* Detaylı İçerik - En Altta */}
-              <div>
-                <label className="block text-sm font-medium text-gray-700 mb-1">Detaylı İçerik *</label>
-                <div className="border border-gray-300 rounded-lg">
-                  <CKEditorComponent
-                    value={areaForm.content}
-                    onChange={(data) => setAreaForm({...areaForm, content: data})}
-                    onMapsChange={(maps) => setAreaForm({...areaForm, maps})}
-                    initialMaps={areaForm.maps}
-                    placeholder="Bölge hakkında detaylı bilgi..."
-                    height="250px"
-                    label=""
-                  />
-                </div>
-              </div>
-              </div>
-              
-              {/* Fixed Bottom Buttons */}
-              <div className="flex-shrink-0 border-t border-gray-200 p-6">
-                <div className="flex gap-3">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setShowAddModal(false);
-                      setEditingArea(null);
-                      setAreaForm({ name: '', slug: '', description: '', content: '', imageUrl: '', isActive: true, order: 0, maps: [] });
-                    }}
-                    className="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition-colors"
-                  >
-                    İptal
-                  </button>
-                  <button
-                    type="submit"
-                    disabled={isUploading}
-                    className="flex-1 px-4 py-2 bg-amber-600 hover:bg-amber-700 disabled:bg-amber-400 text-white rounded-lg transition-colors disabled:cursor-not-allowed flex items-center justify-center gap-2"
-                  >
-                    {isUploading ? (
-                      <>
-                        <div className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                        {editingArea ? 'Güncelleniyor...' : 'Ekleniyor...'}
-                      </>
-                    ) : (
-                      editingArea ? 'Güncelle' : 'Ekle'
-                    )}
-                  </button>
+
+                <div className="space-y-4">
+                  <div className="flex items-center gap-2 mb-1">
+                    <div className="w-1 h-1 bg-tertiary rounded-full"></div>
+                    <label className="font-technical text-[10px] font-bold text-tertiary uppercase tracking-[0.2em]">BÖLGESEL ANALİZ VE DETAYLAR *</label>
+                  </div>
+                  <div className="border border-outline-variant bg-white rounded-md min-h-[400px] text-slate-900 overflow-hidden">
+                    <CKEditorComponent
+                      value={areaForm.content}
+                      onChange={(data) => setAreaForm({...areaForm, content: data})}
+                      onMapsChange={(maps) => setAreaForm({...areaForm, maps})}
+                      initialMaps={areaForm.maps}
+                      placeholder="Bölgeye özel detaylı teknik bilgiler ve haritalar..."
+                      height="300px"
+                      label=""
+                    />
+                  </div>
                 </div>
               </div>
             </form>
-          </div>
+            
+            <div className="p-10 border-t border-outline-variant flex items-center justify-end gap-6 bg-background/50 relative z-10">
+              <button 
+                type="button"
+                onClick={() => setShowAddModal(false)} 
+                className="font-technical text-[10px] font-bold text-on-surface-variant/50 hover:text-on-surface transition-colors uppercase tracking-[0.4em]"
+              >
+                İPTAL TERMİNALİ
+              </button>
+              <button 
+                onClick={handleSubmit}
+                disabled={isUploading}
+                className="btn-tech px-12 py-5 h-auto text-xs rounded-md"
+              >
+                {isUploading ? 'VERİ AKTARILIYOR...' : (editingArea ? 'VERİLERİ GÜNCELLE' : 'SİSTEME KAYDET')}
+              </button>
+            </div>
+          </motion.div>
         </div>
       )}
     </div>
   );
-};
-
-export default AdminServiceAreas;
+}

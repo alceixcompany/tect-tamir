@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import Image from 'next/image';
 import { motion } from 'framer-motion';
 import { FiLock, FiMail, FiEye, FiEyeOff, FiArrowRight, FiShield } from 'react-icons/fi';
@@ -44,103 +45,106 @@ const AdminLogin = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] flex flex-col items-center justify-center p-6 relative overflow-hidden">
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6 relative overflow-hidden">
       {/* Decorative background */}
-      <div className="absolute top-0 left-0 w-full h-full opacity-40 pointer-events-none">
-        <div className="absolute -top-24 -left-24 w-96 h-96 bg-[var(--lale-gold)]/10 rounded-full blur-3xl" />
-        <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-blue-100 rounded-full blur-3xl" />
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
+        <div className="absolute -top-24 -left-24 w-96 h-96 bg-tertiary/5 rounded-full blur-[120px] animate-pulse" />
+        <div className="absolute -bottom-24 -right-24 w-96 h-96 bg-tertiary/10 rounded-full blur-[120px]" />
+        <div className="absolute inset-0 bg-circuit-pattern opacity-[0.03]" />
       </div>
 
       <motion.div 
-        initial={{ opacity: 0, scale: 0.95 }}
-        animate={{ opacity: 1, scale: 1 }}
-        className="w-full max-w-[480px] z-10"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="w-full max-w-[440px] z-10"
       >
-        <div className="bg-white rounded-[2.5rem] shadow-[0_32px_80px_rgba(30,51,60,0.12)] border border-gray-100 p-8 sm:p-12">
+        <div className="bg-surface-container border border-outline-variant p-10 md:p-14 relative overflow-hidden">
+          <div className="absolute top-0 right-0 w-24 h-24 bg-circuit-pattern opacity-10 rotate-90"></div>
           
           {/* Logo Section */}
           <div className="flex flex-col items-center mb-12">
-            <div className="relative h-12 w-48 mb-8">
-              <Image 
-                src="/demirbaslogo.png" 
-                alt="Demirbaş Muhasebe" 
-                fill 
-                className="object-contain"
-                priority
-              />
-            </div>
-            <div className="inline-flex items-center gap-2 px-3 py-1 bg-gray-50 rounded-full border border-gray-100">
-              <FiShield className="text-[var(--lale-gold)] text-xs" />
-              <span className="text-[10px] font-bold uppercase tracking-widest text-[#5a666d]">GÜVENLİ YÖNETİM GİRİŞİ</span>
+            <Link href="/" className="text-3xl font-display font-bold tracking-tighter text-on-surface uppercase mb-8">
+              TECH-LAB <span className="text-tertiary">PRECISION</span>
+            </Link>
+            
+            <div className="inline-flex items-center gap-3 px-4 py-1.5 bg-background border border-outline-variant/50">
+              <FiShield className="text-tertiary text-xs" />
+              <span className="font-technical text-[9px] font-bold uppercase tracking-[0.3em] text-on-surface-variant">GÜVENLİ TERMİNAL GİRİŞİ</span>
             </div>
           </div>
 
-          <form onSubmit={handleSubmit} className="space-y-5">
-            <div className="space-y-1.5">
-              <label className="text-[11px] font-bold text-[var(--lale-anthracite)] uppercase tracking-wider ml-1">E-posta</label>
+          <form onSubmit={handleSubmit} className="space-y-8">
+            <div className="space-y-3">
+              <div className="flex items-center gap-2 mb-1">
+                <div className="w-1 h-1 bg-tertiary rounded-full"></div>
+                <label className="font-technical text-[9px] font-bold text-tertiary uppercase tracking-[0.2em]">KİMLİK BİLGİSİ / E-POSTA</label>
+              </div>
               <div className="relative">
-                <FiMail className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <FiMail className="absolute left-5 top-1/2 -translate-y-1/2 text-outline-variant w-4 h-4" />
                 <input
                   type="email"
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="demirbas@admin.com"
-                  className="w-full pl-12 pr-4 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:border-[var(--lale-gold)] focus:bg-white transition-all text-sm"
+                  placeholder="admin@techlabprecision.com"
+                  className="w-full pl-14 pr-5 py-4 bg-background border border-outline-variant rounded-md text-on-surface font-technical text-xs focus:border-tertiary focus:ring-2 focus:ring-tertiary/10 outline-none transition-all placeholder:text-outline-variant/50"
                   disabled={isLoading}
                 />
               </div>
             </div>
 
-            <div className="space-y-1.5">
-              <label className="text-[11px] font-bold text-[var(--lale-anthracite)] uppercase tracking-wider ml-1">Şifre</label>
+            <div className="space-y-3">
+              <div className="flex items-center gap-2 mb-1">
+                <div className="w-1 h-1 bg-tertiary rounded-full"></div>
+                <label className="font-technical text-[9px] font-bold text-tertiary uppercase tracking-[0.2em]">ERİŞİM ANAHTARI / ŞİFRE</label>
+              </div>
               <div className="relative">
-                <FiLock className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
+                <FiLock className="absolute left-5 top-1/2 -translate-y-1/2 text-outline-variant w-4 h-4" />
                 <input
                   type={showPassword ? 'text' : 'password'}
                   required
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full pl-12 pr-12 py-4 bg-gray-50 border border-gray-100 rounded-2xl focus:outline-none focus:border-[var(--lale-gold)] focus:bg-white transition-all text-sm"
+                  className="w-full pl-14 pr-12 py-4 bg-background border border-outline-variant rounded-md text-on-surface font-technical text-xs focus:border-tertiary focus:ring-2 focus:ring-tertiary/10 outline-none transition-all placeholder:text-outline-variant/50"
                   disabled={isLoading}
                 />
                 <button
                   type="button"
                   onClick={() => setShowPassword(!showPassword)}
-                  className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-[var(--lale-gold)] transition-colors"
+                  className="absolute right-5 top-1/2 -translate-y-1/2 text-outline-variant hover:text-tertiary transition-colors"
                 >
-                  {showPassword ? <FiEyeOff className="w-5 h-5" /> : <FiEye className="w-5 h-5" />}
+                  {showPassword ? <FiEyeOff className="w-4 h-4" /> : <FiEye className="w-4 h-4" />}
                 </button>
               </div>
             </div>
 
             {error && (
-              <div className="p-3 bg-red-50 text-red-600 text-xs font-medium rounded-xl border border-red-100 text-center">
-                {error}
+              <div className="p-4 bg-red-900/10 text-red-400 text-[10px] font-technical font-bold border border-red-900/30 text-center uppercase tracking-widest">
+                ERİŞİM REDDEDİLDİ: {error}
               </div>
             )}
 
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full group relative flex items-center justify-center gap-3 bg-[var(--lale-anthracite)] text-white py-4 rounded-2xl font-bold text-sm shadow-xl shadow-gray-200 hover:bg-[#2c3e47] transition-all disabled:opacity-70 active:scale-[0.98]"
+              className="btn-tech w-full flex items-center justify-center gap-4 py-5 group"
             >
               {isLoading ? (
-                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+                <div className="w-5 h-5 border-2 border-on-tertiary/30 border-t-on-tertiary rounded-full animate-spin" />
               ) : (
                 <>
-                  OTURUM AÇ
-                  <FiArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+                  SİSTEME BAĞLAN
+                  <FiArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-2" />
                 </>
               )}
             </button>
           </form>
         </div>
 
-        <div className="mt-8 text-center">
-          <p className="text-[10px] font-bold text-gray-400 uppercase tracking-[0.3em]">
-            Demirbaş Muhasebe &copy; {new Date().getFullYear()}
+        <div className="mt-12 text-center">
+          <p className="font-technical text-[8px] text-on-surface-variant/30 uppercase tracking-[0.5em]">
+            TECH-LAB PRECISION &copy; {new Date().getFullYear()} / INTERNAL ACCESS ONLY
           </p>
         </div>
       </motion.div>

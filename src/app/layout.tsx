@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Playfair_Display, Dancing_Script } from "next/font/google";
+import { Inter, Space_Grotesk, JetBrains_Mono } from "next/font/google";
 import Script from "next/script";
 import "./globals.css";
 import Header from "@/components/Header";
@@ -12,89 +12,31 @@ const inter = Inter({
   variable: '--font-inter',
 });
 
-const playfair = Playfair_Display({
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin", "latin-ext"],
-  variable: '--font-playfair',
+  variable: '--font-space',
 });
 
-const dancingScript = Dancing_Script({
+const jetbrainsMono = JetBrains_Mono({
   subsets: ["latin", "latin-ext"],
-  variable: '--font-dancing',
+  variable: '--font-mono',
 });
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.demirbasmuhasebe.com"),
-  title: "Demirbaş Muhasebe | Mali Müşavirlik ve Muhasebe Hizmetleri",
-  description: "Demirbaş Muhasebe ile genel muhasebe, vergi, bordro, SGK ve mali danışmanlık süreçlerinizi düzenli, güvenilir ve profesyonel biçimde yönetin.",
+  title: "TECH-LAB PRECISION | Profesyonel Teknik Servis",
+  description: "Ağır Vasıta, Otomotiv ve iPhone Anakart Uzmanlığı. Çip seviyesinde profesyonel onarım.",
   keywords: [
-    "demirbaş muhasebe",
-    "demirbas muhasebe",
-    "muhasebe ofisi",
-    "mali müşavirlik",
-    "genel muhasebe",
-    "vergi danışmanlığı",
-    "bordro hizmetleri",
-    "sgk işlemleri",
-    "şirket kuruluşu",
-    "e-fatura",
-    "e-defter",
-    "istanbul muhasebeci",
-    "kurumsal muhasebe hizmeti"
+    "beyin tamiri",
+    "anakart tamiri",
+    "ecu tamiri",
+    "iphone anakart tamiri",
+    "mikro lehimleme",
+    "elektronik kart tamiri"
   ].join(", "),
-  authors: [{ name: "Demirbaş Muhasebe" }],
-  creator: "Demirbaş Muhasebe",
-  publisher: "Demirbaş Muhasebe",
+  authors: [{ name: "TECH-LAB PRECISION" }],
+  creator: "TECH-LAB PRECISION",
+  publisher: "TECH-LAB PRECISION",
   robots: "index, follow",
-  alternates: {
-    canonical: "https://www.demirbasmuhasebe.com"
-  },
-  category: "finance",
-  classification: "Business",
-  other: {
-    "geo.region": "TR-34",
-    "geo.placename": "İstanbul",
-    "geo.position": "41.0082;28.9784",
-    "ICBM": "41.0082, 28.9784"
-  },
-  icons: {
-    icon: [
-      { url: '/demirbaslogo.png', sizes: '16x16', type: 'image/png' },
-      { url: '/demirbaslogo.png', sizes: '32x32', type: 'image/png' },
-      { url: '/demirbaslogo.png', sizes: '48x48', type: 'image/png' },
-      { url: '/demirbaslogo.png', sizes: '96x96', type: 'image/png' },
-      { url: '/demirbaslogo.png', sizes: '128x128', type: 'image/png' },
-      { url: '/demirbaslogo.png', sizes: '256x256', type: 'image/png' },
-    ],
-    shortcut: '/demirbaslogo.png',
-    apple: [
-      { url: '/demirbaslogo.png', sizes: '180x180', type: 'image/png' },
-    ],
-    other: [
-      { rel: 'mask-icon', url: '/demirbaslogo.png' },
-    ],
-  },
-  openGraph: {
-    title: "Demirbaş Muhasebe | İşletmeniz İçin Güvenilir Mali Destek",
-    description: "Muhasebe, vergi, SGK ve bordro süreçlerinizi düzenli ve güvenilir şekilde yöneten profesyonel mali müşavirlik hizmeti.",
-    type: "website",
-    locale: "tr_TR",
-    siteName: "Demirbaş Muhasebe",
-    url: "https://www.demirbasmuhasebe.com",
-    images: [
-      {
-        url: '/banner/hero_bg_home.png',
-        width: 1200,
-        height: 630,
-        alt: 'Demirbaş Muhasebe'
-      }
-    ]
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Demirbaş Muhasebe",
-    description: "Muhasebe, vergi, SGK ve bordro süreçleriniz için kurumsal mali destek.",
-    images: ['/banner/hero_bg_home.png']
-  },
 };
 
 export default function RootLayout({
@@ -103,43 +45,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="tr">
+    <html lang="tr" className="dark">
       <head>
-        {/* Google Tag Manager */}
-        <Script
-          id="gtm-script"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-})(window,document,'script','dataLayer','GTM-WMRRXTMT');`,
-          }}
-        />
-        {/* End Google Tag Manager */}
-        
-        {/* Google tag (gtag.js) */}
-        <Script
-          strategy="afterInteractive"
-          src="https://www.googletagmanager.com/gtag/js?id=G-C0CDXP5F4H"
-        />
-        <Script
-          id="gtag-config"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-              window.dataLayer = window.dataLayer || [];
-              function gtag(){dataLayer.push(arguments);}
-              gtag('js', new Date());
-              gtag('config', 'G-C0CDXP5F4H');
-              gtag('config', 'AW-16813075076');
-            `,
-          }}
-        />
-        {/* End Google tag (gtag.js) */}
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
       </head>
-      <body className={`${inter.variable} ${playfair.variable} ${dancingScript.variable} font-sans`}>
+      <body className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans bg-background text-on-background`}>
+
         {/* Google Tag Manager (noscript) */}
         <noscript>
           <iframe

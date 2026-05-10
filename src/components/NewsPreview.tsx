@@ -1,9 +1,8 @@
 'use client'
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { collection, getDocs } from 'firebase/firestore';
-import { FiArrowRight } from 'react-icons/fi';
 import { db } from '@/lib/firebase';
 
 interface Haber {
@@ -13,114 +12,129 @@ interface Haber {
   imageUrl?: string;
   tags?: string[];
   isActive?: boolean;
-  order?: number;
-  createdAt?: string;
 }
 
-const createSlug = (title: string): string =>
-  title
-    .toLowerCase()
-    .replace(/ğ/g, 'g')
-    .replace(/ü/g, 'u')
-    .replace(/ş/g, 's')
-    .replace(/ı/g, 'i')
-    .replace(/ö/g, 'o')
-    .replace(/ç/g, 'c')
-    .replace(/[^a-z0-9\s-]/g, '')
-    .replace(/\s+/g, '-')
-    .replace(/-+/g, '-')
-    .trim();
+const fallbackNews = [
+  {
+    id: '1',
+    tag: 'ECU GÜNCELLEME',
+    title: 'Yeni Nesil Ağır Vasıta Beyin Onarım Teknikleri',
+    description: 'Euro 6 sistemlerinde karşılaşılan kronik arızaların çip seviyesinde kalıcı onarım metotları.',
+    imageUrl: '/news_ecu_tech_1778397998458.png'
+  },
+  {
+    id: '2',
+    tag: 'IPHONE ONARIM',
+    title: 'iPhone 15 Pro Max Anakart Mimarisi ve Onarım Zorlukları',
+    description: 'Mikro-BGA yapısındaki katmanlı anakartlarda sıvı teması sonrası veri kurtarma süreçleri.',
+    imageUrl: '/news_iphone_fix_1778398018931.png'
+  },
+  {
+    id: '3',
+    tag: 'DİAGNOSTİK',
+    title: 'Lazer Destekli Arıza Tespit Sistemleri Laboratuvarımızda',
+    description: 'Gözle görülmeyen kılcal çatlakların ve kısa devrelerin lazer termal görüntüleme ile tespiti.',
+    imageUrl: '/news_laser_diag_1778398038684.png'
+  }
+];
 
 const NewsPreview = () => {
-  const [news, setNews] = useState<Haber[]>([]);
+  const [news, setNews] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const fetchNews = async () => {
       try {
-        setLoading(true);
         const snapshot = await getDocs(collection(db, 'haberler'));
-        const items = snapshot.docs.map((doc) => ({ id: doc.id, ...doc.data() })) as Haber[];
-        const activeItems = items
-          .filter((item) => item.isActive !== false)
-          .sort((a, b) => {
-            const aOrder = a.order ?? 0;
-            const bOrder = b.order ?? 0;
-            if (aOrder !== bOrder) {
-              return aOrder - bOrder;
-            }
-            return (b.createdAt ?? '').localeCompare(a.createdAt ?? '');
-          })
+        const items = snapshot.docs
+          .map(doc => ({ id: doc.id, ...doc.data() }))
+          .filter((item: any) => item.isActive !== false)
           .slice(0, 3);
-
-        setNews(activeItems);
+        
+        if (items.length > 0) {
+          setNews(items);
+        } else {
+          setNews(fallbackNews);
+        }
       } catch (error) {
-        console.error('Ana sayfa haberleri yuklenemedi:', error);
+        console.error('News fetch error:', error);
+        setNews(fallbackNews);
       } finally {
         setLoading(false);
       }
     };
-
     fetchNews();
   }, []);
 
-  if (loading && news.length === 0) return null;
-  if (!loading && news.length === 0) return null;
+  const createSlug = (title: string): string => {
+    return title
+      .toLowerCase()
+      .replace(/ğ/g, 'g')
+      .replace(/ü/g, 'u')
+      .replace(/ş/g, 's')
+      .replace(/ı/g, 'i')
+      .replace(/ö/g, 'o')
+      .replace(/ç/g, 'c')
+      .replace(/[^a-z0-9\s-]/g, '')
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .trim();
+  };
+
+  const displayNews = loading ? fallbackNews : news;
 
   return (
-    <section id="haberler" className="bg-[#f8fafc] py-24 relative overflow-hidden">
-      <div className="mx-auto max-w-7xl px-5 sm:px-7 lg:px-10">
+    <section id="haberler" className="bg-background py-24 relative overflow-hidden border-t border-outline-variant">
+      <div className="max-w-container-max mx-auto px-margin-desktop">
         <div className="mb-16 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
-            <h2 className="text-4xl font-bold text-[#1a1a1a]">Güncel Analizler</h2>
-            <p className="mt-4 text-[#5f6970]">Ekonomi ve mevzuattaki son gelişmeler.</p>
+            <span className="font-technical text-tertiary tracking-[0.3em] uppercase text-xs">Teknik Bilgi Bankası</span>
+            <h2 className="text-4xl font-display font-bold text-on-surface mt-2">Güncel Analizler & Haberler</h2>
+            <p className="mt-4 text-on-surface-variant">Elektronik onarım dünyasındaki son gelişmeler ve laboratuvarımızdan teknik güncellemeler.</p>
           </div>
 
           <Link
             href="/haberler"
-            className="inline-flex items-center gap-2 text-sm font-bold text-[var(--lale-gold)] transition-colors hover:opacity-80"
+            className="btn-tech-outline"
           >
-            Tümünü Gör
-            <FiArrowRight className="h-4 w-4" />
+            TÜMÜNÜ GÖR
           </Link>
         </div>
 
         <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-          {news.map((item) => (
+          {displayNews.map((item) => (
             <article
               key={item.id}
-              className="group bg-white rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col h-full"
+              className="group bg-surface-container border border-outline-variant hover:border-tertiary transition-all duration-300 flex flex-col h-full glow-border"
             >
-              <div className="relative h-56 overflow-hidden bg-gray-100">
+              <div className="relative h-56 overflow-hidden bg-background">
                 <Image
-                  src={item.imageUrl || '/banner/news_hero.png'}
+                  src={item.imageUrl || '/news_ecu_tech_1778397998458.png'}
                   alt={item.title}
                   fill
-                  unoptimized
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  sizes="(max-width: 768px) 100vw, 33vw"
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
                 />
               </div>
 
               <div className="p-7 flex flex-col flex-1">
-                <div className="text-[var(--lale-gold)] text-xs font-bold uppercase tracking-widest mb-3">
-                  {item.tags?.[0] || 'MEVZUAT'}
+                <div className="text-tertiary text-[10px] font-technical uppercase tracking-[0.2em] mb-3">
+                  {item.tag || item.tags?.[0] || 'TEKNİK ANALİZ'}
                 </div>
 
-                <h3 className="text-xl font-bold leading-tight text-[#1a1a1a] mb-4 group-hover:text-[var(--lale-gold)] transition-colors">
+                <h3 className="text-xl font-display font-bold leading-tight text-on-surface mb-4 group-hover:text-tertiary transition-colors">
                   {item.title}
                 </h3>
                 
-                <p className="line-clamp-3 text-sm leading-relaxed text-[#5f6970] mb-6">
-                  {item.description || 'Güncel mali gelişmeler ve işletmeler için önemli hatırlatmalar.'}
+                <p className="line-clamp-3 text-sm leading-relaxed text-on-surface-variant mb-6">
+                  {item.description}
                 </p>
 
                 <Link
                   href={`/haberler/${createSlug(item.title)}`}
-                  className="mt-auto inline-flex items-center gap-2 text-sm font-bold text-[#1a1a1a] group-hover:text-[var(--lale-gold)] transition-all"
+                  className="mt-auto inline-flex items-center gap-2 text-[10px] font-technical uppercase tracking-widest text-tertiary group-hover:gap-4 transition-all"
                 >
-                  Okumaya Devam Et
-                  <FiArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-1" />
+                  DETAYLI OKU
+                  <span className="material-symbols-outlined text-sm">arrow_forward</span>
                 </Link>
               </div>
             </article>
