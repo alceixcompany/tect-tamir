@@ -63,7 +63,7 @@ const NewsPage = () => {
           className="object-cover opacity-40 brightness-75"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"></div>
-        <div className="max-w-container-max mx-auto px-margin-desktop relative z-10 w-full pb-16">
+        <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop relative z-10 w-full pb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -77,7 +77,7 @@ const NewsPage = () => {
         </div>
       </section>
 
-      <section className="max-w-container-max mx-auto px-margin-desktop py-20">
+      <section className="max-w-container-max mx-auto px-4 md:px-margin-desktop py-20">
         <div className="max-w-4xl">
           <p className="text-xl text-on-surface-variant leading-relaxed font-display uppercase tracking-tight">
             Elektronik dünyasındaki son gelişmeler, karmaşık onarım vaka analizleri ve laboratuvarımızdan güncel teknik raporlar.
@@ -85,7 +85,7 @@ const NewsPage = () => {
         </div>
       </section>
 
-      <section className="max-w-container-max mx-auto px-margin-desktop">
+      <section className="max-w-container-max mx-auto px-4 md:px-margin-desktop">
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
             {[...Array(4)].map((_, i) => (
@@ -149,7 +149,7 @@ const NewsPage = () => {
       </section>
 
       {/* Newsletter */}
-      <section className="max-w-container-max mx-auto px-margin-desktop mt-32">
+      <section className="max-w-container-max mx-auto px-4 md:px-margin-desktop mt-32">
         <div className="bg-surface-container-high border border-outline-variant p-12 md:p-20 relative overflow-hidden circuit-pattern">
           <div className="max-w-2xl">
             <h2 className="text-3xl md:text-5xl font-display font-bold text-on-surface mb-6 uppercase tracking-tighter">

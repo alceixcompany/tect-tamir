@@ -22,7 +22,7 @@ const Footer = () => {
 
   return (
     <footer className="bg-surface-container-lowest text-on-surface-variant border-t border-outline-variant pt-20 pb-10">
-      <div className="max-w-container-max mx-auto px-margin-desktop">
+      <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
           
           {/* Brand Info */}
@@ -34,10 +34,10 @@ const Footer = () => {
               Endüstriyel elektronik onarımında dünya standartlarında laboratuvar altyapısı ve uzman mühendis kadrosu ile çözüm üretiyoruz.
             </p>
             <div className="flex gap-4">
-              <Link href="#" className="w-10 h-10 border border-outline-variant flex items-center justify-center hover:border-tertiary hover:text-tertiary transition-all">
+              <Link href="#" className="w-10 h-10 border border-outline-variant rounded-full flex items-center justify-center hover:border-tertiary hover:text-tertiary transition-all">
                 <span className="material-symbols-outlined text-sm">share</span>
               </Link>
-              <Link href="#" className="w-10 h-10 border border-outline-variant flex items-center justify-center hover:border-tertiary hover:text-tertiary transition-all">
+              <Link href="#" className="w-10 h-10 border border-outline-variant rounded-full flex items-center justify-center hover:border-tertiary hover:text-tertiary transition-all">
                 <span className="material-symbols-outlined text-sm">alternate_email</span>
               </Link>
             </div>
@@ -89,12 +89,12 @@ const Footer = () => {
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-outline-variant/30 pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div className="border-t border-outline-variant/30 pt-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <div className="font-technical text-[10px] tracking-widest uppercase opacity-60">
-            © 2024 TECH-LAB PRECISION. TÜM HAKLARI SAKLIDIR.
+            © 2026 TECH-LAB PRECISION. TÜM HAKLARI SAKLIDIR.
           </div>
           <div className="font-technical text-[10px] tracking-widest uppercase flex items-center gap-4">
-            <span>DESIGNED BY <span className="text-tertiary font-bold">ALCEIX</span></span>
+            <span>DESIGNED BY <Link href="https://www.alceix.com/" target="_blank" className="text-tertiary font-bold hover:underline">ALCEIX</Link></span>
             <span className="opacity-40">|</span>
             <span className="opacity-60">ALCEIX tarafından oluşturulmuştur.</span>
           </div>

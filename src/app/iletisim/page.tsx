@@ -17,7 +17,7 @@ const ContactPage = () => {
           className="object-cover opacity-40 brightness-75 grayscale hover:grayscale-0 transition-all duration-1000"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"></div>
-        <div className="max-w-container-max mx-auto px-margin-desktop relative z-10 w-full pb-16">
+        <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop relative z-10 w-full pb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -31,7 +31,7 @@ const ContactPage = () => {
         </div>
       </section>
 
-      <section className="max-w-container-max mx-auto px-margin-desktop py-24 relative">
+      <section className="max-w-container-max mx-auto px-4 md:px-margin-desktop py-24 relative">
         <div className="flex flex-col lg:grid lg:grid-cols-12 gap-16 lg:gap-24">
           
           {/* Left Column: Info & Visuals */}
@@ -145,7 +145,7 @@ const ContactPage = () => {
       </section>
 
       {/* Map Integration */}
-      <section className="max-w-container-max mx-auto px-margin-desktop mb-24">
+      <section className="max-w-container-max mx-auto px-4 md:px-margin-desktop mb-24">
         <div className="relative aspect-[21/9] border border-outline-variant overflow-hidden group">
           <iframe
             src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3184.0400509927945!2d28.842329076039675!3d40.99229797135275!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDU5JzMyLjMiTiAyOMKwNTAnNDEuNyJF!5e1!3m2!1str!2saz!4v1778048676704!5m2!1str!2saz"

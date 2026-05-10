@@ -46,11 +46,11 @@
   }
 
   .btn-tech {
-    @apply bg-tertiary text-on-tertiary px-6 py-2 font-technical tracking-widest rounded-sm hover:brightness-110 active:scale-95 transition-all duration-300;
+    @apply bg-tertiary text-on-tertiary px-6 py-2 font-technical tracking-widest rounded-full hover:brightness-110 active:scale-95 transition-all duration-300;
   }
 
   .btn-tech-outline {
-    @apply border border-outline-variant text-on-background px-6 py-2 font-technical tracking-widest rounded-sm hover:border-tertiary hover:shadow-[0_0_15px_rgba(173,199,255,0.2)] active:scale-95 transition-all duration-300;
+    @apply border border-outline-variant text-on-background px-6 py-2 font-technical tracking-widest rounded-full hover:border-tertiary hover:shadow-[0_0_15px_rgba(173,199,255,0.2)] active:scale-95 transition-all duration-300;
   }
 
   .tech-card {
@@ -61,6 +61,7 @@
 /* Custom scrollbar for technical look */
 ::-webkit-scrollbar {
   width: 6px;
+  height: 6px;
 }
 
 ::-webkit-scrollbar-track {
@@ -69,4 +70,13 @@
 
 ::-webkit-scrollbar-thumb {
   @apply bg-outline-variant rounded-full hover:bg-tertiary transition-colors;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }

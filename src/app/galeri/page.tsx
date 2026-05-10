@@ -60,7 +60,7 @@ const GaleriPage = () => {
           className="object-cover opacity-40 brightness-75"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"></div>
-        <div className="max-w-container-max mx-auto px-margin-desktop relative z-10 w-full pb-16">
+        <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop relative z-10 w-full pb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -74,7 +74,7 @@ const GaleriPage = () => {
         </div>
       </section>
 
-      <section className="max-w-container-max mx-auto px-margin-desktop py-20">
+      <section className="max-w-container-max mx-auto px-4 md:px-margin-desktop py-20">
         <div className="max-w-4xl">
           <p className="text-xl text-on-surface-variant leading-relaxed font-display uppercase tracking-tight">
             Onarım süreçlerimizi gerçekleştirdiğimiz, en son teknoloji diagnostik ve mikro-cerrahi ekipmanlarla donatılmış laboratuvarımızdan kesitler.
@@ -82,7 +82,7 @@ const GaleriPage = () => {
         </div>
       </section>
 
-      <section className="max-w-container-max mx-auto px-margin-desktop pb-32">
+      <section className="max-w-container-max mx-auto px-4 md:px-margin-desktop pb-32">
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {[...Array(6)].map((_, i) => (

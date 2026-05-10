@@ -35,7 +35,7 @@ const Header = () => {
           ? 'bg-background/80 backdrop-blur-xl h-16 shadow-lg' 
           : 'bg-background h-20'
       }`}>
-        <div className="max-w-container-max mx-auto px-6 md:px-margin-desktop flex items-center justify-between h-full">
+        <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop flex items-center justify-between h-full">
           <Link href="/" className="text-xl md:text-2xl font-display font-bold tracking-tighter text-on-background group shrink-0">
             TECH-LAB <span className="text-tertiary transition-all duration-300 group-hover:neon-text-glow">PRECISION</span>
           </Link>
@@ -56,7 +56,7 @@ const Header = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            <button className="hidden sm:block btn-tech px-10 rounded-md h-11 text-[9px] font-bold tracking-widest shrink-0">
+            <button className="hidden sm:block btn-tech px-10 rounded-full h-11 text-[9px] font-bold tracking-widest shrink-0">
               TEKLİF AL
             </button>
             <button 
@@ -103,7 +103,7 @@ const Header = () => {
           </div>
 
           <div className="mt-auto space-y-6">
-            <button className="btn-tech w-full py-6 rounded-xl text-xs font-bold tracking-[0.3em]">
+            <button className="btn-tech w-full py-6 rounded-full text-xs font-bold tracking-[0.3em]">
               TEKLİF AL
             </button>
             <div className="flex justify-between items-center px-2">

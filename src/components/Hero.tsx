@@ -21,7 +21,7 @@ const Hero = () => {
       </div>
 
       {/* Content Container */}
-      <div className="max-w-container-max mx-auto px-margin-desktop relative z-10 w-full">
+      <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop relative z-10 w-full">
         <div className="max-w-4xl space-y-12">
           
           <motion.div

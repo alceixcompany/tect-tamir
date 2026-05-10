@@ -65,7 +65,7 @@ const FloatingContact = () => {
   const radius = 110; // Daire yarıçapı
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-8 right-8 md:bottom-10 md:right-10 z-[100]">
       {/* Contact Options - Quarter Circle Layout */}
       <div className="relative">
         {contactOptions.map((option, index) => {
@@ -79,15 +79,15 @@ const FloatingContact = () => {
               href={option.href}
               target="_blank"
               rel="noopener noreferrer"
-              className={`${option.color} text-white w-12 h-12 rounded-full flex items-center justify-center shadow-lg transition-all duration-500 ease-out transform absolute ${
+              className={`bg-surface-container border border-tertiary/40 text-tertiary hover:bg-tertiary hover:text-on-tertiary w-12 h-12 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(173,199,255,0.2)] hover:shadow-[0_0_20px_rgba(173,199,255,0.6)] transition-all duration-500 ease-out transform absolute ${
                 isOpen 
                   ? 'opacity-100 scale-100' 
                   : 'opacity-0 scale-0 pointer-events-none'
-              } hover:scale-110 hover:rotate-12`}
+              } hover:scale-110`}
               style={{
                 left: `${x + 32}px`, // 32px = ana butonun yarı genişliği
                 top: `${y + 32}px`, // 32px = ana butonun yarı yüksekliği
-                transitionDelay: isOpen ? `${index * 150}ms` : '0ms',
+                transitionDelay: isOpen ? `${index * 100}ms` : '0ms',
                 zIndex: isOpen ? 20 : -1
               }}
               title={option.name}
@@ -101,18 +101,14 @@ const FloatingContact = () => {
       {/* Main Toggle Button */}
       <button
         onClick={toggleMenu}
-        className="relative z-30 flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-[var(--lale-gold)] text-[var(--lale-emerald-deep)] shadow-2xl shadow-[rgba(212,175,55,0.28)] transition-all duration-300 hover:scale-110 hover:bg-[var(--lale-gold-soft)] active:scale-95"
+        className="relative z-30 flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-[#96b0e6] text-on-tertiary shadow-[0_0_15px_rgba(173,199,255,0.3)] transition-all duration-300 hover:scale-110 hover:bg-tertiary hover:shadow-[0_0_25px_rgba(173,199,255,0.5)] active:scale-95"
         title="İletişim"
         type="button"
       >
         {isOpen ? (
-          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/>
-          </svg>
+          <span className="material-symbols-outlined text-3xl">close</span>
         ) : (
-          <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-            <path d="M6.62 10.79c1.44 2.83 3.76 5.14 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.11.35.03.74-.25 1.02l-2.2 2.2z"/>
-          </svg>
+          <span className="material-symbols-outlined text-3xl animate-pulse">forum</span>
         )}
       </button>
     </div>

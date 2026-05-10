@@ -43,7 +43,7 @@ const Gallery = () => {
 
   return (
     <section id="galeri" className="py-24 bg-surface-container overflow-hidden">
-      <div className="max-w-container-max mx-auto px-margin-desktop">
+      <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop">
         <div className="grid grid-cols-12 gap-gutter">
           <div className="col-span-12 lg:col-span-4 self-center space-y-6">
             <span className="font-technical text-tertiary tracking-[0.3em] uppercase text-xs">Temiz Oda Laboratuvarı</span>
@@ -68,18 +68,25 @@ const Gallery = () => {
               GALERİMİZİ GÖRÜNTÜLE
             </Link>
           </div>
-          <div className="col-span-12 lg:col-span-8 grid grid-cols-2 gap-8">
+          <div className="col-span-12 lg:col-span-8 grid grid-cols-1 sm:grid-cols-2 gap-6 lg:gap-8">
             {displayItems.map((item, index) => (
               <div 
                 key={item.id} 
-                className={`overflow-hidden border border-outline-variant rounded-md relative group ${index === 2 ? 'col-span-2 h-64' : 'h-64'}`}
+                className={`overflow-hidden border border-outline-variant rounded-sm relative group 
+                  ${index === 2 ? 'sm:col-span-2 h-72 lg:h-64' : 'h-64'} 
+                  ${index === 0 ? 'mt-0' : 'sm:mt-0'}
+                  ${index === 1 ? 'sm:mt-12' : ''}
+                `}
               >
                 <Image
                   src={item.imageUrl}
                   alt={item.title || 'Laboratuvar Görseli'}
                   fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="object-cover transition-transform duration-1000 group-hover:scale-105"
                 />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 flex items-end p-6">
+                  <span className="font-technical text-[10px] text-white uppercase tracking-[0.3em]">{item.title}</span>
+                </div>
               </div>
             ))}
           </div>

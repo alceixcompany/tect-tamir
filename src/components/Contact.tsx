@@ -5,7 +5,7 @@ import Image from 'next/image';
 const Contact = () => {
   return (
     <section id="iletisim" className="bg-background py-24 relative overflow-hidden">
-      <div className="max-w-container-max mx-auto px-margin-desktop">
+      <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-20">
           
           {/* Reviews/Experience */}

@@ -85,7 +85,7 @@ const NewsPreview = () => {
 
   return (
     <section id="haberler" className="bg-background py-24 relative overflow-hidden border-t border-outline-variant">
-      <div className="max-w-container-max mx-auto px-margin-desktop">
+      <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop">
         <div className="mb-16 flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
           <div className="max-w-2xl">
             <span className="font-technical text-tertiary tracking-[0.3em] uppercase text-xs">Teknik Bilgi Bankası</span>
@@ -101,39 +101,43 @@ const NewsPreview = () => {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-          {displayNews.map((item) => (
+        <div className="grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-3">
+          {displayNews.map((item, index) => (
             <article
               key={item.id}
-              className="group bg-surface-container border border-outline-variant hover:border-tertiary transition-all duration-300 flex flex-col h-full glow-border"
+              className={`group bg-surface-container border border-outline-variant hover:border-tertiary transition-all duration-500 flex flex-col h-full glow-border
+                ${index === 1 ? 'md:translate-y-12 lg:translate-y-12' : ''}
+                ${index === 2 ? 'lg:translate-y-6' : ''}
+              `}
             >
               <div className="relative h-56 overflow-hidden bg-background">
                 <Image
                   src={item.imageUrl || '/news_ecu_tech_1778397998458.png'}
                   alt={item.title}
                   fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  className="object-cover transition-transform duration-1000 group-hover:scale-105"
                 />
+                <div className="absolute top-4 left-4">
+                  <div className="bg-background/90 backdrop-blur-sm border border-tertiary/30 px-3 py-1 text-tertiary text-[8px] font-technical uppercase tracking-widest">
+                    {item.tag || item.tags?.[0] || 'TEKNİK ANALİZ'}
+                  </div>
+                </div>
               </div>
 
-              <div className="p-7 flex flex-col flex-1">
-                <div className="text-tertiary text-[10px] font-technical uppercase tracking-[0.2em] mb-3">
-                  {item.tag || item.tags?.[0] || 'TEKNİK ANALİZ'}
-                </div>
-
-                <h3 className="text-xl font-display font-bold leading-tight text-on-surface mb-4 group-hover:text-tertiary transition-colors">
+              <div className="p-8 flex flex-col flex-1">
+                <h3 className="text-xl font-display font-bold leading-[1.2] text-on-surface mb-4 group-hover:text-tertiary transition-colors uppercase tracking-tight">
                   {item.title}
                 </h3>
                 
-                <p className="line-clamp-3 text-sm leading-relaxed text-on-surface-variant mb-6">
+                <p className="line-clamp-3 text-sm leading-relaxed text-on-surface-variant/80 mb-8 font-light">
                   {item.description}
                 </p>
 
                 <Link
                   href={`/haberler/${createSlug(item.title)}`}
-                  className="mt-auto inline-flex items-center gap-2 text-[10px] font-technical uppercase tracking-widest text-tertiary group-hover:gap-4 transition-all"
+                  className="mt-auto inline-flex items-center gap-3 text-[10px] font-technical uppercase tracking-[0.2em] text-tertiary group-hover:gap-5 transition-all"
                 >
-                  DETAYLI OKU
+                  TEKNİK İNCELEME
                   <span className="material-symbols-outlined text-sm">arrow_forward</span>
                 </Link>
               </div>

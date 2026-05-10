@@ -61,7 +61,7 @@ const ServicesPage = () => {
           className="object-cover opacity-40 brightness-75"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"></div>
-        <div className="max-w-container-max mx-auto px-margin-desktop relative z-10 w-full pb-16">
+        <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop relative z-10 w-full pb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -75,7 +75,7 @@ const ServicesPage = () => {
         </div>
       </section>
 
-      <section className="max-w-container-max mx-auto px-margin-desktop py-20">
+      <section className="max-w-container-max mx-auto px-4 md:px-margin-desktop py-20">
         <div className="max-w-4xl">
           <p className="text-xl text-on-surface-variant leading-relaxed font-display uppercase tracking-tight">
             Laboratuvarımızda en karmaşık anakart ve beyin arızalarını, IPC standartlarında ve orijinal parçalar kullanarak çip seviyesinde onarıyoruz.
@@ -84,7 +84,7 @@ const ServicesPage = () => {
       </section>
 
       {/* Services Grid */}
-      <section className="max-w-container-max mx-auto px-margin-desktop">
+      <section className="max-w-container-max mx-auto px-4 md:px-margin-desktop">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
           {services.map((service, index) => (
             <motion.div
@@ -133,7 +133,7 @@ const ServicesPage = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="max-w-container-max mx-auto px-margin-desktop mt-32">
+      <section className="max-w-container-max mx-auto px-4 md:px-margin-desktop mt-32">
         <div className="bg-surface-container border border-outline-variant rounded-md p-12 md:p-20 relative overflow-hidden text-center circuit-pattern">
           <h2 className="text-3xl md:text-5xl font-display font-bold text-on-surface mb-6 uppercase tracking-tighter">
             Cihazınız İçin <span className="text-tertiary neon-text-glow">Ücretsiz Ön Analiz</span> Alın

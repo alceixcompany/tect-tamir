@@ -45,13 +45,16 @@ const services = [
 const Services = () => {
   return (
     <section id="hizmetler" className="py-24 bg-background relative overflow-hidden">
-      <div className="max-w-container-max mx-auto px-margin-desktop">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-4">
-          <div>
-            <span className="font-technical text-tertiary tracking-[0.3em] uppercase text-xs">UZMANLIK ALANLARIMIZ</span>
-            <h2 className="text-4xl text-on-surface mt-2">Endüstriyel Onarım Çözümleri</h2>
+      <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-end mb-16 gap-8">
+          <div className="max-w-xl">
+            <span className="font-technical text-tertiary tracking-[0.3em] uppercase text-[10px] font-bold">UZMANLIK ALANLARIMIZ</span>
+            <h2 className="text-4xl md:text-5xl text-on-surface mt-2 font-display font-bold uppercase tracking-tighter">
+              Endüstriyel <br className="hidden md:block" />
+              Onarım Çözümleri
+            </h2>
           </div>
-          <div className="text-on-surface-variant font-technical max-w-sm text-right hidden md:block text-xs uppercase tracking-wider">
+          <div className="text-on-surface-variant font-technical max-w-sm md:text-right text-[10px] uppercase tracking-[0.2em] leading-relaxed opacity-70">
             Gelişmiş mikroskoplar ve diagnostik ekipmanlar ile her türlü karmaşık devre onarımını gerçekleştiriyoruz.
           </div>
         </div>

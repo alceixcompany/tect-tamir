@@ -23,7 +23,7 @@ const AboutPage = () => {
           className="object-cover opacity-40 brightness-75"
         />
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent"></div>
-        <div className="max-w-container-max mx-auto px-margin-desktop relative z-10 w-full pb-16">
+        <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop relative z-10 w-full pb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -38,7 +38,7 @@ const AboutPage = () => {
       </section>
 
       {/* Intro Section */}
-      <section className="max-w-container-max mx-auto px-margin-desktop py-24">
+      <section className="max-w-container-max mx-auto px-4 md:px-margin-desktop py-24">
         <div className="flex flex-col lg:flex-row items-center gap-20">
           <div className="lg:w-1/2">
             <h2 className="text-3xl md:text-5xl font-display font-bold text-on-surface leading-tight uppercase tracking-tighter">
@@ -71,7 +71,7 @@ const AboutPage = () => {
 
       {/* Stats / Timeline */}
       <section className="bg-surface-container py-24 border-y border-outline-variant">
-        <div className="max-w-container-max mx-auto px-margin-desktop">
+        <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
             {milestones.map((item, index) => (
               <motion.div 
@@ -92,7 +92,7 @@ const AboutPage = () => {
 
       {/* Mission & Vision */}
       <section className="py-32">
-        <div className="max-w-container-max mx-auto px-margin-desktop">
+        <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop">
           <div className="grid lg:grid-cols-2 gap-32">
             <div className="space-y-12">
               <div className="space-y-4">
@@ -141,7 +141,7 @@ const AboutPage = () => {
       </section>
 
       {/* Lab CTA */}
-      <section className="max-w-container-max mx-auto px-margin-desktop mb-24">
+      <section className="max-w-container-max mx-auto px-4 md:px-margin-desktop mb-24">
         <div className="bg-surface-container border border-outline-variant p-20 text-center relative overflow-hidden circuit-pattern">
           <h2 className="text-3xl md:text-5xl font-display font-bold text-on-surface mb-8 uppercase tracking-tighter">
             Laboratuvarımızı <span className="text-tertiary neon-text-glow">Ziyaret Edin</span>

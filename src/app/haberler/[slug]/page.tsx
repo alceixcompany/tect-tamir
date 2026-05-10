@@ -94,7 +94,7 @@ const HaberDetay = () => {
         <div className="absolute inset-0 bg-gradient-to-t from-background via-background/40 to-transparent" />
         
         <div className="absolute bottom-0 left-0 w-full">
-          <div className="max-w-container-max mx-auto px-margin-desktop pb-16">
+          <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop pb-16">
             <Link href="/haberler" className="group inline-flex items-center gap-4 font-technical text-[10px] text-tertiary uppercase tracking-[0.4em] mb-12 hover:drop-shadow-[0_0_8px_rgba(173,199,255,0.5)] transition-all">
               <span className="material-symbols-outlined text-sm transition-transform group-hover:-translate-x-2">west</span>
               TÜM ANALİZLERE DÖN
@@ -111,7 +111,7 @@ const HaberDetay = () => {
       </section>
 
       {/* Article Body */}
-      <div className="max-w-container-max mx-auto px-margin-desktop grid lg:grid-cols-12 gap-20 mt-20">
+      <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop grid lg:grid-cols-12 gap-20 mt-20">
         <div className="lg:col-span-8">
           <div className="prose prose-invert prose-tech max-w-none">
             {haber.subtitle && (
