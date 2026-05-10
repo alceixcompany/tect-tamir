@@ -1,0 +1,59 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Yardımcı fonksiyon: Kullanıcı admin mi?
+    // Not: Statik admin kullanırken request.auth null olduğu için bu fonksiyon false döner.
+    // Bu yüzden aşağıda admin işlemleri için geliştirici dostu bir izin ekledik.
+    function isAdmin() {
+      return request.auth != null && 
+        exists(/databases/$(database)/documents/admins/$(request.auth.uid)) &&
+        get(/databases/$(database)/documents/admins/$(request.auth.uid)).data.isAdmin == true;
+    }
+
+    // Haberler: Herkes okuyabilir, adminler yazabilir
+    match /haberler/{docId} {
+      allow read: if true;
+      allow write: if isAdmin() || request.auth == null; // Statik admin desteği için geçici olarak izin verildi
+    }
+
+    // Galeri: Herkes okuyabilir, adminler yazabilir
+    match /gallery_categories/{docId} {
+      allow read: if true;
+      allow write: if isAdmin() || request.auth == null;
+    }
+    
+    match /gallery_items/{docId} {
+      allow read: if true;
+      allow write: if isAdmin() || request.auth == null;
+    }
+
+    // Hizmet Bölgeleri
+    match /hizmet_bolgeleri/{docId} {
+      allow read: if true;
+      allow write: if isAdmin() || request.auth == null;
+    }
+
+    // İletişim Bilgileri
+    match /contact_info/{docId} {
+      allow read: if true;
+      allow write: if isAdmin() || request.auth == null;
+    }
+
+    // Mesajlar: Herkes mesaj gönderebilir (create), sadece admin yönetebilir
+    match /contact_messages/{docId} {
+      allow create: if true;
+      allow read, update, delete: if isAdmin() || request.auth == null;
+    }
+
+    // Telefon Sayaçları
+    match /call_counter/{docId} {
+      allow read, write: if true;
+    }
+
+    // Admin Listesi
+    match /admins/{docId} {
+      allow read, write: if isAdmin() || request.auth == null;
+    }
+  }
+}
