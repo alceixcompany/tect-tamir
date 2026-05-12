@@ -52,13 +52,7 @@ const Contact = () => {
                   <p className="text-sm">+90 (551) 367 81 34</p>
                 </div>
               </div>
-              <div className="flex items-start gap-4">
-                <span className="material-symbols-outlined text-tertiary mt-1">mail</span>
-                <div>
-                  <div className="font-technical text-on-surface-variant text-[10px] tracking-widest uppercase">E-POSTA</div>
-                  <p className="text-sm">Zaferbicici34@gmail.com</p>
-                </div>
-              </div>
+
             </div>
             
             <div className="w-full h-48 bg-background border border-outline-variant relative overflow-hidden">

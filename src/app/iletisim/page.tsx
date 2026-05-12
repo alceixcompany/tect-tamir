@@ -61,8 +61,7 @@ const ContactPage = () => {
             <div className="grid gap-6">
               {[
                 { icon: 'location_on', label: 'Laboratuvar Adresi', value: 'Esenler / İstanbul' },
-                { icon: 'contact_support', label: 'Teknik Destek', value: '+90 (551) 367 81 34' },
-                { icon: 'alternate_email', label: 'E-Posta', value: 'Zaferbicici34@gmail.com' }
+                { icon: 'contact_support', label: 'Teknik Destek', value: '+90 (551) 367 81 34' }
               ].map((item, index) => (
                 <motion.div 
                   key={index}
