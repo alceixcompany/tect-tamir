@@ -1,6 +1,7 @@
 'use client'
 import React from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { usePathname } from 'next/navigation';
 
 const Footer = () => {
@@ -12,26 +13,30 @@ const Footer = () => {
   }
 
   const services = [
-    'Ağır Vasıta Beyin Tamiri',
-    'Otomotiv ECU Tamiri',
-    'ABS / Klima Onarımı',
-    'Elektronik Kart Tamiri',
     'iPhone Anakart Tamiri',
-    'Mikro Lehimleme'
+    'Mikro Lehimleme Laboratuvarı',
+    'Hassas Elektronik Kart Tamiri',
+    'Veri Kurtarma',
+    'Ekran & Batarya Değişimi'
   ];
 
   return (
     <footer className="bg-surface-container-lowest text-on-surface-variant border-t border-outline-variant pt-20 pb-10">
       <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-20">
-          
+
           {/* Brand Info */}
           <div className="space-y-6">
-            <div className="text-3xl font-display font-bold text-on-surface uppercase tracking-tighter">
-              TECH-LAB <span className="text-tertiary">PRECISION</span>
-            </div>
+            <Link href="/" className="relative h-16 w-64 block">
+              <Image
+                src="/iphonetamiratolyesi_logo.png"
+                alt="iPhone Tamir Atölyesi"
+                fill
+                className="object-contain object-left"
+              />
+            </Link>
             <p className="text-sm leading-relaxed max-w-xs">
-              Endüstriyel elektronik onarımında dünya standartlarında laboratuvar altyapısı ve uzman mühendis kadrosu ile çözüm üretiyoruz.
+              iPhone anakart onarımı ve mikro lehimleme alanında uzman laboratuvar altyapısı ile profesyonel teknik servis çözümleri sunuyoruz.
             </p>
             <div className="flex gap-4">
               <Link href="#" className="w-10 h-10 border border-outline-variant rounded-full flex items-center justify-center hover:border-tertiary hover:text-tertiary transition-all">
@@ -77,11 +82,11 @@ const Footer = () => {
             <div className="space-y-6">
               <div className="flex items-start gap-4">
                 <span className="material-symbols-outlined text-tertiary text-lg">location_on</span>
-                <p className="text-sm">İkitelli OSB, Teknik Sanayi Sitesi 14. Blok No: 28, Başakşehir/İstanbul</p>
+                <p className="text-sm">Esenler / İstanbul</p>
               </div>
               <div className="flex items-start gap-4">
                 <span className="material-symbols-outlined text-tertiary text-lg">call</span>
-                <p className="text-sm font-technical">+90 (212) 555 01 23</p>
+                <p className="text-sm font-technical">+90 (551) 367 81 34</p>
               </div>
             </div>
           </div>
@@ -91,7 +96,7 @@ const Footer = () => {
         {/* Bottom Bar */}
         <div className="border-t border-outline-variant/30 pt-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
           <div className="font-technical text-[10px] tracking-widest uppercase opacity-60">
-            © 2026 TECH-LAB PRECISION. TÜM HAKLARI SAKLIDIR.
+            © 2026 IPHONE TAMİR ATÖLYESİ. TÜM HAKLARI SAKLIDIR.
           </div>
           <div className="font-technical text-[10px] tracking-widest uppercase flex items-center gap-4">
             <span>DESIGNED BY <Link href="https://www.alceix.com/" target="_blank" className="text-tertiary font-bold hover:underline">ALCEIX</Link></span>

@@ -12,6 +12,6 @@ export default function robots(): MetadataRoute.Robots {
         '/static/',
       ],
     },
-    sitemap: 'https://www.demirbas.com/sitemap.xml',
+    sitemap: 'https://www.iphonetamiratolyesi.com/sitemap.xml',
   }
 }

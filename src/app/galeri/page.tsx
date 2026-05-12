@@ -55,7 +55,7 @@ const GaleriPage = () => {
       <section className="relative h-[45vh] min-h-[400px] w-full overflow-hidden flex items-end">
         <Image 
           src="/lab_workstation_1778396468117.png"
-          alt="TECH-LAB Çalışma İstasyonu"
+          alt="iPhone Tamir Atölyesi Çalışma İstasyonu"
           fill
           className="object-cover opacity-40 brightness-75"
         />

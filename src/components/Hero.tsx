@@ -86,7 +86,7 @@ const Hero = () => {
       {/* Side Detail Element */}
       <div className="absolute right-12 bottom-12 hidden lg:flex flex-col items-end gap-4">
         <div className="font-technical text-[9px] text-on-surface-variant/30 uppercase tracking-[0.5em] vertical-rl">
-          EST. 2014 / İSTANBUL / TECH-LAB PRECISION
+          EST. 2014 / İSTANBUL / IPHONE TAMİR ATÖLYESİ
         </div>
         <div className="w-[1px] h-24 bg-gradient-to-b from-outline-variant/50 to-transparent"></div>
       </div>

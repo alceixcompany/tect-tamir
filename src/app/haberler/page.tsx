@@ -57,8 +57,8 @@ const NewsPage = () => {
       {/* News Hero Section */}
       <section className="relative h-[45vh] min-h-[400px] w-full overflow-hidden flex items-end">
         <Image 
-          src="/news_ecu_tech_1778397998458.png"
-          alt="TECH-LAB Teknik Raporlar"
+          src="/micro_soldering_lab_1778397801389.png"
+          alt="iPhone Tamir Atölyesi Teknik Raporlar"
           fill
           className="object-cover opacity-40 brightness-75"
         />

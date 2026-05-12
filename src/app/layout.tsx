@@ -23,20 +23,24 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "TECH-LAB PRECISION | Profesyonel Teknik Servis",
-  description: "Ağır Vasıta, Otomotiv ve iPhone Anakart Uzmanlığı. Çip seviyesinde profesyonel onarım.",
+  title: "iPhone Tamir Atölyesi | Profesyonel iPhone Anakart Onarımı",
+  description: "iPhone anakart tamiri, veri kurtarma ve mikro lehimleme uzmanlığı. Çip seviyesinde profesyonel onarım hizmetleri.",
   keywords: [
-    "beyin tamiri",
-    "anakart tamiri",
-    "ecu tamiri",
+    "iphone tamir",
     "iphone anakart tamiri",
+    "iphone veri kurtarma",
     "mikro lehimleme",
-    "elektronik kart tamiri"
+    "apple teknik servis",
+    "iphone çip tamiri"
   ].join(", "),
-  authors: [{ name: "TECH-LAB PRECISION" }],
-  creator: "TECH-LAB PRECISION",
-  publisher: "TECH-LAB PRECISION",
+  authors: [{ name: "iPhone Tamir Atölyesi" }],
+  creator: "iPhone Tamir Atölyesi",
+  publisher: "iPhone Tamir Atölyesi",
   robots: "index, follow",
+  icons: {
+    icon: "/iphonetamiratolyesi_icon.png",
+    apple: "/iphonetamiratolyesi_icon.png",
+  },
 };
 
 export default function RootLayout({

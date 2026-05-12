@@ -5,30 +5,6 @@ import Image from 'next/image';
 
 const services = [
   {
-    icon: 'local_shipping',
-    image: '/heavy_truck_ecu_repair_1778397685432.png',
-    title: 'Ağır Vasıta Beyin Tamiri',
-    description: 'Tır, kamyon ve otobüslerin motor kontrol üniteleri (ECU) üzerinde çip seviyesi hassas onarım.'
-  },
-  {
-    icon: 'directions_car',
-    image: '/automotive_ecu_repair_1778397704368.png',
-    title: 'Otomotiv ECU Tamiri',
-    description: 'Binek araçların tüm elektronik beyin arızaları, yazılım güncellemeleri ve donanım müdahaleleri.'
-  },
-  {
-    icon: 'ac_unit',
-    image: '/abs_klima_repair_1778397726542.png',
-    title: 'ABS / Klima Beyni Onarımı',
-    description: 'Güvenlik ve konfor ünitelerinde meydana gelen sistemsel ve fiziksel arızaların giderilmesi.'
-  },
-  {
-    icon: 'memory',
-    image: '/pcb_card_repair_1778397751635.png',
-    title: 'Elektronik Kart Tamiri',
-    description: 'Endüstriyel ve bireysel kullanımda olan her türlü çok katmanlı elektronik kartın onarımı.'
-  },
-  {
     icon: 'smartphone',
     image: '/iphone_motherboard_repair_1778397775835.png',
     title: 'iPhone Anakart Tamiri',
@@ -39,6 +15,12 @@ const services = [
     image: '/micro_soldering_lab_1778397801389.png',
     title: 'Mikro Lehimleme',
     description: 'Çip değişimi, entegre onarımı ve BGA reballing işlemlerinde laboratuvar hassasiyeti.'
+  },
+  {
+    icon: 'memory',
+    image: '/pcb_card_repair_1778397751635.png',
+    title: 'Elektronik Kart Tamiri',
+    description: 'Bireysel ve kurumsal kullanımda olan her türlü çok katmanlı elektronik kartın onarımı.'
   }
 ];
 

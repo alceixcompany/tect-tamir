@@ -28,7 +28,7 @@ const Contact = () => {
                     <span key={i} className="material-symbols-outlined text-sm">star</span>
                   ))}
                 </div>
-                <p className="text-on-surface-variant italic mb-4">"iPhone anakartındaki sıvı temasını titizlikle temizleyip cihazımı verileriyle birlikte kurtardılar. Teşekkürler TECH-LAB."</p>
+                <p className="text-on-surface-variant italic mb-4">"iPhone anakartındaki sıvı temasını titizlikle temizleyip cihazımı verileriyle birlikte kurtardılar. Teşekkürler iPhone Tamir Atölyesi."</p>
                 <div className="font-technical text-on-surface text-xs uppercase tracking-wider">Merve K. - Freelance Tasarımcı</div>
               </div>
             </div>
@@ -42,21 +42,21 @@ const Contact = () => {
                 <span className="material-symbols-outlined text-tertiary mt-1">location_on</span>
                 <div>
                   <div className="font-technical text-on-surface-variant text-[10px] tracking-widest uppercase">ADRES</div>
-                  <p className="text-sm">İkitelli OSB, Teknik Sanayi Sitesi 14. Blok No: 28, Başakşehir/İstanbul</p>
+                  <p className="text-sm">Esenler / İstanbul</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
                 <span className="material-symbols-outlined text-tertiary mt-1">call</span>
                 <div>
                   <div className="font-technical text-on-surface-variant text-[10px] tracking-widest uppercase">TELEFON</div>
-                  <p className="text-sm">+90 (212) 555 01 23</p>
+                  <p className="text-sm">+90 (551) 367 81 34</p>
                 </div>
               </div>
               <div className="flex items-start gap-4">
                 <span className="material-symbols-outlined text-tertiary mt-1">mail</span>
                 <div>
                   <div className="font-technical text-on-surface-variant text-[10px] tracking-widest uppercase">E-POSTA</div>
-                  <p className="text-sm">servis@techlab-precision.com</p>
+                  <p className="text-sm">Zaferbicici34@gmail.com</p>
                 </div>
               </div>
             </div>
@@ -70,7 +70,7 @@ const Contact = () => {
               />
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <div className="bg-background/90 border border-tertiary p-2 text-[10px] font-technical text-tertiary animate-bounce uppercase">
-                  TECH-LAB LOCATED HERE
+                  41°02'10.7"N 28°52'58.3"E
                 </div>
               </div>
             </div>

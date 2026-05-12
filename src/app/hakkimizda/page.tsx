@@ -18,7 +18,7 @@ const AboutPage = () => {
       <section className="relative h-[45vh] min-h-[400px] w-full overflow-hidden flex items-end">
         <Image 
           src="/clean_room_facility_1778396507960.png"
-          alt="TECH-LAB Temiz Oda Laboratuvarı"
+          alt="iPhone Tamir Atölyesi Temiz Oda Laboratuvarı"
           fill
           className="object-cover opacity-40 brightness-75"
         />
@@ -45,7 +45,7 @@ const AboutPage = () => {
               Teknolojiye Bilimsel <br/> Bir <span className="text-tertiary">Dokunuş</span>
             </h2>
             <p className="mt-8 text-xl text-on-surface-variant leading-relaxed font-display uppercase tracking-tight">
-              TECH-LAB PRECISION, modern elektroniğin en hassas noktalarında cerrahi titizlikle çalışan bir teknoloji laboratuvarıdır.
+              iPhone Tamir Atölyesi, modern elektroniğin en hassas noktalarında cerrahi titizlikle çalışan bir teknoloji laboratuvarıdır.
             </p>
             <p className="mt-6 text-on-surface-variant/70 leading-relaxed text-sm">
               2014 yılından bu yana, endüstriyel kontrol ünitelerinden en hassas mobil sistemlere kadar 
@@ -57,7 +57,7 @@ const AboutPage = () => {
             <div className="relative z-10 border border-outline-variant overflow-hidden group">
               <Image
                 src="/tech_lab_overview_1778397945364.png"
-                alt="TECH-LAB Precision Lab"
+                alt="iPhone Tamir Atölyesi Laboratuvarı"
                 width={800}
                 height={600}
                 className="object-cover transition-all duration-700 group-hover:scale-105"

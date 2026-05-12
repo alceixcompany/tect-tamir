@@ -12,7 +12,7 @@ const AdminLogin = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-  
+
   const dispatch = useAppDispatch();
   const { user, isLoading, error, isAuthenticated } = useAppSelector((state) => state.auth);
   const router = useRouter();
@@ -33,7 +33,7 @@ const AdminLogin = () => {
     if (!email || !password) return;
 
     try {
-      if (email === 'demirbas@admin.com' && password === 'Demirbas123') {
+      if (email === 'admin@iphonetamiratolyesi.com' && password === 'Admin123') {
         await dispatch(loginWithStaticAdmin({ email, password })).unwrap();
       } else {
         await dispatch(loginUser({ email, password })).unwrap();
@@ -53,20 +53,26 @@ const AdminLogin = () => {
         <div className="absolute inset-0 bg-circuit-pattern opacity-[0.03]" />
       </div>
 
-      <motion.div 
+      <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         className="w-full max-w-[440px] z-10"
       >
         <div className="bg-surface-container border border-outline-variant p-10 md:p-14 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-24 h-24 bg-circuit-pattern opacity-10 rotate-90"></div>
-          
+
           {/* Logo Section */}
           <div className="flex flex-col items-center mb-12">
-            <Link href="/" className="text-3xl font-display font-bold tracking-tighter text-on-surface uppercase mb-8">
-              TECH-LAB <span className="text-tertiary">PRECISION</span>
+            <Link href="/" className="relative h-20 w-64 block mb-8">
+              <Image
+                src="/iphonetamiratolyesi_logo.png"
+                alt="iPhone Tamir Atölyesi"
+                fill
+                className="object-contain"
+                priority
+              />
             </Link>
-            
+
             <div className="inline-flex items-center gap-3 px-4 py-1.5 bg-background border border-outline-variant/50">
               <FiShield className="text-tertiary text-xs" />
               <span className="font-technical text-[9px] font-bold uppercase tracking-[0.3em] text-on-surface-variant">GÜVENLİ TERMİNAL GİRİŞİ</span>
@@ -86,7 +92,7 @@ const AdminLogin = () => {
                   required
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  placeholder="admin@techlabprecision.com"
+                  placeholder="admin@iphonetamiratolyesi.com"
                   className="w-full pl-14 pr-5 py-4 bg-background border border-outline-variant rounded-md text-on-surface font-technical text-xs focus:border-tertiary focus:ring-2 focus:ring-tertiary/10 outline-none transition-all placeholder:text-outline-variant/50"
                   disabled={isLoading}
                 />
@@ -144,7 +150,7 @@ const AdminLogin = () => {
 
         <div className="mt-12 text-center">
           <p className="font-technical text-[8px] text-on-surface-variant/30 uppercase tracking-[0.5em]">
-            TECH-LAB PRECISION &copy; {new Date().getFullYear()} / INTERNAL ACCESS ONLY
+            IPHONE TAMİR ATÖLYESİ &copy; {new Date().getFullYear()} / INTERNAL ACCESS ONLY
           </p>
         </div>
       </motion.div>

@@ -241,7 +241,7 @@ const AdminDashboard = () => {
                   <div className="h-2 w-2 rounded-full bg-green-400 shadow-[0_0_8px_#4ade80]" />
                   <span className="font-technical text-[9px] text-green-400 uppercase tracking-[0.3em]">AKTİF</span>
                 </div>
-                <span className="font-technical text-[9px] text-on-surface-variant/30 uppercase tracking-widest">V.3.1.0-PRECISION</span>
+                <span className="font-technical text-[9px] text-on-surface-variant/30 uppercase tracking-widest">V.3.1.0-IPHONE-TAMIR</span>
               </div>
             </div>
           </div>

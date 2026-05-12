@@ -17,10 +17,10 @@ interface Haber {
 const fallbackNews = [
   {
     id: '1',
-    tag: 'ECU GÜNCELLEME',
-    title: 'Yeni Nesil Ağır Vasıta Beyin Onarım Teknikleri',
-    description: 'Euro 6 sistemlerinde karşılaşılan kronik arızaların çip seviyesinde kalıcı onarım metotları.',
-    imageUrl: '/news_ecu_tech_1778397998458.png'
+    tag: 'TEKNİK ANALİZ',
+    title: 'Yeni Nesil iPhone İşlemci (CPU) Onarım Teknikleri',
+    description: 'A17 Pro ve üzeri işlemcilerde karşılaşılan kronik ısınma ve veri yolu arızalarının laboratuvar ortamında onarımı.',
+    imageUrl: '/micro_soldering_lab_1778397801389.png'
   },
   {
     id: '2',
@@ -112,7 +112,7 @@ const NewsPreview = () => {
             >
               <div className="relative h-56 overflow-hidden bg-background">
                 <Image
-                  src={item.imageUrl || '/news_ecu_tech_1778397998458.png'}
+                  src={item.imageUrl || '/micro_soldering_lab_1778397801389.png'}
                   alt={item.title}
                   fill
                   className="object-cover transition-transform duration-1000 group-hover:scale-105"

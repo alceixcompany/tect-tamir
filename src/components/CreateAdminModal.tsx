@@ -98,7 +98,7 @@ const CreateAdminModal: React.FC<CreateAdminModalProps> = ({ isOpen, onClose }) 
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               className="w-full bg-background border border-outline-variant rounded-md px-5 py-4 text-on-surface font-technical text-xs focus:border-tertiary focus:ring-2 focus:ring-tertiary/10 outline-none transition-all"
-              placeholder="admin@techlabprecision.com"
+              placeholder="admin@iphonetamiratolyesi.com"
               required
             />
           </div>

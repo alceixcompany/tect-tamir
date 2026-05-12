@@ -233,7 +233,7 @@ const ServiceAreaDetailPage = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a
-              href="tel:+905461045900"
+              href="tel:+905513678134"
               className="lale-gold-button gap-2"
             >
               📞 Hemen Ara

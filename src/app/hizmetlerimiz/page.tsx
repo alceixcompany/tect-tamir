@@ -6,20 +6,6 @@ import { motion } from 'framer-motion';
 
 const services = [
   {
-    slug: 'agir-vasita-beyin-tamiri',
-    image: '/heavy_truck_ecu_repair_1778397685432.png',
-    title: 'Ağır Vasıta Beyin Tamiri',
-    description: 'Tır, kamyon ve otobüs kontrol ünitelerinde (ECU) çip seviyesi hassas müdahale ve onarım.',
-    features: ['EURO 6 Sistem Desteği', 'Parametre Programlama', 'Hata Kodu Temizleme']
-  },
-  {
-    slug: 'otomotiv-ecu-tamiri',
-    image: '/automotive_ecu_repair_1778397704368.png',
-    title: 'Otomotiv ECU Tamiri',
-    description: 'Binek araçların motor ve konfor beyinlerinde donanımsal onarım ve yazılım güncellemeleri.',
-    features: ['Immobilizer Onarımı', 'Airbag Beyin Tamiri', 'Yazılım Güncelleme']
-  },
-  {
     slug: 'iphone-anakart-tamiri',
     image: '/iphone_motherboard_repair_1778397775835.png',
     title: 'iPhone Anakart Tamiri',
@@ -27,25 +13,18 @@ const services = [
     features: ['Veri Kurtarma', 'NAND Değişimi', 'Audio IC Tamiri']
   },
   {
-    slug: 'elektronik-kart-tamiri',
-    image: '/pcb_card_repair_1778397751635.png',
-    title: 'Endüstriyel Kart Tamiri',
-    description: 'Üretim makineleri ve endüstriyel cihazların çok katmanlı PCB kartlarında profesyonel çözüm.',
-    features: ['PCB Rework', 'BGA Entegre Değişimi', 'Devre Analizi']
-  },
-  {
-    slug: 'abs-klima-beyni',
-    image: '/abs_klima_repair_1778397726542.png',
-    title: 'ABS / Klima Beyni Onarımı',
-    description: 'Güvenlik ve konfor ünitelerinde kronikleşmiş elektronik arızaların kalıcı onarımı.',
-    features: ['ABS Modül Tamiri', 'Klima Kontrol Onarımı', 'Sinyal Analizi']
-  },
-  {
     slug: 'mikro-lehimleme',
     image: '/micro_soldering_lab_1778397801389.png',
     title: 'Mikro Lehimleme Laboratuvarı',
     description: 'İleri seviye mikroskoplar altında gerçekleştirilen hassas mikro lehimleme ve reballing işlemleri.',
     features: ['BGA Reballing', 'SMD Entegre Montajı', 'Mikroskopik Onarım']
+  },
+  {
+    slug: 'elektronik-kart-tamiri',
+    image: '/pcb_card_repair_1778397751635.png',
+    title: 'Hassas Elektronik Kart Tamiri',
+    description: 'Bireysel ve kurumsal cihazların çok katmanlı PCB kartlarında profesyonel çözüm.',
+    features: ['PCB Rework', 'BGA Entegre Değişimi', 'Devre Analizi']
   }
 ];
 
@@ -56,7 +35,7 @@ const ServicesPage = () => {
       <section className="relative h-[45vh] min-h-[400px] w-full overflow-hidden flex items-end">
         <Image 
           src="/bga_rework_1778396487205.png"
-          alt="TECH-LAB BGA Rework"
+          alt="iPhone Tamir Atölyesi BGA Rework"
           fill
           className="object-cover opacity-40 brightness-75"
         />
@@ -145,7 +124,7 @@ const ServicesPage = () => {
             <Link href="/iletisim" className="btn-tech px-12 py-4">
               ANALİZ TALEBİ OLUŞTUR
             </Link>
-            <Link href="tel:+902125550123" className="btn-tech-outline px-12 py-4">
+            <Link href="tel:+905513678134" className="btn-tech-outline px-12 py-4">
               TEKNİK DESTEK HATTI
             </Link>
           </div>

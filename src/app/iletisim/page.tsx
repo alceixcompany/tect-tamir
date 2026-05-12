@@ -12,7 +12,7 @@ const ContactPage = () => {
       <section className="relative h-[40vh] min-h-[400px] w-full overflow-hidden flex items-end">
         <Image 
           src="/tech_lab_overview_1778397945364.png"
-          alt="TECH-LAB Laboratuvar"
+          alt="iPhone Tamir Atölyesi Laboratuvar"
           fill
           className="object-cover opacity-40 brightness-75 grayscale hover:grayscale-0 transition-all duration-1000"
         />
@@ -60,9 +60,9 @@ const ContactPage = () => {
 
             <div className="grid gap-6">
               {[
-                { icon: 'location_on', label: 'Laboratuvar Adresi', value: 'İkitelli OSB, Teknik Sanayi Sitesi, 14. Blok No: 542, Başakşehir/İstanbul' },
-                { icon: 'contact_support', label: 'Teknik Destek', value: '+90 (212) 555 01 23' },
-                { icon: 'alternate_email', label: 'E-Posta', value: 'teknik@techlabprecision.com' }
+                { icon: 'location_on', label: 'Laboratuvar Adresi', value: 'Esenler / İstanbul' },
+                { icon: 'contact_support', label: 'Teknik Destek', value: '+90 (551) 367 81 34' },
+                { icon: 'alternate_email', label: 'E-Posta', value: 'Zaferbicici34@gmail.com' }
               ].map((item, index) => (
                 <motion.div 
                   key={index}
@@ -148,17 +148,17 @@ const ContactPage = () => {
       <section className="max-w-container-max mx-auto px-4 md:px-margin-desktop mb-24">
         <div className="relative aspect-[21/9] border border-outline-variant overflow-hidden group">
           <iframe
-            src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3184.0400509927945!2d28.842329076039675!3d40.99229797135275!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNDDCsDU5JzMyLjMiTiAyOMKwNTAnNDEuNyJF!5e1!3m2!1str!2saz!4v1778048676704!5m2!1str!2saz"
+            src="https://www.google.com/maps/embed?pb=!1m17!1m12!1m3!1d3181.91326781458!2d28.880287076041974!3d41.036315971346724!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m2!1m1!2zNDHCsDAyJzEwLjciTiAyOMKwNTInNTguMyJF!5e1!3m2!1str!2saz!4v1778560712527!5m2!1str!2saz"
             width="100%"
             height="100%"
             style={{ border: 0 }}
             allowFullScreen
             loading="lazy"
-            title="TECH-LAB Location"
+            title="iPhone Tamir Atölyesi Konumu"
             className="filter contrast-125 grayscale opacity-40 group-hover:grayscale-0 group-hover:opacity-100 transition-all duration-1000"
           />
           <div className="absolute bottom-6 left-6 bg-background/80 backdrop-blur-md border border-outline-variant p-4 font-technical text-[9px] text-tertiary uppercase tracking-[0.3em]">
-            KOORDİNATLAR: 40°59'32.3"N 28°50'41.7"E
+            KOORDİNATLAR: 41°02'10.7"N 28°52'58.3"E
           </div>
         </div>
       </section>

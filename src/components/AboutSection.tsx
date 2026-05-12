@@ -10,7 +10,7 @@ const AboutSection = () => {
             <div className="relative z-10 border border-outline-variant overflow-hidden">
               <Image
                 src="/tech_lab_overview_1778397945364.png"
-                alt="TECH-LAB Laboratuvar Ortamı"
+                alt="iPhone Tamir Atölyesi Laboratuvar Ortamı"
                 width={800}
                 height={1000}
                 className="aspect-[4/5] object-cover transition-all duration-700"
@@ -34,7 +34,7 @@ const AboutSection = () => {
             </div>
             
             <p className="text-on-surface-variant leading-relaxed text-base lg:text-lg opacity-80">
-              TECH-LAB PRECISION olarak, modern elektroniğin en karmaşık sorunlarını çip seviyesinde çözüme ulaştırıyoruz. Sadece tamir etmiyoruz; sistemlerinizi orijinal performansına ve güvenilirliğine geri döndürüyoruz.
+              iPhone Tamir Atölyesi olarak, modern elektroniğin en karmaşık sorunlarını çip seviyesinde çözüme ulaştırıyoruz. Sadece tamir etmiyoruz; cihazlarınızı orijinal performansına ve güvenilirliğine geri döndürüyoruz.
             </p>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8 py-4">

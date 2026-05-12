@@ -51,37 +51,37 @@ const staticPages = [
 // Hizmetler (statik)
 const services = [
   {
-    url: '/hizmetlerimiz/genel-muhasebe',
+    url: '/hizmetlerimiz/agir-vasita-beyin-tamiri',
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.8,
   },
   {
-    url: '/hizmetlerimiz/vergi-beyanname',
+    url: '/hizmetlerimiz/otomotiv-ecu-tamiri',
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.8,
   },
   {
-    url: '/hizmetlerimiz/bordro-sgk',
+    url: '/hizmetlerimiz/iphone-anakart-tamiri',
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.8,
   },
   {
-    url: '/hizmetlerimiz/sirket-kurulusu',
+    url: '/hizmetlerimiz/elektronik-kart-tamiri',
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.8,
   },
   {
-    url: '/hizmetlerimiz/e-defter-e-fatura',
+    url: '/hizmetlerimiz/abs-klima-beyni',
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.8,
   },
   {
-    url: '/hizmetlerimiz/mali-danismanlik',
+    url: '/hizmetlerimiz/mikro-lehimleme',
     lastModified: new Date(),
     changeFrequency: 'monthly' as const,
     priority: 0.8,
@@ -89,7 +89,7 @@ const services = [
 ]
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://www.demirbasmuhasebe.com'
+  const baseUrl = 'https://www.iphonetamiratolyesi.com'
   
   try {
     // Firebase'den dinamik verileri al

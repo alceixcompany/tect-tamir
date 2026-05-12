@@ -22,14 +22,14 @@ interface AuthState {
 
 // Statik admin bilgileri
 const STATIC_ADMIN = {
-  email: 'demirbas@admin.com',
-  password: 'Demirbas123',
+  email: 'admin@iphonetamiratolyesi.com',
+  password: 'Admin123',
   uid: 'static-admin-uid',
-  displayName: 'Demirbaş Admin'
+  displayName: 'iPhone Tamir Admin'
 };
 
 // LocalStorage key for auth persistence
-const AUTH_STORAGE_KEY = 'demirbas_auth_state';
+const AUTH_STORAGE_KEY = 'iphonetamir_auth_state';
 
 // Helper functions for localStorage
 const saveAuthToStorage = (user: User | null) => {
