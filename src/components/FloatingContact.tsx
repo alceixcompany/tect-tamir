@@ -1,9 +1,8 @@
 'use client'
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { usePathname } from 'next/navigation';
 
 const FloatingContact = () => {
-  const [isOpen, setIsOpen] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
   const pathname = usePathname();
   const isAdminPage = pathname?.startsWith('/admin') || false;
@@ -11,10 +10,6 @@ const FloatingContact = () => {
   useEffect(() => {
     setIsMounted(true);
   }, []);
-
-  const toggleMenu = () => {
-    setIsOpen(!isOpen);
-  };
 
   const contactOptions = [
     {
@@ -25,8 +20,6 @@ const FloatingContact = () => {
         </svg>
       ),
       href: 'https://wa.me/905513678134',
-      color: 'bg-[var(--lale-emerald)] border border-[rgba(212,175,55,0.42)]',
-      angle: 220 // Sol üst (çeyrek daire)
     },
     {
       name: 'Telefon',
@@ -36,8 +29,6 @@ const FloatingContact = () => {
         </svg>
       ),
       href: 'tel:+905513678134',
-      color: 'bg-[var(--lale-emerald)] border border-[rgba(212,175,55,0.42)]',
-      angle: 260 // Sol üst (çeyrek daire)
     },
     {
       name: 'Instagram',
@@ -47,8 +38,6 @@ const FloatingContact = () => {
         </svg>
       ),
       href: 'https://www.instagram.com/',
-      color: 'bg-[var(--lale-emerald)] border border-[rgba(212,175,55,0.42)]',
-      angle: 180 // Sol (çeyrek daire)
     }
   ];
 
@@ -62,55 +51,23 @@ const FloatingContact = () => {
     return null;
   }
 
-  const radius = 110; // Daire yarıçapı
-
   return (
     <div className="fixed bottom-8 right-8 md:bottom-10 md:right-10 z-[100]">
-      {/* Contact Options - Quarter Circle Layout */}
-      <div className="relative">
-        {contactOptions.map((option, index) => {
-          const angleRad = (option.angle * Math.PI) / 180;
-          const x = Math.cos(angleRad) * radius;
-          const y = Math.sin(angleRad) * radius;
-          
-          return (
-            <a
-              key={option.name}
-              href={option.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className={`bg-surface-container border border-tertiary/40 text-tertiary hover:bg-tertiary hover:text-on-tertiary w-12 h-12 rounded-full flex items-center justify-center shadow-[0_0_15px_rgba(173,199,255,0.2)] hover:shadow-[0_0_20px_rgba(173,199,255,0.6)] transition-all duration-500 ease-out transform absolute ${
-                isOpen 
-                  ? 'opacity-100 scale-100' 
-                  : 'opacity-0 scale-0 pointer-events-none'
-              } hover:scale-110`}
-              style={{
-                left: `${x + 32}px`, // 32px = ana butonun yarı genişliği
-                top: `${y + 32}px`, // 32px = ana butonun yarı yüksekliği
-                transitionDelay: isOpen ? `${index * 100}ms` : '0ms',
-                zIndex: isOpen ? 20 : -1
-              }}
-              title={option.name}
-            >
-              {option.icon}
-            </a>
-          );
-        })}
+      <div className="flex flex-col items-center gap-3">
+        {contactOptions.map((option) => (
+          <a
+            key={option.name}
+            href={option.href}
+            target={option.href.startsWith('http') ? '_blank' : undefined}
+            rel={option.href.startsWith('http') ? 'noopener noreferrer' : undefined}
+            className="flex h-12 w-12 items-center justify-center rounded-full border border-tertiary/40 bg-surface-container text-tertiary shadow-[0_0_15px_rgba(173,199,255,0.2)] transition-all duration-300 hover:scale-110 hover:bg-tertiary hover:text-on-tertiary hover:shadow-[0_0_20px_rgba(173,199,255,0.6)] active:scale-95"
+            title={option.name}
+            aria-label={option.name}
+          >
+            {option.icon}
+          </a>
+        ))}
       </div>
-
-      {/* Main Toggle Button */}
-      <button
-        onClick={toggleMenu}
-        className="relative z-30 flex h-16 w-16 cursor-pointer items-center justify-center rounded-full bg-[#96b0e6] text-on-tertiary shadow-[0_0_15px_rgba(173,199,255,0.3)] transition-all duration-300 hover:scale-110 hover:bg-tertiary hover:shadow-[0_0_25px_rgba(173,199,255,0.5)] active:scale-95"
-        title="İletişim"
-        type="button"
-      >
-        {isOpen ? (
-          <span className="material-symbols-outlined text-3xl">close</span>
-        ) : (
-          <span className="material-symbols-outlined text-3xl animate-pulse">forum</span>
-        )}
-      </button>
     </div>
   );
 };
