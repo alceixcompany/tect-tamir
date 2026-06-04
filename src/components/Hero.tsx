@@ -1,6 +1,7 @@
 'use client'
 import React from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 import { motion } from 'framer-motion';
 
 const Hero = () => {
@@ -72,12 +73,12 @@ const Hero = () => {
             </div>
 
             <div className="flex flex-wrap gap-4">
-              <button className="btn-tech px-8 py-4 text-[10px] uppercase tracking-[0.3em] bg-white text-black hover:bg-tertiary hover:text-white transition-all">
+              <Link href="/iletisim" className="btn-tech px-8 py-4 text-[10px] uppercase tracking-[0.3em] bg-white text-black hover:bg-tertiary hover:text-white transition-all">
                 TEKNİK ANALİZ TALEBİ
-              </button>
-              <button className="px-8 py-4 border border-white/20 text-white/80 font-technical text-[9px] tracking-widest hover:bg-white/5 transition-all">
+              </Link>
+              <Link href="/hizmetlerimiz" className="px-8 py-4 border border-white/20 text-white/80 font-technical text-[9px] tracking-widest hover:bg-white/5 transition-all">
                 HİZMETLERİMİZ
-              </button>
+              </Link>
             </div>
           </motion.div>
         </div>

@@ -1,282 +1,131 @@
-'use client'
-import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
-import { useParams } from 'next/navigation';
-import { collection, getDocs, query, where, limit } from 'firebase/firestore';
-import { db } from '@/lib/firebase';
+import Link from 'next/link';
+import { notFound } from 'next/navigation';
+import { getGalleryImages, getServiceAreaBySlug } from '@/lib/firestore-data';
+import { titleFromSlug } from '@/lib/slug';
+import { siteConfig } from '@/lib/seo';
 
-interface ServiceArea {
-  id: string;
-  name: string;
-  slug: string;
-  description: string;
-  content: string;
-  imageUrl: string;
-  isActive: boolean;
-  order: number;
-  maps?: Array<{
-    id: string;
-    url: string;
-    title: string;
-  }>;
+export const revalidate = 3600;
+
+function fallbackArea(slug: string) {
+  const name = titleFromSlug(slug);
+
+  return {
+    id: slug,
+    name,
+    slug,
+    description: `${name} bölgesinde iPhone anakart tamiri, mikro lehimleme, veri kurtarma ve elektronik kart onarımı için teknik analiz desteği.`,
+    content: `<p>${name} ve çevresinden gelen cihazlar laboratuvarımızda mikroskop altında incelenir. Sıvı teması, açılmama, şebeke sorunu, kısa devre, NAND ve entegre arızalarında önce arıza tespiti yapılır, ardından onarım süreci net şekilde paylaşılır.</p><p>İstanbul Esenler merkezli teknik laboratuvarımıza randevu ile cihaz teslim edebilir veya uygun durumlarda kargo ile ön analiz talebi oluşturabilirsiniz.</p>`,
+    imageUrl: '/realistic_hero.png',
+    isActive: true,
+    order: 0,
+  };
 }
 
-interface GalleryImage {
-  id: string;
-  url: string;
-  alt: string;
-  caption?: string;
-}
-
-const ServiceAreaDetailPage = () => {
-  const params = useParams();
-  const slug = params.slug as string;
-  
-  const [serviceArea, setServiceArea] = useState<ServiceArea | null>(null);
-  const [galleryImages, setGalleryImages] = useState<GalleryImage[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchServiceArea = async () => {
-      try {
-        // Fetch service area by slug
-        const q = query(
-          collection(db, 'hizmet_bolgeleri'),
-          where('slug', '==', slug),
-          where('isActive', '==', true)
-        );
-        const querySnapshot = await getDocs(q);
-        
-        if (!querySnapshot.empty) {
-          const doc = querySnapshot.docs[0];
-          const areaData = { id: doc.id, ...doc.data() } as ServiceArea;
-          
-          
-          setServiceArea(areaData);
-          
-          // Fetch some gallery images for this area
-          const galleryQuery = query(
-            collection(db, 'galeri'),
-            where('isActive', '==', true),
-            limit(6)
-          );
-          const gallerySnapshot = await getDocs(galleryQuery);
-          const images = gallerySnapshot.docs.map(doc => ({
-            id: doc.id,
-            ...doc.data()
-          })) as GalleryImage[];
-          setGalleryImages(images);
-        }
-      } catch (error) {
-        console.error('Error fetching service area:', error);
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    if (slug) {
-      fetchServiceArea();
-    }
-  }, [slug]);
-
-  if (loading) {
-    return (
-      <div className="lale-dark-section min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-12 h-12 border-4 border-[var(--lale-gold)] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-[rgba(251,250,246,0.72)]">Yükleniyor...</p>
-        </div>
-      </div>
-    );
-  }
+export default async function ServiceAreaDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const serviceArea = (await getServiceAreaBySlug(slug)) || fallbackArea(slug);
+  const galleryImages = await getGalleryImages(6);
 
   if (!serviceArea) {
-    return (
-      <div className="lale-dark-section min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-6xl mb-4">❌</div>
-          <h1 className="text-2xl font-bold text-[var(--lale-ivory)] mb-2">Hizmet Bölgesi Bulunamadı</h1>
-          <p className="text-[rgba(251,250,246,0.68)]">Aradığınız hizmet bölgesi mevcut değil veya aktif değil.</p>
-        </div>
-      </div>
-    );
+    notFound();
   }
 
   return (
-    <div className="page-flow min-h-screen bg-[var(--lale-emerald-deep)]">
-      <section className="lale-page-hero py-20 text-white">
-        <div className="absolute inset-0">
-          <Image
-            src={serviceArea.imageUrl || '/img/sayfa1.jpg'}
-            alt={serviceArea.name}
-            fill
-            priority
-            className="object-cover object-center"
-            sizes="100vw"
-            quality={85}
-          />
-        </div>
-        
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,35,31,0.70),rgba(6,35,31,0.82))]"></div>
-        
-        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-            <span className="text-[var(--lale-gold)]">{serviceArea.name}</span>
+    <main className="min-h-screen bg-background text-on-background">
+      <section className="relative h-[50vh] min-h-[460px] w-full overflow-hidden flex items-end">
+        <Image
+          src={serviceArea.imageUrl || '/realistic_hero.png'}
+          alt={`${serviceArea.name} iPhone tamiri ve mikro lehimleme`}
+          fill
+          priority
+          className="object-cover opacity-45 brightness-75"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/30 to-transparent" />
+        <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop relative z-10 w-full pb-16">
+          <Link href="/hizmet-bolgelerimiz" className="inline-flex items-center gap-2 text-[10px] font-bold text-tertiary uppercase tracking-[0.4em] mb-8 hover:opacity-70 transition-all">
+            <span className="material-symbols-outlined text-sm">west</span>
+            Hizmet Bölgelerine Dön
+          </Link>
+          <span className="font-technical text-tertiary tracking-[0.4em] uppercase text-[10px] mb-4 block font-bold">Bölgesel Teknik Destek</span>
+          <h1 className="text-5xl md:text-7xl font-display font-bold text-on-surface uppercase tracking-tighter">
+            {serviceArea.name} <span className="text-tertiary">iPhone Tamiri</span>
           </h1>
-          <p className="text-xl md:text-2xl text-[rgba(251,250,246,0.74)] max-w-2xl mx-auto">
+          <p className="mt-6 text-lg md:text-xl text-on-surface-variant/80 leading-relaxed max-w-3xl font-display uppercase tracking-tight">
             {serviceArea.description}
           </p>
         </div>
       </section>
 
-      <section className="lale-dark-section py-16">
-        <div className="max-w-4xl mx-auto px-4">
-          <div className="prose prose-lg max-w-none">
-            <div 
-              className="text-[rgba(251,250,246,0.72)] leading-relaxed"
+      <section className="max-w-container-max mx-auto px-4 md:px-margin-desktop py-20">
+        <div className="grid lg:grid-cols-12 gap-16">
+          <article className="lg:col-span-8">
+            <div
+              className="article-content text-lg leading-relaxed text-on-surface-variant space-y-8"
               dangerouslySetInnerHTML={{ __html: serviceArea.content }}
             />
-          </div>
-          
-          {/* Maps Section - İçeriğin altında */}
-          {serviceArea.maps && serviceArea.maps.length > 0 && (
-            <div className="mt-12">
-              <div className="text-center mb-8">
-                <h2 className="text-2xl md:text-3xl font-bold text-[var(--lale-ivory)] mb-4">
-                  {serviceArea.name} Bölgesi Konumu
-                </h2>
-                <p className="text-lg text-[rgba(251,250,246,0.68)]">
-                  Hizmet verdiğimiz bölgenin detaylı haritası
-                </p>
-              </div>
 
-              <div className={`grid gap-6 ${
-                serviceArea.maps?.length === 1 
-                  ? 'grid-cols-1' 
-                  : serviceArea.maps?.length === 2 
-                    ? 'grid-cols-1 md:grid-cols-2' 
-                    : 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3'
-              }`}>
-                {serviceArea.maps?.map((map) => (
-                  <div key={map.id} className="lale-card-dark rounded-xl shadow-lg overflow-hidden border">
-                    <div className="p-4">
-                      <div className="w-full h-64 rounded-lg overflow-hidden">
-                        <iframe
-                          src={map.url}
-                          width="100%"
-                          height="100%"
-                          style={{ border: 0 }}
-                          allowFullScreen
-                          loading="lazy"
-                          referrerPolicy="no-referrer-when-downgrade"
-                          title={map.title}
-                          className="w-full h-full"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                ))}
+            <div className="mt-14 grid sm:grid-cols-2 gap-4">
+              {[
+                'iPhone anakart tamiri',
+                'Sıvı teması ve kısa devre analizi',
+                'Mikro lehimleme ve BGA reballing',
+                'Veri kurtarma ön incelemesi',
+              ].map((item) => (
+                <div key={item} className="flex items-center gap-4 p-5 rounded-md border border-outline-variant/30 bg-surface-container/50">
+                  <span className="material-symbols-outlined text-tertiary text-lg">check_circle</span>
+                  <span className="text-[10px] font-technical font-bold uppercase tracking-widest text-on-surface-variant/80">{item}</span>
+                </div>
+              ))}
+            </div>
+          </article>
+
+          <aside className="lg:col-span-4">
+            <div className="sticky top-32 bg-surface-container border border-outline-variant p-10 rounded-md">
+              <h2 className="text-xl font-display font-bold text-on-surface uppercase tracking-tight mb-6">Hızlı İletişim</h2>
+              <div className="space-y-5 text-sm text-on-surface-variant mb-8">
+                <p><strong className="text-on-surface">Adres:</strong> {siteConfig.address}</p>
+                <p><strong className="text-on-surface">Telefon:</strong> {siteConfig.phone}</p>
+                <p><strong className="text-on-surface">Hizmet:</strong> {serviceArea.name} ve çevresi</p>
+              </div>
+              <div className="flex flex-col gap-3">
+                <Link href="/iletisim" className="btn-tech py-4 text-center text-[10px]">
+                  Analiz Talebi Gönder
+                </Link>
+                <Link href={`tel:${siteConfig.phoneHref}`} className="btn-tech-outline py-4 text-center text-[10px]">
+                  Hemen Ara
+                </Link>
               </div>
             </div>
-          )}
+          </aside>
         </div>
       </section>
 
       {galleryImages.length > 0 && (
-        <section className="lale-dark-section py-16">
-          <div className="max-w-6xl mx-auto px-4">
-            <div className="text-center mb-12">
-              <h2 className="text-3xl md:text-4xl font-bold text-[var(--lale-ivory)] mb-4">
-                {serviceArea.name} Bölgesi Çalışmalarımızdan
-              </h2>
-              <p className="text-lg text-[rgba(251,250,246,0.68)]">
-                Bu bölgede gerçekleştirdiğimiz projelerden örnekler
-              </p>
-            </div>
+        <section className="max-w-container-max mx-auto px-4 md:px-margin-desktop py-16">
+          <h2 className="text-3xl md:text-4xl font-display font-bold text-on-surface mb-10 uppercase tracking-tighter">
+            Laboratuvar <span className="text-tertiary">Çalışmalarımız</span>
+          </h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+            {galleryImages.map((image) => {
+              const src = image.url || image.imageUrl || '/lab_workstation_1778396468117.png';
+              const alt = image.alt || image.title || `${serviceArea.name} iPhone tamiri laboratuvar çalışması`;
 
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {galleryImages.map((image) => (
-                <div
-                  key={image.id}
-                  className="group cursor-pointer overflow-hidden rounded-xl lale-card-dark hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2"
-                  onClick={() => setSelectedImage(image.url)}
-                >
-                  <div className="relative h-64 overflow-hidden">
-                    <Image
-                      src={image.url}
-                      alt={image.alt}
-                      fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-300"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                    />
-                    {image.caption && (
-                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
-                        <p className="text-white text-sm font-medium">{image.caption}</p>
-                      </div>
-                    )}
-                  </div>
+              return (
+                <div key={image.id} className="relative h-64 overflow-hidden border border-outline-variant bg-surface-container">
+                  <Image
+                    src={src}
+                    alt={alt}
+                    fill
+                    className="object-cover opacity-80"
+                    sizes="(max-width: 768px) 100vw, 33vw"
+                  />
                 </div>
-              ))}
-            </div>
+              );
+            })}
           </div>
         </section>
       )}
-
-      <section className="lale-dark-section py-16">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-[var(--lale-ivory)] mb-6">
-            {serviceArea.name} Bölgesinde Hizmet mi Arıyorsunuz?
-          </h2>
-          <p className="text-xl text-[rgba(251,250,246,0.72)] mb-8">
-            Hemen arayın, en kısa sürede yanınızdayız!
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="tel:+905513678134"
-              className="lale-gold-button gap-2"
-            >
-              📞 Hemen Ara
-            </a>
-            <a
-              href="https://wa.me/905461045900/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="lale-outline-button gap-2"
-            >
-              💬 WhatsApp
-            </a>
-          </div>
-        </div>
-      </section>
-
-      {/* Image Modal */}
-      {selectedImage && (
-        <div
-          className="fixed inset-0 bg-black/90 z-50 flex items-center justify-center p-4"
-          onClick={() => setSelectedImage(null)}
-        >
-          <div className="relative max-w-4xl max-h-full">
-            <Image
-              src={selectedImage}
-              alt="Gallery Image"
-              width={800}
-              height={600}
-              className="object-contain max-h-full"
-            />
-            <button
-              onClick={() => setSelectedImage(null)}
-              className="absolute top-4 right-4 text-white bg-black/50 rounded-full p-2 hover:bg-black/70 transition-colors duration-300"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-        </div>
-      )}
-    </div>
+    </main>
   );
-};
-
-export default ServiceAreaDetailPage;
+}

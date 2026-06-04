@@ -11,7 +11,7 @@ const ContactPage = () => {
       {/* Contact Hero Section */}
       <section className="relative h-[40vh] min-h-[400px] w-full overflow-hidden flex items-end">
         <Image 
-          src="/tech_lab_overview_1778397945364.png"
+          src="/tech_lab_overview_v2.png"
           alt="iPhone Tamir Atölyesi Laboratuvar"
           fill
           className="object-cover opacity-40 brightness-75 grayscale hover:grayscale-0 transition-all duration-1000"

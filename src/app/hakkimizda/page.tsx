@@ -56,7 +56,7 @@ const AboutPage = () => {
           <div className="lg:w-1/2 relative">
             <div className="relative z-10 border border-outline-variant overflow-hidden group">
               <Image
-                src="/tech_lab_overview_1778397945364.png"
+                src="/tech_lab_overview_v2.png"
                 alt="iPhone Tamir Atölyesi Laboratuvarı"
                 width={800}
                 height={600}

@@ -5,18 +5,21 @@ import Image from 'next/image';
 
 const services = [
   {
+    slug: 'iphone-anakart-tamiri',
     icon: 'smartphone',
     image: '/iphone_motherboard_repair_1778397775835.png',
     title: 'iPhone Anakart Tamiri',
     description: 'Sıvı teması, şebeke sorunları ve açılmama gibi kritik iPhone anakart arızalarında mikro cerrahi.'
   },
   {
+    slug: 'mikro-lehimleme',
     icon: 'biotech',
     image: '/micro_soldering_lab_1778397801389.png',
     title: 'Mikro Lehimleme',
     description: 'Çip değişimi, entegre onarımı ve BGA reballing işlemlerinde laboratuvar hassasiyeti.'
   },
   {
+    slug: 'elektronik-kart-tamiri',
     icon: 'memory',
     image: '/pcb_card_repair_1778397751635.png',
     title: 'Elektronik Kart Tamiri',
@@ -65,7 +68,7 @@ const Services = () => {
                 <h3 className="text-xl font-display font-bold mb-3 text-on-surface">{service.title}</h3>
                 <p className="text-on-surface-variant text-sm mb-6 leading-relaxed h-12 line-clamp-2">{service.description}</p>
                 <Link 
-                  href="/hizmetlerimiz" 
+                  href={`/hizmetlerimiz/${service.slug}`}
                   className="font-technical text-tertiary text-[10px] tracking-[0.2em] flex items-center gap-2 group-hover:gap-4 transition-all"
                 >
                   DETAYLARI İNCELE <span className="material-symbols-outlined text-sm">arrow_forward</span>

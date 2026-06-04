@@ -13,8 +13,14 @@ const servicesData = {
     icon: '01',
     description: 'Sıvı teması, şebeke ve enerji sorunlarında mikro-cerrahi hassasiyetinde anakart onarımı.',
     features: ['Veri Kurtarma', 'NAND Değişimi', 'Audio IC Tamiri', 'FaceID Onarımı'],
-    overview: 'Mikro-elektronik dünyasının en hassas alanı olan iPhone anakartları, laboratuvarımızda yüksek çözünürlüklü mikroskoplar altında onarılmaktadır.',
+    overview: 'Mikro-elektronik dünyasının en hassas alanı olan iPhone anakartları, laboratuvarımızda yüksek çözünürlüklü mikroskoplar altında incelenir. Açılmayan cihaz, sıvı teması, şebeke yok, şarj almama, kısa devre ve veri erişimi problemlerinde önce ölçüm ve termal analiz yapılır; ardından onarım riski ve başarı ihtimali net şekilde paylaşılır.',
     whyChoose: ['Mikro-Cerrahi Ekipmanlar', 'Veri Güvenliği Önceliği', 'Yüksek Başarı Oranı'],
+    searchIntent: [
+      'Sıvı temaslı iPhone anakart temizliği ve oksit analizi',
+      'Açılmayan iPhone için güç hattı ve kısa devre tespiti',
+      'Şebeke, Wi-Fi, ses ve Face ID devre arızalarının incelenmesi',
+      'Veri kurtarma öncelikli anakart müdahaleleri',
+    ],
     process: [
       { step: 1, title: 'Mikroskopik İnceleme', description: 'Kart üzerindeki oksitlenme ve kısa devre alanları saptanır.' },
       { step: 2, title: 'Katman Analizi', description: 'Çok katmanlı kart yapısındaki iç kopukluklar kontrol edilir.' },
@@ -28,8 +34,14 @@ const servicesData = {
     icon: '02',
     description: 'İleri seviye mikroskoplar altında gerçekleştirilen hassas mikro lehimleme ve reballing işlemleri.',
     features: ['BGA Reballing', 'SMD Entegre Montajı', 'Mikroskopik Onarım', 'İnce Hat Jumper Uygulaması'],
-    overview: 'Standart lehimleme tekniklerinin yetersiz kaldığı mikron seviyesindeki işlemler için uzman ekibimizle hizmet veriyoruz.',
+    overview: 'Standart lehimleme tekniklerinin yetersiz kaldığı mikron seviyesindeki işlemler için uzman ekibimizle hizmet veriyoruz. BGA reballing, entegre değişimi, ince hat jumper uygulaması ve çok katmanlı kart müdahalelerinde kontrollü sıcaklık profilleri ve ESD güvenli çalışma ortamı kullanılır.',
     whyChoose: ['JBC & Metcal Ekipmanlar', 'Sertifikalı Teknik Personel', 'Mikron Seviyesinde Hassasiyet'],
+    searchIntent: [
+      'BGA reballing ve çip altı bağlantı yenileme',
+      'SMD entegre değişimi ve mikroskop altında hat onarımı',
+      'Kopmuş pad, ince hat ve jumper uygulamaları',
+      'Onarım sonrası stabilite ve fonksiyon testleri',
+    ],
     process: [
       { step: 1, title: 'Hazırlık', description: 'Çalışma alanı ve komponentler ESD korumalı ortamda hazırlanır.' },
       { step: 2, title: 'Mikro-Müdahale', description: 'Yüksek çözünürlüklü mikroskop altında hassas lehimleme yapılır.' },
@@ -43,8 +55,14 @@ const servicesData = {
     icon: '03',
     description: 'Bireysel ve kurumsal cihazların çok katmanlı PCB kartlarında profesyonel çözüm.',
     features: ['PCB Rework', 'BGA Entegre Değişimi', 'Devre Analizi', 'SMD Montajı'],
-    overview: 'Hassas elektronik sistemlerin duruş süresini en aza indirmek için kritik önem taşıyan kontrol kartlarını hızla onarıyoruz.',
+    overview: 'Hassas elektronik sistemlerin duruş süresini en aza indirmek için kritik önem taşıyan kontrol kartlarını teknik ölçüm, devre analizi ve çip seviyesinde müdahalelerle onarıyoruz. Endüstriyel kontrol kartları, otomasyon devreleri, güç kartları ve çok katmanlı PCB arızalarında sistematik arıza tespiti yapılır.',
     whyChoose: ['Gelişmiş Parça Stoğu', 'Yerinde Analiz İmkanı', 'Kritik Sistem Tecrübesi'],
+    searchIntent: [
+      'Çok katmanlı PCB kart arıza tespiti',
+      'Endüstriyel kontrol kartı ve güç devresi onarımı',
+      'Yanmış komponent, kısa devre ve besleme hattı analizi',
+      'BGA entegre değişimi ve yük altında test',
+    ],
     process: [
       { step: 1, title: 'Devre Şeması Analizi', description: 'Kartın çalışma prensibi ve kritik noktaları belirlenir.' },
       { step: 2, title: 'Kritik Komponent Testi', description: 'Hassas ölçüm cihazları ile parçalar incelenir.' },
@@ -118,6 +136,17 @@ export default function ServiceDetailPage() {
                 <p className="text-lg leading-relaxed text-on-surface-variant/70 font-display">
                   {service.overview}
                 </p>
+                <div className="bg-surface-container/40 border border-outline-variant/30 p-8 rounded-md">
+                  <h3 className="text-xl font-display font-bold text-on-surface uppercase tracking-tight mb-6">Bu Hizmette Neleri İnceliyoruz?</h3>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {service.searchIntent.map((item) => (
+                      <div key={item} className="flex gap-4">
+                        <span className="material-symbols-outlined text-tertiary text-lg mt-0.5">done_all</span>
+                        <p className="text-xs leading-relaxed text-on-surface-variant font-technical uppercase tracking-wider">{item}</p>
+                      </div>
+                    ))}
+                  </div>
+                </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-6">
                   {service.features.map((item) => (
                     <div key={item} className="flex items-start gap-4 p-5 rounded-md border border-outline-variant/30 bg-surface-container/50 group hover:border-tertiary/30 transition-all">
@@ -184,6 +213,21 @@ export default function ServiceDetailPage() {
                   <Link href="/iletisim" className="btn-tech w-full py-5 text-xs font-bold tracking-[0.3em] block rounded-md">
                     ANALİZ BAŞLAT
                   </Link>
+                </div>
+
+                <div className="bg-background border border-outline-variant/40 p-8 rounded-md">
+                  <h3 className="text-lg font-display font-bold text-on-surface uppercase tracking-tight mb-5">İlgili Sayfalar</h3>
+                  <div className="space-y-3">
+                    <Link href="/hizmet-bolgelerimiz" className="block text-xs font-technical uppercase tracking-widest text-on-surface-variant hover:text-tertiary transition-colors">
+                      İstanbul Hizmet Bölgeleri
+                    </Link>
+                    <Link href="/haberler" className="block text-xs font-technical uppercase tracking-widest text-on-surface-variant hover:text-tertiary transition-colors">
+                      Teknik Analizler
+                    </Link>
+                    <Link href="/galeri" className="block text-xs font-technical uppercase tracking-widest text-on-surface-variant hover:text-tertiary transition-colors">
+                      Laboratuvar Görselleri
+                    </Link>
+                  </div>
                 </div>
               </div>
             </div>

@@ -6,7 +6,7 @@ import { collection, getDocs } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
 const fallbackGallery = [
-  { id: '1', imageUrl: '/lab_workstation_1778396468117.png', title: 'Teknik Çalışma İstasyonu' },
+  { id: '1', imageUrl: '/modern_phone_repair_lab.png', title: 'Modern iPhone Onarım İstasyonu' },
   { id: '2', imageUrl: '/bga_rework_1778396487205.png', title: 'BGA Rework İstasyonu' },
   { id: '3', imageUrl: '/clean_room_facility_1778396507960.png', title: 'Temiz Oda Tesisi' }
 ];

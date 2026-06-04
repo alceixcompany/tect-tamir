@@ -9,7 +9,7 @@ const AboutSection = () => {
           <div className="relative w-full lg:w-1/2 group order-2 lg:order-1">
             <div className="relative z-10 border border-outline-variant overflow-hidden">
               <Image
-                src="/tech_lab_overview_1778397945364.png"
+                src="/tech_lab_overview_v2.png"
                 alt="iPhone Tamir Atölyesi Laboratuvar Ortamı"
                 width={800}
                 height={1000}

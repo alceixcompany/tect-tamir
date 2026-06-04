@@ -1,312 +1,116 @@
-'use client'
-import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { db } from '@/lib/firebase';
-import { collection, getDocs } from 'firebase/firestore';
+import { getActiveServiceAreas } from '@/lib/firestore-data';
+import { fallbackServiceAreas } from '@/lib/seo';
 
-interface ServiceArea {
-  id: string;
-  name: string;
-  slug: string;
-  description: string;
-  content: string;
-  imageUrl: string;
-  isActive: boolean;
-  order: number;
-  createdAt: string;
-  updatedAt: string;
-}
+export const revalidate = 3600;
 
-interface GalleryItem {
-  id: string;
-  title: string;
-  description: string;
-  imageUrl: string;
-  thumbnailUrl: string;
-  isActive: boolean;
-  isFeatured: boolean;
-  order: number;
-  createdAt: string;
-}
+const fallbackAreas = [
+  {
+    id: fallbackServiceAreas[0].slug,
+    name: fallbackServiceAreas[0].name,
+    slug: fallbackServiceAreas[0].slug,
+    description: 'Esenler ve çevresinde iPhone anakart tamiri, sıvı teması, veri kurtarma ve mikro lehimleme desteği.',
+    imageUrl: '/realistic_hero.png',
+  },
+  {
+    id: fallbackServiceAreas[1].slug,
+    name: fallbackServiceAreas[1].name,
+    slug: fallbackServiceAreas[1].slug,
+    description: 'Bağcılar bölgesinden gelen cihazlar için laboratuvar ortamında çip seviyesinde onarım süreçleri.',
+    imageUrl: '/micro_soldering_lab_1778397801389.png',
+  },
+  {
+    id: fallbackServiceAreas[2].slug,
+    name: fallbackServiceAreas[2].name,
+    slug: fallbackServiceAreas[2].slug,
+    description: 'Güngören iPhone anakart arızaları, şebeke sorunları ve veri kurtarma talepleri için teknik analiz.',
+    imageUrl: '/iphone_motherboard_repair_1778397775835.png',
+  },
+  {
+    id: fallbackServiceAreas[3].slug,
+    name: fallbackServiceAreas[3].name,
+    slug: fallbackServiceAreas[3].slug,
+    description: 'İstanbul genelinden kargo veya randevu ile gelen elektronik kart ve iPhone anakart onarımları.',
+    imageUrl: '/pcb_card_repair_1778397751635.png',
+  },
+];
 
-const ServiceAreasPage = () => {
-  const [serviceAreas, setServiceAreas] = useState<ServiceArea[]>([]);
-  const [galleryItems, setGalleryItems] = useState<GalleryItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        setError(null);
-        
-        // Fetch service areas from Firestore
-        const areasSnapshot = await getDocs(collection(db, 'hizmet_bolgeleri'));
-        const areasData = areasSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as ServiceArea[];
-        
-        // Filter active areas and sort by order
-        const activeAreas = areasData.filter(area => area.isActive);
-        activeAreas.sort((a, b) => (a.order || 0) - (b.order || 0));
-        
-        setServiceAreas(activeAreas);
-
-        // Fetch gallery items from Firestore and get last 3
-        try {
-          const gallerySnapshot = await getDocs(collection(db, 'gallery_items'));
-          const galleryData = gallerySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })) as GalleryItem[];
-          
-          // Filter active items and get last 3
-          const activeItems = galleryData.filter(item => item.isActive);
-          
-          // Sort by creation date (newest first) and get last 3
-          const sortedItems = activeItems.sort((a, b) => 
-            new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
-          );
-          
-          // Get last 3 items (most recent)
-          setGalleryItems(sortedItems.slice(-3));
-        } catch (galleryError) {
-          console.error('Galeri verisi yüklenirken hata:', galleryError);
-          // Continue without gallery data
-          setGalleryItems([]);
-        }
-        
-      } catch (error) {
-        console.error('Veri yüklenirken hata:', error);
-        setError('Veri yüklenirken hata oluştu');
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchData();
-  }, []);
-
-  if (loading) {
-    return (
-      <div className="lale-dark-section min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-12 h-12 border-4 border-[var(--lale-gold)] border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-[rgba(251,250,246,0.72)]">Yükleniyor...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div className="lale-dark-section min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="text-6xl mb-4">⚠️</div>
-          <h3 className="text-xl font-semibold text-[var(--lale-ivory)] mb-2">Hata Oluştu</h3>
-          <p className="text-[rgba(251,250,246,0.68)] mb-4">{error}</p>
-          <button
-            onClick={() => window.location.reload()}
-            className="lale-gold-button"
-          >
-            Tekrar Dene
-          </button>
-        </div>
-      </div>
-    );
-  }
+export default async function ServiceAreasPage() {
+  const serviceAreas = await getActiveServiceAreas();
+  const areas = serviceAreas.length > 0 ? serviceAreas : fallbackAreas;
 
   return (
-    <div className="page-flow min-h-screen bg-[var(--lale-emerald-deep)]">
-      <section className="lale-page-hero py-20 text-white">
-        <div className="absolute inset-0">
-          <Image
-            src="/banner/hero_bg_home.png"
-            alt="Hizmet Bölgelerimiz Arka Plan"
-            fill
-            priority
-            className="object-cover object-center"
-            sizes="100vw"
-            quality={85}
-          />
-        </div>
-        
-        <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(6,35,31,0.70),rgba(6,35,31,0.82))]"></div>
-        
-        <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-6xl font-bold mb-6 leading-tight">
-            <span className="text-[var(--lale-gold)]">Hizmet Bölgelerimiz</span>
+    <main className="min-h-screen bg-background text-on-background">
+      <section className="relative h-[45vh] min-h-[400px] w-full overflow-hidden flex items-end">
+        <Image
+          src="/realistic_hero.png"
+          alt="İstanbul iPhone tamiri ve mikro lehimleme hizmet bölgeleri"
+          fill
+          priority
+          className="object-cover opacity-40 brightness-75"
+        />
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-background/20 to-transparent" />
+        <div className="max-w-container-max mx-auto px-4 md:px-margin-desktop relative z-10 w-full pb-16">
+          <span className="font-technical text-tertiary tracking-[0.4em] uppercase text-[10px] mb-4 block font-bold">İstanbul Teknik Servis Ağı</span>
+          <h1 className="text-5xl md:text-7xl font-display font-bold text-on-surface uppercase tracking-tighter">
+            Hizmet <span className="text-tertiary">Bölgelerimiz</span>
           </h1>
-          <p className="text-xl md:text-2xl text-[rgba(251,250,246,0.74)] max-w-2xl mx-auto">
-            İstanbul&apos;un farklı bölgelerindeki işletmelere muhasebe ve mali danışmanlık desteği sunuyoruz
+        </div>
+      </section>
+
+      <section className="max-w-container-max mx-auto px-4 md:px-margin-desktop py-20">
+        <div className="max-w-4xl">
+          <p className="text-xl text-on-surface-variant leading-relaxed font-display uppercase tracking-tight">
+            İstanbul Esenler merkezli laboratuvarımızda iPhone anakart tamiri, mikro lehimleme, veri kurtarma ve elektronik kart onarımı için bölgesel teknik destek sağlıyoruz.
           </p>
         </div>
       </section>
 
-      <section className="lale-dark-section py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-[var(--lale-ivory)] mb-4">
-              Hizmet Verdiğimiz Bölgeler
-            </h2>
-            <p className="text-lg text-[rgba(251,250,246,0.68)] max-w-2xl mx-auto">
-              Size en yakın hizmet alanlarını inceleyin ve işletmenize uygun çalışma modeli için bizimle iletişime geçin.
-            </p>
-          </div>
-
-          {serviceAreas.length === 0 ? (
-            <div className="text-center py-12">
-              <div className="text-6xl mb-4">🏗️</div>
-              <h3 className="text-xl font-semibold text-[var(--lale-ivory)] mb-2">Henüz Hizmet Bölgesi Eklenmemiş</h3>
-              <p className="text-[rgba(251,250,246,0.68)]">Admin panelinden hizmet bölgeleri ekleyebilirsiniz.</p>
-              
-              {/* Debug Info */}
-              <div className="mt-6 p-4 bg-[rgba(251,250,246,0.06)] rounded-lg text-left max-w-2xl mx-auto border border-[rgba(212,175,55,0.14)]">
-                <h4 className="font-semibold text-[var(--lale-gold)] mb-2">Debug Bilgisi:</h4>
-                <p className="text-sm text-[rgba(251,250,246,0.68)]">Loading: {loading.toString()}</p>
-                <p className="text-sm text-[rgba(251,250,246,0.68)]">Service Areas Count: {serviceAreas.length}</p>
-                <p className="text-sm text-[rgba(251,250,246,0.68)]">Error: {error || 'None'}</p>
-                
-              </div>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-              {serviceAreas.map((area) => (
-                <Link
-                  key={area.id}
-                  href={`/hizmet-bolgelerimiz/${area.slug}`}
-                  className="group lale-card-dark rounded-xl hover:shadow-xl transition-all duration-300 transform hover:-translate-y-2 overflow-hidden"
-                >
-                  <div className="relative h-48 overflow-hidden">
-                    <Image
-                      src={area.imageUrl || '/img/sayfa1.jpg'}
-                      alt={area.name}
-                      fill
-                      className="object-cover group-hover:scale-110 transition-transform duration-300"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent"></div>
-                  </div>
-                  
-                  <div className="p-6">
-                    <h3 className="text-xl font-bold text-[var(--lale-ivory)] mb-2 group-hover:text-[var(--lale-gold)] transition-colors duration-300">
-                      {area.name}
-                    </h3>
-                    <p className="text-[rgba(251,250,246,0.68)] text-sm leading-relaxed">
-                      {area.description}
-                    </p>
-                    
-                    <div className="mt-4 flex items-center text-[var(--lale-gold)] font-medium text-sm">
-                      Detayları Gör
-                      <svg className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                      </svg>
-                    </div>
-                  </div>
-                </Link>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
-
-      <section className="lale-dark-section py-16">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl md:text-4xl font-bold text-[var(--lale-ivory)] mb-4">
-              Çalışmalarımızdan Örnekler
-            </h2>
-            <p className="text-lg text-[rgba(251,250,246,0.68)] max-w-2xl mx-auto">
-              Hizmet verdiğimiz bölgelerdeki kurumsal çalışmalardan seçilen görseller
-            </p>
-          </div>
-
-          {galleryItems.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 max-w-4xl mx-auto">
-              {galleryItems.slice(0, 3).map((item) => (
-                <div
-                  key={item.id}
-                  className="group lale-card-dark rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition-all duration-300 cursor-pointer"
-                >
-                  <div className="aspect-square bg-[rgba(251,250,246,0.06)] relative overflow-hidden max-w-xs mx-auto">
-                    {item.imageUrl ? (
-                      <Image
-                        src={item.imageUrl}
-                        alt={item.title}
-                        width={400}
-                        height={300}
-                        className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-                        onError={(e) => {
-                          const target = e.target as HTMLImageElement;
-                          target.style.display = 'none';
-                        }}
-                      />
-                    ) : (
-                      <div className="w-full h-full flex items-center justify-center">
-                        <span className="text-4xl text-gray-300">🖼️</span>
-                      </div>
-                    )}
-                    
-                    {/* Hover Overlay - Sadece göz simgesi */}
-                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
-                      <div className="bg-[rgba(6,35,31,0.82)] rounded-full p-3 cursor-pointer transform scale-90 group-hover:scale-100 transition-transform duration-200 shadow-lg border border-[rgba(212,175,55,0.18)]">
-                        <svg className="w-6 h-6 text-[var(--lale-gold)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          ) : (
-            <div className="text-center py-12">
-              <div className="text-6xl mb-4">🖼️</div>
-              <h3 className="text-xl font-semibold text-[var(--lale-ivory)] mb-2">Henüz Galeri Resmi Eklenmemiş</h3>
-              <p className="text-[rgba(251,250,246,0.68)]">Admin panelinden galeri resimleri ekleyebilirsiniz.</p>
-            </div>
-          )}
-
-          <div className="text-center mt-12">
+      <section className="max-w-container-max mx-auto px-4 md:px-margin-desktop">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+          {areas.map((area) => (
             <Link
-              href="/galeri"
-              className="lale-gold-button gap-2"
+              key={area.id}
+              href={`/hizmet-bolgelerimiz/${area.slug}`}
+              className="group bg-surface-container border border-outline-variant hover:border-tertiary transition-all duration-300 relative circuit-pattern glow-border overflow-hidden"
             >
-              Tüm Galeriyi Gör
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-              </svg>
+              <div className="relative h-52 w-full overflow-hidden">
+                <Image
+                  src={area.imageUrl || '/realistic_hero.png'}
+                  alt={`${area.name} iPhone anakart tamiri hizmet bölgesi`}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110 opacity-90 group-hover:opacity-100"
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-surface-container to-transparent" />
+              </div>
+
+              <div className="p-8">
+                <h2 className="text-2xl font-display font-bold mb-3 text-on-surface group-hover:text-tertiary transition-colors">{area.name}</h2>
+                <p className="text-on-surface-variant text-sm mb-6 leading-relaxed line-clamp-4">{area.description}</p>
+                <span className="font-technical text-tertiary text-[10px] tracking-[0.2em] flex items-center gap-2 group-hover:gap-4 transition-all">
+                  BÖLGE DETAYI <span className="material-symbols-outlined text-sm">arrow_forward</span>
+                </span>
+              </div>
             </Link>
-          </div>
+          ))}
         </div>
       </section>
 
-      <section className="lale-dark-section py-16">
-        <div className="max-w-4xl mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-[var(--lale-ivory)] mb-6">
-            Size En Yakın Hizmet Bölgesini Mi Arıyorsunuz?
+      <section className="max-w-container-max mx-auto px-4 md:px-margin-desktop mt-24">
+        <div className="bg-surface-container border border-outline-variant rounded-md p-12 md:p-20 relative overflow-hidden circuit-pattern">
+          <h2 className="text-3xl md:text-5xl font-display font-bold text-on-surface mb-6 uppercase tracking-tighter">
+            Bölgeniz Listede Yoksa <span className="text-tertiary neon-text-glow">Yine Ulaşın</span>
           </h2>
-          <p className="text-xl text-[rgba(251,250,246,0.72)] mb-8">
-            Ekibimizle iletişime geçin, size uygun hizmet bölgesini ve çalışma planını birlikte netleştirelim.
+          <p className="text-on-surface-variant max-w-2xl mb-10 text-lg">
+            İstanbul dışından gelen cihazlar için kargo ile kabul, ön analiz ve onarım süreci planlanabilir.
           </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <a
-              href="tel:+905513678134"
-              className="lale-gold-button gap-2"
-            >
-              📞 Hemen Ara
-            </a>
-            <a
-              href="https://wa.me/905461045900/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="lale-outline-button gap-2"
-            >
-              💬 WhatsApp
-            </a>
-          </div>
+          <Link href="/iletisim" className="btn-tech px-12 py-4 inline-flex">
+            İletişime Geçin
+          </Link>
         </div>
       </section>
-    </div>
+    </main>
   );
-};
-
-export default ServiceAreasPage;
+}

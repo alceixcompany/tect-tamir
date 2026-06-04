@@ -4,34 +4,34 @@ import { FiChevronDown, FiHelpCircle } from 'react-icons/fi';
 
 const faqs = [
   {
-    question: 'Yeni şirket kuracak biri olarak hangi aşamada muhasebeciyle çalışmalıyım?',
+    question: 'iPhone anakart tamiri hangi arızalarda gerekir?',
     answer:
-      'En sağlıklı yaklaşım, kuruluş öncesinde görüşmektir. Şirket türü seçimi, vergi yükümlülükleri, faaliyet kodu ve başlangıç evrakları daha en baştan doğru planlandığında ileride oluşabilecek zaman ve maliyet kayıpları azalır.',
+      'Sıvı teması, cihazın açılmaması, şebeke yok hatası, sürekli yeniden başlama, şarj almama, kısa devre ve veri erişimi sorunlarında anakart seviyesinde teknik inceleme gerekir.',
   },
   {
-    question: 'Aylık muhasebe sürecinde bizden düzenli olarak ne talep ediyorsunuz?',
+    question: 'Sıvı temaslı iPhone için ilk ne yapmalıyım?',
     answer:
-      'Temel olarak fatura, gider belgesi, banka hareketleri ve personel verilerini düzenli şekilde topluyoruz. Şirketin yapısına göre belge akışını sadeleştirip size özel bir teslim düzeni oluşturuyoruz.',
+      'Cihazı şarja takmayın, açmaya çalışmayın ve sıcak hava uygulamayın. En kısa sürede laboratuvar incelemesine getirilmesi veri kurtarma ve onarım şansını artırır.',
   },
   {
-    question: 'Beyanname ve SGK tarihlerinin takibi nasıl ilerliyor?',
+    question: 'Verilerim silinmeden onarım yapılabilir mi?',
     answer:
-      'Tüm yasal tarihleri kendi takvimimizde izliyor, gerekli belge ve onayları önceden hazırlıyoruz. Böylece son gün stresi ve gecikme riskini minimumda tutuyoruz.',
+      'Birçok anakart arızasında öncelik veriyi korumaktır. NAND, CPU hattı, güç devresi veya sıvı teması durumuna göre veri kurtarma olasılığı teknik analiz sonrası netleşir.',
   },
   {
-    question: 'Bordro ve personel işlemlerini de takip ediyor musunuz?',
+    question: 'Mikro lehimleme işlemi ne kadar sürer?',
     answer:
-      'Evet. İşe giriş-çıkış, bordro, aylık prim hizmet belgeleri ve ilgili SGK süreçleri hizmet kapsamına göre tarafımızdan yönetilebiliyor.',
+      'Arızanın türüne göre değişir. Basit entegre ve hat onarımları daha kısa sürebilir; katman arızası, reballing veya veri kurtarma işlemlerinde süreç daha detaylı ilerler.',
   },
   {
-    question: 'İşletmem büyüdükçe hizmet kapsamı değiştirilebilir mi?',
+    question: 'Onarım öncesi fiyat veriyor musunuz?',
     answer:
-      'Elbette. Personel sayısı, işlem hacmi veya şirket yapısı değiştikçe hizmet kapsamını yeniden planlayabilir, ihtiyaç duyulan alanlarda daha kapsamlı destek sunabiliriz.',
+      'Cihazın arıza tespiti yapıldıktan sonra onarım kapsamı, riskler ve ücret bilgisi paylaşılır. Onay alınmadan onarım süreci başlatılmaz.',
   },
   {
-    question: 'İlk görüşmede hangi konular konuşuluyor?',
+    question: 'İstanbul dışından cihaz gönderebilir miyim?',
     answer:
-      'Faaliyet alanınız, mevcut şirket yapınız, personel durumu, belge akışı ve beklentileriniz konuşulur. Böylece size uygun çalışma modeli ve hizmet çerçevesi netleşir.',
+      'Evet. İstanbul dışından gelen cihazlar için kargo ile kabul yapılabilir. Gönderim öncesi cihaz durumu ve arıza belirtisi için iletişim kurmanız yeterlidir.',
   },
 ] as const;
 
@@ -43,21 +43,21 @@ const FAQ = () => {
   };
 
   return (
-    <section className="lale-dark-section py-24 sm:py-28">
+    <section className="bg-background py-24 sm:py-28">
       <div className="relative mx-auto max-w-5xl px-5 sm:px-7 lg:px-10">
         <div className="mx-auto max-w-3xl text-center">
-          <div className="lale-kicker bg-[rgba(6,35,31,0.56)]">
+          <div className="inline-flex items-center gap-2 border border-outline-variant bg-surface-container px-4 py-2 font-technical text-[10px] uppercase tracking-[0.3em] text-tertiary">
             <FiHelpCircle className="h-4 w-4" />
             SIK SORULAN SORULAR
           </div>
 
-          <h2 className="mt-8 font-serif text-4xl leading-tight text-[var(--lale-ivory)] sm:text-5xl">
-            Aklınıza takılan sorular için
-            <span className="block text-[var(--lale-gold)]">kısa ve net yanıtlar</span>
+          <h2 className="mt-8 font-display text-4xl font-bold leading-tight text-on-surface sm:text-5xl uppercase tracking-tighter">
+            Anakart tamiri öncesi
+            <span className="block text-tertiary">bilmeniz gerekenler</span>
           </h2>
 
-          <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-[rgba(251,250,246,0.72)]">
-            Şirket kuruluşu, aylık muhasebe düzeni, beyanname ve bordro
+          <p className="mx-auto mt-6 max-w-2xl text-lg leading-8 text-on-surface-variant">
+            iPhone anakart tamiri, sıvı teması, mikro lehimleme ve veri kurtarma
             süreçleriyle ilgili en çok gelen soruları derledik.
           </p>
         </div>
@@ -69,22 +69,22 @@ const FAQ = () => {
             return (
               <div
                 key={faq.question}
-                className={`overflow-hidden rounded-[10px] border bg-[rgba(6,35,31,0.72)] shadow-[0_18px_40px_rgba(0,0,0,0.22)] transition-all duration-300 ${
-                  isActive ? 'border-[rgba(212,175,55,0.48)]' : 'border-[rgba(212,175,55,0.18)]'
+                className={`overflow-hidden rounded-md border bg-surface-container shadow-[0_18px_40px_rgba(0,0,0,0.22)] transition-all duration-300 ${
+                  isActive ? 'border-tertiary/60' : 'border-outline-variant'
                 }`}
               >
                 <button
                   onClick={() => toggleFAQ(index)}
                   className="flex w-full items-center justify-between gap-5 px-5 py-5 text-left sm:px-7"
                 >
-                  <h3 className="text-base font-medium leading-7 text-[var(--lale-ivory)] sm:text-lg">
+                  <h3 className="text-base font-medium leading-7 text-on-surface sm:text-lg">
                     {faq.question}
                   </h3>
                   <div
                     className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-full border transition-all duration-300 ${
                       isActive
-                        ? 'border-[var(--lale-gold)] bg-[rgba(212,175,55,0.12)] text-[var(--lale-gold)]'
-                        : 'border-[rgba(212,175,55,0.18)] bg-[rgba(251,250,246,0.06)] text-[rgba(251,250,246,0.58)]'
+                        ? 'border-tertiary bg-tertiary/10 text-tertiary'
+                        : 'border-outline-variant bg-background text-on-surface-variant'
                     }`}
                   >
                     <FiChevronDown
@@ -101,8 +101,8 @@ const FAQ = () => {
                   }`}
                 >
                   <div className="overflow-hidden">
-                    <div className="border-t border-[rgba(212,175,55,0.12)] px-5 pb-5 pt-4 sm:px-7">
-                      <p className="max-w-4xl text-sm leading-7 text-[rgba(251,250,246,0.68)]">
+                    <div className="border-t border-outline-variant px-5 pb-5 pt-4 sm:px-7">
+                      <p className="max-w-4xl text-sm leading-7 text-on-surface-variant">
                         {faq.answer}
                       </p>
                     </div>

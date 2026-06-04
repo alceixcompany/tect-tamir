@@ -13,11 +13,11 @@ const Footer = () => {
   }
 
   const services = [
-    'iPhone Anakart Tamiri',
-    'Mikro Lehimleme Laboratuvarı',
-    'Hassas Elektronik Kart Tamiri',
-    'Veri Kurtarma',
-    'Ekran & Batarya Değişimi'
+    { name: 'iPhone Anakart Tamiri', href: '/hizmetlerimiz/iphone-anakart-tamiri' },
+    { name: 'Mikro Lehimleme Laboratuvarı', href: '/hizmetlerimiz/mikro-lehimleme' },
+    { name: 'Hassas Elektronik Kart Tamiri', href: '/hizmetlerimiz/elektronik-kart-tamiri' },
+    { name: 'Veri Kurtarma', href: '/hizmetlerimiz/iphone-anakart-tamiri' },
+    { name: 'BGA Reballing', href: '/hizmetlerimiz/mikro-lehimleme' }
   ];
 
   return (
@@ -52,11 +52,11 @@ const Footer = () => {
           <div>
             <h4 className="font-technical text-on-surface text-[10px] tracking-[0.2em] uppercase mb-8">HİZMETLERİMİZ</h4>
             <ul className="space-y-4">
-              {services.map((service, index) => (
-                <li key={index}>
-                  <Link href="/hizmetlerimiz" className="text-sm hover:text-tertiary transition-colors flex items-center gap-2 group">
+              {services.map((service) => (
+                <li key={service.name}>
+                  <Link href={service.href} className="text-sm hover:text-tertiary transition-colors flex items-center gap-2 group">
                     <span className="w-1 h-1 bg-tertiary/30 group-hover:bg-tertiary transition-all"></span>
-                    {service}
+                    {service.name}
                   </Link>
                 </li>
               ))}

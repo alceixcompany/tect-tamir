@@ -61,9 +61,9 @@ const Header = () => {
           </div>
 
           <div className="flex items-center gap-4">
-            <button className="hidden sm:block btn-tech px-10 rounded-full h-11 text-[9px] font-bold tracking-widest shrink-0">
+            <Link href="/iletisim" className="hidden sm:flex btn-tech px-10 rounded-full h-11 text-[9px] font-bold tracking-widest shrink-0 items-center">
               TEKLİF AL
-            </button>
+            </Link>
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="lg:hidden h-11 w-11 flex items-center justify-center border border-outline-variant/30 rounded-md text-on-surface-variant hover:text-tertiary hover:border-tertiary transition-all"
@@ -106,9 +106,9 @@ const Header = () => {
           </div>
 
           <div className="mt-auto space-y-6">
-            <button className="btn-tech w-full py-6 rounded-full text-xs font-bold tracking-[0.3em]">
+            <Link href="/iletisim" onClick={() => setIsMobileMenuOpen(false)} className="btn-tech w-full py-6 rounded-full text-xs font-bold tracking-[0.3em] flex justify-center">
               TEKLİF AL
-            </button>
+            </Link>
             <div className="flex justify-between items-center px-2">
               <span className="font-technical text-[8px] text-on-surface-variant/40 uppercase tracking-[0.5em]">Istanbul / iPhone Tamir Atölyesi</span>
               <div className="h-px flex-1 mx-6 bg-outline-variant/20"></div>

@@ -1,96 +1,75 @@
 import { MetadataRoute } from 'next'
 import { db } from '@/lib/firebase'
 import { collection, getDocs, query, where, DocumentData } from 'firebase/firestore'
+import { absoluteUrl, fallbackServiceAreas, servicePages } from '@/lib/seo'
+import { createSlug } from '@/lib/slug'
+
+const staticLastModified = new Date('2026-06-04')
+
+function toDate(value: unknown): Date {
+  if (!value) return staticLastModified
+  if (value instanceof Date) return value
+  if (typeof value === 'string' || typeof value === 'number') return new Date(value)
+  if (typeof value === 'object' && value !== null && 'toDate' in value && typeof value.toDate === 'function') {
+    return value.toDate()
+  }
+  return staticLastModified
+}
 
 // Statik sayfalar
 const staticPages = [
   {
     url: '',
-    lastModified: new Date(),
+    lastModified: staticLastModified,
     changeFrequency: 'weekly' as const,
     priority: 1,
   },
   {
     url: '/hizmetlerimiz',
-    lastModified: new Date(),
+    lastModified: staticLastModified,
     changeFrequency: 'monthly' as const,
     priority: 0.9,
   },
   {
     url: '/hizmet-bolgelerimiz',
-    lastModified: new Date(),
+    lastModified: staticLastModified,
     changeFrequency: 'monthly' as const,
     priority: 0.9,
   },
   {
     url: '/galeri',
-    lastModified: new Date(),
+    lastModified: staticLastModified,
     changeFrequency: 'weekly' as const,
     priority: 0.8,
   },
   {
     url: '/haberler',
-    lastModified: new Date(),
+    lastModified: staticLastModified,
     changeFrequency: 'daily' as const,
     priority: 0.8,
   },
   {
     url: '/hakkimizda',
-    lastModified: new Date(),
+    lastModified: staticLastModified,
     changeFrequency: 'monthly' as const,
     priority: 0.7,
   },
   {
     url: '/iletisim',
-    lastModified: new Date(),
+    lastModified: staticLastModified,
     changeFrequency: 'monthly' as const,
     priority: 0.8,
   },
 ]
 
-// Hizmetler (statik)
-const services = [
-  {
-    url: '/hizmetlerimiz/agir-vasita-beyin-tamiri',
-    lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
-    priority: 0.8,
-  },
-  {
-    url: '/hizmetlerimiz/otomotiv-ecu-tamiri',
-    lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
-    priority: 0.8,
-  },
-  {
-    url: '/hizmetlerimiz/iphone-anakart-tamiri',
-    lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
-    priority: 0.8,
-  },
-  {
-    url: '/hizmetlerimiz/elektronik-kart-tamiri',
-    lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
-    priority: 0.8,
-  },
-  {
-    url: '/hizmetlerimiz/abs-klima-beyni',
-    lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
-    priority: 0.8,
-  },
-  {
-    url: '/hizmetlerimiz/mikro-lehimleme',
-    lastModified: new Date(),
-    changeFrequency: 'monthly' as const,
-    priority: 0.8,
-  },
-]
+const services = servicePages.map((service) => ({
+  url: `/hizmetlerimiz/${service.slug}`,
+  lastModified: staticLastModified,
+  changeFrequency: 'monthly' as const,
+  priority: 0.85,
+}))
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const baseUrl = 'https://www.iphonetamiratolyesi.com'
-  
   try {
     // Firebase'den dinamik verileri al
     const [newsSnapshot, serviceAreasSnapshot] = await Promise.all([
@@ -109,28 +88,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Haberler için sitemap entries
     const newsPages: MetadataRoute.Sitemap = newsSnapshot.docs.map((doc: DocumentData) => {
       const data = doc.data()
-      
-      // Slug oluşturma fonksiyonu
-      const createSlug = (title: string): string => {
-        return title
-          .toLowerCase()
-          .replace(/ğ/g, 'g')
-          .replace(/ü/g, 'u')
-          .replace(/ş/g, 's')
-          .replace(/ı/g, 'i')
-          .replace(/ö/g, 'o')
-          .replace(/ç/g, 'c')
-          .replace(/[^a-z0-9\s-]/g, '')
-          .replace(/\s+/g, '-')
-          .replace(/-+/g, '-')
-          .trim();
-      };
-      
       const slug = data.slug || createSlug(data.title || '');
       
       return {
-        url: `${baseUrl}/haberler/${slug}`,
-        lastModified: data.updatedAt ? new Date(data.updatedAt) : new Date(),
+        url: absoluteUrl(`/haberler/${slug}`),
+        lastModified: toDate(data.updatedAt || data.createdAt),
         changeFrequency: 'weekly' as const,
         priority: 0.7,
       }
@@ -139,45 +101,38 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Hizmet bölgeleri için sitemap entries
     const serviceAreaPages: MetadataRoute.Sitemap = serviceAreasSnapshot.docs.map((doc: DocumentData) => {
       const data = doc.data()
-      
-      // Slug oluşturma fonksiyonu
-      const createSlug = (name: string): string => {
-        return name
-          .toLowerCase()
-          .replace(/ğ/g, 'g')
-          .replace(/ü/g, 'u')
-          .replace(/ş/g, 's')
-          .replace(/ı/g, 'i')
-          .replace(/ö/g, 'o')
-          .replace(/ç/g, 'c')
-          .replace(/[^a-z0-9\s-]/g, '')
-          .replace(/\s+/g, '-')
-          .replace(/-+/g, '-')
-          .trim();
-      };
-      
       const slug = data.slug || createSlug(data.name || '');
       
       return {
-        url: `${baseUrl}/hizmet-bolgelerimiz/${slug}`,
-        lastModified: data.updatedAt ? new Date(data.updatedAt) : new Date(),
+        url: absoluteUrl(`/hizmet-bolgelerimiz/${slug}`),
+        lastModified: toDate(data.updatedAt || data.createdAt),
         changeFrequency: 'monthly' as const,
         priority: 0.8,
       }
     })
 
+    const dynamicServiceAreaUrls = new Set(serviceAreaPages.map((page) => page.url))
+    const fallbackServiceAreaPages: MetadataRoute.Sitemap = fallbackServiceAreas
+      .map((area) => ({
+        url: absoluteUrl(`/hizmet-bolgelerimiz/${area.slug}`),
+        lastModified: staticLastModified,
+        changeFrequency: 'monthly' as const,
+        priority: 0.75,
+      }))
+      .filter((page) => !dynamicServiceAreaUrls.has(page.url))
+
     // Tüm sayfaları birleştir
     const allPages: MetadataRoute.Sitemap = [
       // Statik sayfalar
       ...staticPages.map(page => ({
-        url: `${baseUrl}${page.url}`,
+        url: absoluteUrl(page.url),
         lastModified: page.lastModified,
         changeFrequency: page.changeFrequency,
         priority: page.priority,
       })),
       // Hizmetler
       ...services.map(service => ({
-        url: `${baseUrl}${service.url}`,
+        url: absoluteUrl(service.url),
         lastModified: service.lastModified,
         changeFrequency: service.changeFrequency,
         priority: service.priority,
@@ -186,6 +141,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       ...newsPages,
       // Dinamik hizmet bölgeleri
       ...serviceAreaPages,
+      ...fallbackServiceAreaPages,
     ]
 
     return allPages
@@ -196,16 +152,22 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     // Hata durumunda sadece statik sayfaları döndür
     return [
       ...staticPages.map(page => ({
-        url: `${baseUrl}${page.url}`,
+        url: absoluteUrl(page.url),
         lastModified: page.lastModified,
         changeFrequency: page.changeFrequency,
         priority: page.priority,
       })),
       ...services.map(service => ({
-        url: `${baseUrl}${service.url}`,
+        url: absoluteUrl(service.url),
         lastModified: service.lastModified,
         changeFrequency: service.changeFrequency,
         priority: service.priority,
+      })),
+      ...fallbackServiceAreas.map(area => ({
+        url: absoluteUrl(`/hizmet-bolgelerimiz/${area.slug}`),
+        lastModified: staticLastModified,
+        changeFrequency: 'monthly' as const,
+        priority: 0.75,
       })),
     ]
   }

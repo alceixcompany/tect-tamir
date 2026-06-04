@@ -6,6 +6,7 @@ import Gallery from '@/components/Gallery';
 import NewsPreview from '@/components/NewsPreview';
 import Contact from '@/components/Contact';
 import AboutSection from '@/components/AboutSection';
+import FAQ from '@/components/FAQ';
 
 export default function Home() {
   return (
@@ -17,9 +18,9 @@ export default function Home() {
       <References />
       <Gallery />
       <NewsPreview />
+      <FAQ />
       <Contact />
     </main>
   );
 }
-
 

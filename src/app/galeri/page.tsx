@@ -16,7 +16,7 @@ interface GalleryItem {
 }
 
 const fallbackGallery = [
-  { id: '1', imageUrl: '/lab_workstation_1778396468117.png', title: 'Hassas Onarım İstasyonu', description: 'Yüksek çözünürlüklü mikroskoplar ve ESD güvenli çalışma alanları.' },
+  { id: '1', imageUrl: '/modern_phone_repair_lab.png', title: 'Modern iPhone Onarım İstasyonu', description: 'Güncel cihazlarda mikro lehimleme, anakart analizi ve ESD güvenli çalışma alanı.' },
   { id: '2', imageUrl: '/bga_rework_1778396487205.png', title: 'BGA Rework Ünitesi', description: 'Otomatik profil kontrollü çip sökme ve takma sistemleri.' },
   { id: '3', imageUrl: '/clean_room_facility_1778396507960.png', title: 'Kontrollü Ortam', description: 'Tozdan arındırılmış laboratuvar standartlarında onarım süreçleri.' }
 ];
@@ -54,8 +54,8 @@ const GaleriPage = () => {
       {/* Gallery Hero Section */}
       <section className="relative h-[45vh] min-h-[400px] w-full overflow-hidden flex items-end">
         <Image 
-          src="/lab_workstation_1778396468117.png"
-          alt="iPhone Tamir Atölyesi Çalışma İstasyonu"
+          src="/modern_phone_repair_lab.png"
+          alt="Modern iPhone anakart tamiri ve mikro lehimleme istasyonu"
           fill
           className="object-cover opacity-40 brightness-75"
         />

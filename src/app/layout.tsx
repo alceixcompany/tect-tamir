@@ -6,6 +6,12 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import FloatingContact from "@/components/FloatingContact";
 import ReduxProvider from "@/components/ReduxProvider";
+import {
+  createMetadata,
+  localBusinessJsonLd,
+  siteConfig,
+  websiteJsonLd,
+} from "@/lib/seo";
 
 const inter = Inter({ 
   subsets: ["latin", "latin-ext"],
@@ -23,23 +29,34 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "iPhone Tamir Atölyesi | Profesyonel iPhone Anakart Onarımı",
-  description: "iPhone anakart tamiri, veri kurtarma ve mikro lehimleme uzmanlığı. Çip seviyesinde profesyonel onarım hizmetleri.",
-  keywords: [
-    "iphone tamir",
-    "iphone anakart tamiri",
-    "iphone veri kurtarma",
-    "mikro lehimleme",
-    "apple teknik servis",
-    "iphone çip tamiri"
-  ].join(", "),
-  authors: [{ name: "iPhone Tamir Atölyesi" }],
-  creator: "iPhone Tamir Atölyesi",
-  publisher: "iPhone Tamir Atölyesi",
-  robots: "index, follow",
+  metadataBase: new URL(siteConfig.url),
+  ...createMetadata(),
+  applicationName: siteConfig.name,
+  authors: [{ name: siteConfig.name }],
+  creator: siteConfig.name,
+  publisher: siteConfig.name,
+  category: "technology",
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
   icons: {
-    icon: "/iphonetamiratolyesi_icon.png",
-    apple: "/iphonetamiratolyesi_icon.png",
+    icon: siteConfig.icon,
+    apple: siteConfig.icon,
+  },
+  manifest: "/manifest.webmanifest",
+  other: {
+    "geo.region": "TR-34",
+    "geo.placename": `${siteConfig.district}, ${siteConfig.city}`,
+    "geo.position": `${siteConfig.coordinates.latitude};${siteConfig.coordinates.longitude}`,
+    ICBM: `${siteConfig.coordinates.latitude}, ${siteConfig.coordinates.longitude}`,
   },
 };
 
@@ -54,6 +71,18 @@ export default function RootLayout({
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" />
       </head>
       <body className={`${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable} font-sans bg-background text-on-background`}>
+        <Script
+          id="website-json-ld"
+          type="application/ld+json"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd()) }}
+        />
+        <Script
+          id="local-business-json-ld"
+          type="application/ld+json"
+          strategy="beforeInteractive"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd()) }}
+        />
 
         {/* Google Tag Manager (noscript) */}
         <noscript>

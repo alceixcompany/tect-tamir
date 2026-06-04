@@ -1,6 +1,7 @@
 'use client'
 import React, { useState, useEffect } from 'react';
 import { db } from '@/lib/firebase';
+import { resolveNewsImage } from '@/lib/images';
 import { collection, getDocs, addDoc, updateDoc, deleteDoc, doc } from 'firebase/firestore';
 import Image from 'next/image';
 import CKEditorComponent from '@/components/CKEditorComponent';
@@ -176,7 +177,7 @@ const AdminNews = () => {
             <div className="flex flex-col md:flex-row gap-10">
               <div className="relative w-full md:w-56 h-40 bg-background border border-outline-variant/30 rounded-sm overflow-hidden shrink-0">
                 {haber.imageUrl ? (
-                  <Image src={haber.imageUrl} alt={haber.title} fill className="object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
+                  <Image src={resolveNewsImage(haber.imageUrl)} alt={haber.title} fill className="object-cover opacity-80 group-hover:opacity-100 transition-opacity" />
                 ) : (
                   <div className="flex items-center justify-center h-full text-outline-variant/20">
                     <FiImage className="w-12 h-12" />
@@ -326,7 +327,7 @@ const AdminNews = () => {
                         <div className="relative aspect-video bg-background border border-outline-variant rounded-md overflow-hidden flex items-center justify-center">
                           {haberForm.imageUrl ? (
                             <Image 
-                              src={haberForm.imageUrl} 
+                              src={resolveNewsImage(haberForm.imageUrl)} 
                               alt="Preview" 
                               fill 
                               className="object-cover opacity-80"
